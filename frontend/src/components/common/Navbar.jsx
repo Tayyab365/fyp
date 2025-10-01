@@ -12,7 +12,7 @@ const Navbar = () => {
             {isOpen ? "✖" : "☰"}
           </button>
           <NavLink to="/" className="text-2xl font-bold text-[#2563EB] hover:text-[#1D4ED8] transition">
-            My Store
+            <span className="text-black">Shop</span>Ease
           </NavLink>
         </div>
         <ul className="hidden md:flex space-x-8">
@@ -54,10 +54,10 @@ const Navbar = () => {
           </li>
         </ul>
         <div className="flex items-center space-x-3 w-auto">
-          <input
+          {/* <input
             type="text"
             placeholder="Search"
-            className="px-3 py-1 rounded-lg border border-[#CBD5E1] text-black max-w-[200px] md:max-w-xs focus:outline-none focus:ring-2 focus:ring-[#2563EB]"/>
+            className="px-3 py-1 rounded-lg border border-[#CBD5E1] text-black max-w-[200px] md:max-w-xs focus:outline-none focus:ring-2 focus:ring-[#2563EB]"/> */}
           <NavLink
             to="/cart"
             className="relative text-2xl hover:text-[#2563EB] transition">

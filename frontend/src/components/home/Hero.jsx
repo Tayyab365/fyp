@@ -1,6 +1,7 @@
 // src/components/Hero.jsx
 import React from "react";
 import { Link } from "react-router-dom";
+import heroimage from "../../assets/images/heroimage1.png"
 
 const Hero = () => {
   return (
@@ -37,7 +38,7 @@ const Hero = () => {
         {/* Right Side */}
         <div className="md:w-1/2 mt-10 md:mt-0 flex justify-center">
           <img
-            src="https://dummyimage.com/600x400/F8FAFC/2563EB&text=Gaming+Laptop+%2B+Gear"
+            src={heroimage}
             alt="Gaming Gear"
             className="rounded-lg shadow-xl border border-[#E2E8F0]"
           />

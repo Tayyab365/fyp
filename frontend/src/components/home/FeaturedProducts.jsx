@@ -1,11 +1,9 @@
-// src/components/FeaturedProducts.jsx
 import React, { useEffect, useState } from "react";
 
 const FeaturedProducts = () => {
   const [products, setProducts] = useState([]);
 
-  const api_url =
-    "https://67ff575158f18d7209f0cc07.mockapi.io/gamingstore/products";
+  const api_url = "https://67ff575158f18d7209f0cc07.mockapi.io/gamingstore/products";
 
   useEffect(() => {
     fetch(api_url)

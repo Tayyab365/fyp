@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom';
 
 const ProductCard = () => {
 
@@ -49,9 +50,14 @@ const ProductCard = () => {
               <h3 className="text-lg font-semibold text-[#1E293B] mb-2 line-clamp-2">{product.title}</h3>
               <div className="mt-auto">
                 <p className="text-[#2563EB] font-bold text-xl mb-4">${product.price}</p>
-                <button className="w-full py-2 rounded-lg bg-[#2563EB] text-white font-semibold hover:bg-[#1D4ED8] transition">
-                  Add to Cart
-                </button>
+                <div className='flex gap-6'>
+                  <button className="flex-1 py-2 rounded-lg bg-[#2563EB] text-white font-semibold hover:bg-[#1D4ED8] transition">
+                    Add to Cart
+                  </button>
+                  <Link to = {`/product-details/${product.id}`} className="flex-1 py-2 text-center rounded-lg bg-[#2563EB] hover:bg-[#1D4ED8] font-semibold text-white shadow-md transition">
+                    View Product
+                  </Link>
+                </div>
               </div>
             </div>
           ))}

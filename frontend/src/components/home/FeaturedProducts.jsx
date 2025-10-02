@@ -31,13 +31,9 @@ const FeaturedProducts = () => {
                   alt={product.title}
                   className="max-h-full max-w-full object-contain rounded-lg"/>
               </div>
-              <h3 className="text-lg font-semibold text-[#1E293B] mb-2 line-clamp-2">
-                {product.title}
-              </h3>
+              <h3 className="text-lg font-semibold text-[#1E293B] mb-2 line-clamp-2">{product.title}</h3>
               <div className="mt-auto">
-                <p className="text-[#2563EB] font-bold text-xl mb-4">
-                  ${product.price}
-                </p>
+                <p className="text-[#2563EB] font-bold text-xl mb-4">${product.price}</p>
                 <button className="w-full py-2 rounded-lg bg-[#2563EB] text-white font-semibold hover:bg-[#1D4ED8] transition">
                   Add to Cart
                 </button>

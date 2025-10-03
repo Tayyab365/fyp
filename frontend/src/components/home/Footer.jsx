@@ -5,9 +5,7 @@ import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
 const Footer = () => {
   return (
     <footer className="bg-white border-t border-[#E2E8F0]">
-      {/* Main Footer */}
       <div className="max-w-6xl mx-auto px-6 py-12 grid md:grid-cols-3 gap-10">
-        {/* Brand */}
         <div>
           <h2 className="text-2xl font-bold text-[#1E293B]">
             Shop<span className="text-[#2563EB]">Ease</span>
@@ -16,8 +14,6 @@ const Footer = () => {
             Your one-stop shop for premium gaming gear and accessories.
           </p>
         </div>
-
-        {/* Quick Links */}
         <div>
           <h3 className="text-lg font-semibold text-[#1E293B] mb-4">Quick Links</h3>
           <ul className="space-y-2 text-sm">
@@ -35,8 +31,6 @@ const Footer = () => {
             </li>
           </ul>
         </div>
-
-        {/* Social Media */}
         <div>
           <h3 className="text-lg font-semibold text-[#1E293B] mb-4">Follow Us</h3>
           <div className="flex space-x-4">
@@ -52,8 +46,6 @@ const Footer = () => {
           </div>
         </div>
       </div>
-
-      {/* Bottom Bar */}
       <div className="border-t border-[#E2E8F0] text-center py-4 text-[#475569] text-sm">
         © 2025 ShopEase. All rights reserved.
       </div>

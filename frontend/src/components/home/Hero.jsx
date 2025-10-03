@@ -7,9 +7,6 @@ const Hero = () => {
   return (
     <section className="text-sm bg-gradient-to-r from-[#EFF6FF] to-[#DBEAFE]">
       <div className="container mx-auto px-6 py-20 flex flex-col md:flex-row items-center justify-between">
-        
-        {/* Left Side */}
-
         <div className="md:w-1/2 text-center md:text-left space-y-6">
           <h1 className="!text-5xl md:text-6xl font-extrabold leading-tight text-[#1E293B]">
             Build Your <span className="text-[#2563EB]">Ultimate </span>
@@ -22,26 +19,21 @@ const Hero = () => {
           <div className="flex justify-center md:justify-start gap-4 pt-4">
             <Link
               to="/shop"
-              className="bg-[#2563EB] hover:bg-[#1D4ED8] px-6 py-3 rounded-lg font-semibold text-white shadow-md transition"
-            >
+              className="bg-[#2563EB] hover:bg-[#1D4ED8] px-6 py-3 rounded-lg font-semibold text-white shadow-md transition">
               Shop Now
             </Link>
             <Link
               to="/contact"
-              className="bg-white border border-[#2563EB] text-[#2563EB] hover:bg-[#2563EB] hover:text-white px-6 py-3 rounded-lg font-semibold shadow-sm transition"
-            >
+              className="bg-white border border-[#2563EB] text-[#2563EB] hover:bg-[#2563EB] hover:text-white px-6 py-3 rounded-lg font-semibold shadow-sm transition">
               Contact Us
             </Link>
           </div>
         </div>
-
-        {/* Right Side */}
         <div className="md:w-1/2 mt-10 md:mt-0 flex justify-center">
           <img
             src={heroimage}
             alt="Gaming Gear"
-            className="rounded-lg shadow-xl border border-[#E2E8F0]"
-          />
+            className="rounded-lg shadow-xl border border-[#E2E8F0]"/>
         </div>
 
       </div>

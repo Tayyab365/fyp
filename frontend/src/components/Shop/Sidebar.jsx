@@ -1,20 +1,40 @@
 import React from "react";
 
 const Sidebar = () => {
+  const categories = ["Keyboards", "Mouse", "Headsets", "Laptops", "Monitors", "Accessories"];
+
   return (
-    <div className="px-10 py-20">
-      <h2 className="text-xl font-bold text-[#1E293B] text-center mb-6">Categories</h2>
-      <div className="mb-6">
-        <ul className="space-y-2 text-[#475569] text-md">
-          <li className="cursor-pointer hover:text-[#2563EB]">Keyboards</li>
-          <li className="cursor-pointer hover:text-[#2563EB]">Mouse</li>
-          <li className="cursor-pointer hover:text-[#2563EB]">Headsets</li>
-          <li className="cursor-pointer hover:text-[#2563EB]">Laptops</li>
-        </ul>
+    <>
+      {/* ✅ Mobile View (Categories show in grid) */}
+      <div className="md:hidden bg-white px-4 py-6">
+        <h2 className="text-lg font-bold text-[#1E293B] mb-4">Categories</h2>
+        <div className="grid grid-cols-2 gap-3">
+          {categories.map((cat, i) => (
+            <button
+              key={i}
+              className="py-2 px-3 rounded-lg bg-gray-100 text-[#1E293B] text-sm hover:bg-[#2563EB] hover:text-white transition"
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
       </div>
 
-      
-    </div>
+      {/* ✅ Desktop Sidebar */}
+      <div className="hidden md:block w-64 h-screen sticky top-20 border-r border-gray-200 px-6 py-10 mt-12">
+        <h2 className="text-xl font-bold text-[#1E293B] mb-6">Categories</h2>
+        <ul className="space-y-3 text-[#475569] text-md">
+          {categories.map((cat, i) => (
+            <li
+              key={i}
+              className="cursor-pointer hover:text-[#2563EB]"
+            >
+              {cat}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </>
   );
 };
 

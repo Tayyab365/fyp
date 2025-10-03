@@ -4,14 +4,11 @@ import ProductCard from "../components/shop/ProductCard";
 
 const Shop = () => {
   return (
-    <div className="flex">
-      {/* Sidebar (fixed / sticky) */}
-      <div className="w-64 h-screen sticky top-0 border-r border-gray-200 bg-white">
+    <div className="flex flex-col md:flex-row">
+      <div className="md:w-64 w-full md:h-screen sticky top-0 bg-white border-r border-gray-200">
         <Sidebar />
       </div>
-
-      {/* Product Grid (scrollable) */}
-      <div className="flex-1 h-screen overflow-y-auto p-6">
+      <div className="flex-1 py-6">
         <ProductCard />
       </div>
     </div>

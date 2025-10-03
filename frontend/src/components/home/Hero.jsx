@@ -5,17 +5,17 @@ import heroimage from "../../assets/images/heroimage1.png"
 
 const Hero = () => {
   return (
-    <section className="bg-gradient-to-r from-[#EFF6FF] to-[#DBEAFE]">
+    <section className="text-sm bg-gradient-to-r from-[#EFF6FF] to-[#DBEAFE]">
       <div className="container mx-auto px-6 py-20 flex flex-col md:flex-row items-center justify-between">
         
         {/* Left Side */}
 
         <div className="md:w-1/2 text-center md:text-left space-y-6">
-          <h1 className="text-4xl md:text-6xl font-extrabold leading-tight text-[#1E293B]">
+          <h1 className="!text-5xl md:text-6xl font-extrabold leading-tight text-[#1E293B]">
             Build Your <span className="text-[#2563EB]">Ultimate </span>
             Gaming Setup
           </h1>
-          <p className="text-lg text-[#475569] max-w-lg mx-auto md:mx-0">
+          <p className="text-sm text-[#475569] max-w-lg mx-auto md:mx-0">
             High performance gaming laptops, RGB mechanical keyboards, precision mice and pro headsets. 
             Everything a gamer needs, in one store.
           </p>

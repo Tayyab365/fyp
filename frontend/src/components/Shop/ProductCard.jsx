@@ -5,19 +5,10 @@ import { cartContext } from "../../Context/CartContext.";
 
 const ProductCard = () => {
   const {products, loading} = useProducts();
-  const { cartItems, setCartItems } = useContext(cartContext);
+  const { dispatch } = useContext(cartContext);
 
   const addToCart = (product) => {
-    const exist = cartItems.find(items => items.id === product.id)
-    if(exist) {
-      setCartItems(
-        cartItems.map(item => (
-          item.id === product.id ? {...item, quantity: item.quantity + 1} : item
-        ))
-      )
-    }else {
-      setCartItems([...cartItems, {...product, quantity: 1}]);
-    }
+    dispatch({type: "ADD_ITEM", payload: product})
   }
 
   if (loading) return <p className="font-bold text-xl mt-24 pl-24">Loading products...</p>;

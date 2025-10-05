@@ -1,13 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useState} from "react";
 import { useParams } from "react-router-dom";
 import { useProduct } from "../hooks/useProduct";
+import { cartContext } from "../Context/CartContext";
 
 const ProductDetails = () => {
   const { id } = useParams();
 
   const {product, loading} = useProduct(id);
+  const {dispatch} = useContext(cartContext);
+  const [quantity, setQuantity] = useState(1);
 
-  if (!product) return <p className="text-center font-bold text-xl mt-24 pl-24">Loading...</p>;
+  const addToCart = () => {
+    dispatch({type: "ADD_ITEM", payload: {...product, quantity}})
+  }
+
+  if(loading) return <p className="text-center font-bold text-xl mt-24">Loading...</p>
+  if (!product) return <p className="text-center font-bold text-xl mt-24">Product Not found 😕</p>;
 
   return (
     <div className="max-w-6xl mx-auto mt-20 p-6">
@@ -37,13 +45,14 @@ const ProductDetails = () => {
               <input
                 type="number"
                 min="1"
-                defaultValue="1"
+                value={quantity}
+                onChange={(e) => setQuantity(Number(e.target.value))}
                 className="w-20 border rounded-lg px-2 py-1 text-center focus:outline-none focus:ring-2 focus:ring-[#2563EB]"
               />
             </div>
           </div>
           <div className="flex flex-col sm:flex-row gap-4">
-            <button className="flex-1 py-3 rounded-lg bg-[#2563EB] text-white font-semibold hover:bg-[#1D4ED8] transition">
+            <button onClick={addToCart} className="flex-1 py-3 rounded-lg bg-[#2563EB] text-white font-semibold hover:bg-[#1D4ED8] transition">
               Add to Cart
             </button>
             <button className="flex-1 py-3 rounded-lg bg-green-500 text-white font-semibold hover:bg-green-600 transition">

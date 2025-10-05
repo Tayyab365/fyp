@@ -1,8 +1,8 @@
 import React from "react";
 
-const Sidebar = () => {
+const Sidebar = ({setSelectedCategory}) => {
   
-  const categories = ["Keyboards", "Mouse", "Headsets", "Laptops", "Monitors"];
+  const categories = ["All", "keyboard", "Mouse", "Headset", "Laptop", "Monitors"];
 
 
   return (
@@ -15,6 +15,7 @@ const Sidebar = () => {
             <li
               key={i}
               className="cursor-pointer hover:text-[#2563EB]"
+              onClick={() => setSelectedCategory(cat)}
             >
               {cat}
             </li>
@@ -29,7 +30,7 @@ const Sidebar = () => {
             <button
               key={i}
               className="py-2 px-3 rounded-lg bg-gray-100 text-[#1E293B] text-sm hover:bg-[#2563EB] hover:text-white transition"
-            >
+              onClick={() => setSelectedCategory(cat)}>
               {cat}
             </button>
           ))}

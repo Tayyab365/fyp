@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useProducts } from "../../hooks/useProducts";
-import { cartContext } from "../../Context/CartContext.";
+import { cartContext } from "../../Context/CartContext";
 
-const ProductCard = () => {
+const ProductCard = ({selectedCategory}) => {
   const {products, loading} = useProducts();
   const { dispatch } = useContext(cartContext);
 
@@ -12,6 +12,10 @@ const ProductCard = () => {
   }
 
   if (loading) return <p className="font-bold text-xl mt-24 pl-24">Loading products...</p>;
+
+  const filteredCategories = selectedCategory === "All"
+  ? products
+  : products.filter(item => item.category && item.category.toLowerCase().includes(selectedCategory.toLowerCase()))
 
   return (
     <div className="px-4 md:px-10">
@@ -28,7 +32,7 @@ const ProductCard = () => {
       </div>
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {products.map((product) => (
+        {filteredCategories.map((product) => (
           <div key={product.id} className="bg-white rounded-lg shadow-md hover:shadow-xl transition-transform duration-300 hover:-translate-y-2 p-5 flex flex-col border border-[#E2E8F0]">
             <div className="w-full mb-4 flex items-center justify-center overflow-hidden rounded-lg bg-gray-50 h-40 sm:h-48 md:h-56">
               <img src={product.image} alt={product.title} className="max-h-full max-w-full object-contain"/>

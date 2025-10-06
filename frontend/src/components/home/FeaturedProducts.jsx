@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { cartContext } from "../../Context/CartContext";
 
 const FeaturedProducts = () => {
   const [products, setProducts] = useState([]);
+  const { dispatch } = useContext(cartContext);
 
   const api_url =
     "https://67ff575158f18d7209f0cc07.mockapi.io/gamingstore/products";
@@ -48,7 +50,7 @@ const FeaturedProducts = () => {
                 <p className="text-[#2563EB] font-bold text-lg md:text-xl mb-3">
                   ${product.price}
                 </p>
-                <button className="w-full py-2 text-sm md:text-base rounded-lg bg-[#2563EB] text-white font-medium hover:bg-[#1D4ED8] transition">
+                <button onClick={() => dispatch({type: "ADD_ITEM", payload: product})} className="w-full py-2 text-sm md:text-base rounded-lg bg-[#2563EB] text-white font-medium hover:bg-[#1D4ED8] transition">
                   Add to Cart
                 </button>
               </div>

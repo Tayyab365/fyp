@@ -2,7 +2,7 @@ import React from "react";
 
 const Sidebar = ({setSelectedCategory}) => {
   
-  const categories = ["All", "keyboard", "Mouse", "Headset", "Laptop", "Monitors"];
+  const categories = ["All", "keyboard", "Mouse", "Headset", "Chair", "Monitors"];
 
 
   return (

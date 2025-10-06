@@ -7,10 +7,10 @@ import headsetImage from '../../assets/categories images/headset.jpg';
 
 const ProductCategory = () => {
   const categories = [
-    { id: 1, name: "Laptop", image: laptopImage },
-    { id: 2, name: "Keyboard", image: keyboardImage },
-    { id: 3, name: "Mouse", image: mouseImage },
-    { id: 4, name: "Headset", image: headsetImage }
+    { id: 1, name: "Chairs", image: laptopImage, category: "chair" },
+    { id: 2, name: "Keyboards", image: keyboardImage, category: "keyboard" },
+    { id: 3, name: "Mouse", image: mouseImage, category: "mouse" },
+    { id: 4, name: "Headsets", image: headsetImage, category: "headset" }
   ];
 
   return (
@@ -23,8 +23,10 @@ const ProductCategory = () => {
       {/* Categories Grid */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-5 max-w-6xl mx-auto">
         {categories.map((item) => (
-          <div
+          <Link
             key={item.id}
+            to={"/shop"}
+            state = {{category: item.category.toLowerCase()}}
             className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md p-5 flex flex-col items-center justify-center cursor-pointer transition-transform hover:-translate-y-1"
           >
             <img
@@ -35,7 +37,7 @@ const ProductCategory = () => {
             <h3 className="text-sm md:text-base font-semibold text-[#1E293B]">
               {item.name}
             </h3>
-          </div>
+          </Link>
         ))}
       </div>
 

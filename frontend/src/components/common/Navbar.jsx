@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
+import { cartContext } from "../../Context/CartContext";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const {cartItems} = useContext(cartContext);
+
+  const uniqueProducts = cartItems.length;
 
   return (
     <nav className="text-sm w-full fixed top-0 left-0 z-50 bg-white text-[#1E293B] shadow">
@@ -62,6 +66,11 @@ const Navbar = () => {
             to="/cart"
             className="relative text-2xl hover:text-[#2563EB] transition">
             🛒
+            {uniqueProducts > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+                {uniqueProducts}
+              </span>
+            )}
           </NavLink>
           <NavLink to="/login"
             className={({ isActive }) =>

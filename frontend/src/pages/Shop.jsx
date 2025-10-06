@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import Sidebar from "../components/Shop/Sidebar";
 import ProductCard from "../components/shop/ProductCard";
+import { useLocation } from "react-router-dom";
 
 const Shop = () => {
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const location = useLocation();
+  const initialCategory = location.state?.category || "All"
+  const [selectedCategory, setSelectedCategory] = useState(initialCategory);
 
   return (
     <div className="flex flex-col md:flex-row">

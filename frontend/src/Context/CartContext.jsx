@@ -26,7 +26,7 @@ const cartReducer = (state, action) => {
                 item.id === action.payload
                 ? {...item, quantity: item.quantity - 1 }
                 : item
-            ))
+            )).filter(item => item.quantity > 0)
         case "REMOVE_ITEM":
             return state.filter(item => item.id !== action.payload);
         default:

@@ -5,6 +5,7 @@ import { cartContext } from "../../Context/CartContext";
 
 const ProductCard = ({selectedCategory}) => {
   const {products, loading} = useProducts();
+  const [sortOptions, setSortOptions] = useState('');
   const { dispatch } = useContext(cartContext);
 
   const addToCart = (product) => {
@@ -14,8 +15,14 @@ const ProductCard = ({selectedCategory}) => {
   if (loading) return <p className="font-bold text-xl mt-24 pl-24">Loading products...</p>;
 
   const filteredCategories = selectedCategory === "All"
-  ? products
+  ? [...products]
   : products.filter(item => item.category && item.category.toLowerCase().includes(selectedCategory.toLowerCase()))
+
+  if(sortOptions === "lowToHigh"){
+    filteredCategories.sort((a, b) => a.price - b.price);
+  }else if(sortOptions === "highToLow"){
+    filteredCategories.sort((a, b) => b.price - a.price)
+  }
 
   return (
     <div className="px-4 md:px-10">
@@ -23,11 +30,13 @@ const ProductCard = ({selectedCategory}) => {
         <h3 className="!text-2xl md:text-4xl font-bold text-[#1E293B] text-center md:text-left">
           Shop All Products
         </h3>
-        <select className="text-sm w-full md:w-48 border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-[#2563EB]">
+        <select
+        value={sortOptions}
+        onChange={(e) => setSortOptions(e.target.value)}
+        className="text-sm w-full md:w-48 border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-[#2563EB]">
           <option value="">Default</option>
-          <option value="lowToHigh">Price: Low to High</option>
-          <option value="highToLow">Price: High to Low</option>
-          <option value="newest">Newest</option>
+          <option value="lowToHigh">Low to High</option>
+          <option value="highToLow">High to Low</option>
         </select>
       </div>
 

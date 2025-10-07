@@ -29,6 +29,8 @@ const cartReducer = (state, action) => {
             )).filter(item => item.quantity > 0)
         case "REMOVE_ITEM":
             return state.filter(item => item.id !== action.payload);
+        case "CLEAR_CART":
+            return [];
         default:
             return state;
     }
@@ -37,11 +39,14 @@ const cartReducer = (state, action) => {
 export const CartProvider = ({children}) => {
     const initialState = JSON.parse(localStorage.getItem("cartItems")) || [];
     const [cartItems, dispatch] = useReducer(cartReducer, initialState);
+    const clearCart = () => {
+        dispatch({type: "CLEAR_CART"})
+    }
     useEffect(() => (
         localStorage.setItem("cartItems", JSON.stringify(cartItems))
     ), [cartItems])
     return (
-        <cartContext.Provider value={{cartItems, dispatch}}>
+        <cartContext.Provider value={{cartItems, dispatch, clearCart}}>
             {children}
         </cartContext.Provider>
     )

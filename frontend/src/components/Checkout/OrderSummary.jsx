@@ -1,30 +1,55 @@
 import React, { useContext } from "react";
 import {cartContext} from "../../Context/CartContext";
 import { calculateCartTotal } from "../../utils/cartUtils";
+import { useNavigate } from "react-router-dom";
 
 
-const OrderSummary = () => {
-    const { cartItems } = useContext(cartContext);
+const OrderSummary = ({formData, setFormData}) => {
+    const { cartItems, clearCart } = useContext(cartContext);
     const {subTotal, shipping, total, tax} = calculateCartTotal(cartItems,true);
+    const navigate = useNavigate();
+
+    const handlePlaceOrder = () => {
+      if(!formData.fullName || !formData.email || !formData.phone || !formData.address || !formData.city){
+        alert("Please fill all the fields");
+        return;
+      }
+      if(cartItems.length === 0){
+        alert("Your cart is empty. Please add items before placing an order.")
+        return;
+      }
+      const order = {
+        customer: formData,
+        cartItems,
+        orderSummary: {subTotal, shipping, total, tax},
+        date: new Date().toLocaleString(),
+      }
+      
+      localStorage.setItem("orderData", JSON.stringify(order));
+
+      // alert("Order placed successfully");
+      clearCart();
+      setFormData({
+        fullName: '',
+        email: '',
+        phone: '',
+        address: '',
+        city: '',
+        paymentMethod: 'Cash on Delivery',
+        cardNumber: '',
+        expiry: '',
+        cvv: '',
+        easypaisaNumber: ''
+      })
+      navigate("/order-success");
+      // console.log("Order Data: ", order);
+    }
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 max-h-[500px] overflow-y-auto">
       <h2 className="text-lg font-semibold text-[#1E293B] border-b border-gray-200 pb-3 mb-5">
         Order Summary
       </h2>
-
-      {/* <div className="max-h-60 overflow-y-auto space-y-3 mb-5">
-      {cartItems.length > 0 ? (
-        cartItems.map((item) => (
-          <div key={item.id} className="flex justify-between text-sm">
-            <span>{item.name} x {item.quantity}</span>
-            <span>${(item.price * item.quantity).toFixed(2)}</span>
-          </div>
-        ))
-      ) : (
-        <p className="text-gray-500 text-sm text-center">No items in cart</p>
-      )}
-    </div> */}
 
       <div className="space-y-3 text-[#1E293B] text-sm">
         <div className="flex justify-between">
@@ -45,7 +70,7 @@ const OrderSummary = () => {
         </div>
       </div>
 
-      <button className="w-full mt-5 bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-medium py-2.5 rounded-md transition duration-200">
+      <button onClick={handlePlaceOrder} className="w-full mt-5 bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-medium py-2.5 rounded-md transition duration-200">
         Place Order
       </button>
     </div>

@@ -1,3 +1,5 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* bg-gradient-to-r from-blue-100 via-white to-blue-100 */

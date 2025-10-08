@@ -70,13 +70,11 @@ const OrderSuccess = () => {
       </div>
 
       <button
+        className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-6 py-2 rounded-md font-medium transition duration-200"
         onClick={() => {
           localStorage.removeItem("orderData");
           navigate("/")
-        }}
-        
-        className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-6 py-2 rounded-md font-medium transition duration-200"
-      >
+        }}>
         Back to Home
       </button>
     </div>

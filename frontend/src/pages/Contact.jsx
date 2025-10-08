@@ -1,4 +1,5 @@
 import React from "react";
+import Footer from "../components/home/Footer";
 
 const Contact = () => {
   return (
@@ -42,6 +43,7 @@ const Contact = () => {
           <p className="flex items-center gap-3 text-base md:text-lg">📍 123 Main Street, Lahore, Pakistan</p>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };

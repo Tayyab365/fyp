@@ -9,7 +9,7 @@ const Navbar = () => {
   const uniqueProducts = cartItems.length;
 
   return (
-    <nav className="text-sm w-full fixed top-0 left-0 z-50 bg-white text-[#1E293B] shadow">
+    <nav className="text-sm w-full fixed top-0 left-0 z-50 bg-white text-[#1E293B] shadow-sm">
       <div className="flex items-center justify-between px-4 py-3 md:px-8">
         <div className="flex items-center space-x-4">
           <button className="md:hidden text-2xl" onClick={() => setIsOpen(!isOpen)}>
@@ -54,6 +54,15 @@ const Navbar = () => {
                   ? "text-[#2563EB] font-semibold border-b-2 border-[#2563EB] pb-1"
                   : "hover:text-[#2563EB] transition"}>
               About
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-[#2563EB] font-semibold border-b-2 border-[#2563EB] pb-1"
+                  : "hover:text-[#2563EB] transition"}>
+              Dashboard
             </NavLink>
           </li>
         </ul>

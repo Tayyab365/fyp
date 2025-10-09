@@ -12,8 +12,8 @@ import OrderSuccess from './pages/OrderSuccess';
 import DashboardLayout from './DashboardLayout/DashboardLayout';
 import DashboardHome from './pages/dashboard/DashboardHome';
 import Products from './pages/dashboard/Products';
-// import Orders from './pages/dashboard/Orders';
-// import Users from './pages/dashboard/Users';
+import Orders from './pages/dashboard/Orders';
+import Users from './pages/dashboard/Users';
 
 
 const App = () => {
@@ -32,8 +32,8 @@ const App = () => {
         <Route path='/dashboard' element = {<DashboardLayout/>}>
           <Route index element = {<DashboardHome/>}/>
           <Route path='products' element={<Products/>}/>
-          {/* <Route path="orders" element={<Orders />}/> */}
-          {/* <Route path="users" element={<Users />}/> */}
+          <Route path="orders" element={<Orders />}/>
+          <Route path="users" element={<Users />}/>
         </Route>
 
       </Routes>

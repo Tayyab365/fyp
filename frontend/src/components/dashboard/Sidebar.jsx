@@ -12,8 +12,8 @@ const Sidebar = () => {
 
   return (
     <aside className="w-64 bg-white border-r border-gray-200 p-5 shadow-sm">
-      <NavLink to="/" className="text-2xl font-bold text-blue-600 mb-8 block">
-        <span className="text-black">Shop</span> Ease
+      <NavLink to="/" className="text-2xl px-5 font-bold text-blue-600 mb-8 block">
+        <span className="text-black">Shop</span>Ease
       </NavLink>
 
       <nav className="space-y-2">

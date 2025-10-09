@@ -8,7 +8,6 @@ export function useProducts() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch products
   const fetchProducts = async () => {
     setLoading(true);
     setError(null);
@@ -25,7 +24,6 @@ export function useProducts() {
     }
   };
 
-  // DELETE product function
   const deleteProduct = async (id) => {
     try {
       const res = await fetch(`${API_URL}/${id}`, { method: "DELETE" });

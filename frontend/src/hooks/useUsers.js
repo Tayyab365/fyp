@@ -11,7 +11,7 @@ export function useUsers() {
       setError(null);
 
       try {
-        const res = await fetch("https://your-backend.com/api/users"); // Backend API URL
+        const res = await fetch("https://67ff575158f18d7209f0cc07.mockapi.io/gamingstore/users");
         if (!res.ok) throw new Error(`Failed to fetch users: ${res.status}`);
         const data = await res.json();
         setUsers(data);

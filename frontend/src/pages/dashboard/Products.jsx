@@ -3,7 +3,7 @@ import React from "react";
 import { useProducts } from "../../hooks/useProducts";
 
 const Products = () => {
-  const { products, loading, error } = useProducts();
+  const { products, loading, error, deleteProduct } = useProducts();
 
   return (
     <div className="space-y-8">
@@ -46,7 +46,7 @@ const Products = () => {
                     <button className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 transition">
                       Edit
                     </button>
-                    <button className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 transition">
+                    <button onClick={() => deleteProduct(product.id)} className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 transition">
                       Delete
                     </button>
                   </td>

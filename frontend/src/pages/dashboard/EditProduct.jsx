@@ -2,44 +2,39 @@ import React, { useState } from "react";
 import { useProducts } from "../../hooks/useProducts";
 import toast from 'react-hot-toast';
 
-const AddProduct = ({onClose}) => {
+const EditProduct = ({onClose, product}) => {
 
-  const { addProduct } = useProducts();
-
-  const [form, setForm] = useState({
-    title: "",
-    price: "",
-    category: "",
-    stock: "",
-    image: "",
-    description: "",
-  })
-
-  const handleChange = (e) => {
-    setForm({...form, [e.target.name]: e.target.value});
-  }
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    await addProduct(form)
-    toast.success("Product added successfully");
-    setForm({
-      title: "",
-      price: "",
-      category: "",
-      stock: "",
-      image: "",
-      description: "",
+    const {updateProduct} = useProducts();
+    const [form, setForm] = useState({
+        title: product?.title || "",
+        price: product?.price || "",
+        category: product?.category || "",
+        stock: product?.stock || "",
+        image: product?.image || "",
+        description: product?.description || "",
+        title: product?.title || "",
     })
-    onClose();
-  }
+    const handleChange = (e) => {
+        setForm({...form, [e.target.name]: e.target.value});
+    }
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const payload = {
+            ...form,
+            price: Number(form.price),
+            stock: Number(form.stock)
+        }
+        await updateProduct(product.id, payload);
+        toast.success("Product Updated successfully")
+        onClose();
+    }
 
   return (
     <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
       <div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-md relative">
         <h2 className="text-2xl font-bold mb-4 text-gray-800 text-center">
-          Add New Product
+          Edit Product
         </h2>
         <button
         onClick={onClose}
@@ -97,7 +92,7 @@ const AddProduct = ({onClose}) => {
             type="submit"
             className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
           >
-            Add Product
+            Edit Product
           </button>
         </form>
       </div>
@@ -105,4 +100,4 @@ const AddProduct = ({onClose}) => {
   );
 };
 
-export default AddProduct;
+export default EditProduct;

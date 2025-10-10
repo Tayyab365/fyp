@@ -1,5 +1,5 @@
-import React from 'react';
-import {BrowserRouter, Routes, Route} from "react-router-dom";
+import React, { useLayoutEffect } from 'react';
+import {BrowserRouter, Routes, Route, useLocation} from "react-router-dom";
 import Home from './pages/Home';
 import Navbar from './components/common/Navbar';
 import Shop from './pages/Shop';
@@ -15,11 +15,21 @@ import Products from './pages/dashboard/Products';
 import Orders from './pages/dashboard/Orders';
 import Users from './pages/dashboard/Users';
 import AddProduct from './pages/dashboard/AddProduct';
+import {Toaster} from "react-hot-toast"
+import EditProduct from './pages/dashboard/EditProduct';
 
+const ScrollToTop = () => {
+    const { pathname } = useLocation();
+    useLayoutEffect(() => {
+      window.scrollTo(0, 0);
+    }, [pathname])
+    return null;
+  }
 
 const App = () => {
   return (
     <BrowserRouter>
+    <ScrollToTop/>
       <Routes>
         <Route path='/' element = {<><Navbar/><Home/></>}/>
         <Route path='/shop' element = {<><Navbar /><Shop /></>}/>
@@ -36,9 +46,11 @@ const App = () => {
           <Route path="orders" element={<Orders />}/>
           <Route path="users" element={<Users />}/>
           <Route path='add-product' element = {<AddProduct/>}/>
+          <Route path='edit-product' element = {<EditProduct/>}/>
         </Route>
 
       </Routes>
+      <Toaster position = "center-center" reverseOrder = {false}/>
     </BrowserRouter>
   )
 }

@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useProducts } from "../../hooks/useProducts";
-import AddProduct from "./AddProduct"; // 👈 Modal import
+import AddProduct from "./AddProduct";
+import EditProduct from "./EditProduct";
 
 const Products = () => {
   const { products, loading, error, deleteProduct } = useProducts();
-  const [isModalOpen, setIsModalOpen] = useState(false); // 👈 Modal state
+  const [showModal, setShowModal] = useState(false);
+  const [editProduct, setEditProduct] = useState(null);
 
   return (
     <div className="space-y-8">
@@ -12,7 +14,7 @@ const Products = () => {
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold text-gray-800">Products</h1>
         <button
-          onClick={() => setIsModalOpen(true)} // 👈 Open Modal
+          onClick={() => setShowModal(true)}
           className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
         >
           + Add Product
@@ -46,7 +48,7 @@ const Products = () => {
                   <td className="py-2 px-4">${product.price}</td>
                   <td className="py-2 px-4">{product.stock ?? "N/A"}</td>
                   <td className="py-2 px-4 flex gap-2">
-                    <button className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 transition">
+                    <button onClick={() => setEditProduct(product)} className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 transition">
                       Edit
                     </button>
                     <button
@@ -60,14 +62,12 @@ const Products = () => {
               ))}
             </tbody>
           </table>
+              
+              {showModal && <AddProduct onClose = {() => setShowModal(false)}/>}
+              {editProduct && <EditProduct product = {editProduct} onClose={() => setEditProduct(false)}/>}
+
         </div>
       )}
-
-      {/* 👇 Add Product Modal Include */}
-      <AddProduct
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
     </div>
   );
 };

@@ -11,7 +11,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <aside className="w-64 bg-white border-r border-gray-200 p-5 shadow-sm">
+    <div className="w-64 bg-white  p-5">
       <NavLink to="/" className="text-2xl px-5 font-bold text-blue-600 mb-8 block">
         <span className="text-black">Shop</span>Ease
       </NavLink>
@@ -21,6 +21,7 @@ const Sidebar = () => {
           <NavLink
             key={link.path}
             to={link.path}
+            end = {link.path === "/dashboard"}
             className={({ isActive }) =>
               `flex items-center gap-3 px-4 py-2 rounded-lg transition-all duration-200 ${
                 isActive
@@ -34,7 +35,7 @@ const Sidebar = () => {
           </NavLink>
         ))}
       </nav>
-    </aside>
+    </div>
   );
 };
 

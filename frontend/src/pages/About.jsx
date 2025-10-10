@@ -1,5 +1,6 @@
 import React from "react";
 import Footer from "../components/home/Footer";
+import aboutImg from '../assets/images/about.avif'
 
 const About = () => {
   return (
@@ -30,7 +31,7 @@ const About = () => {
         {/* Right Image / Illustration */}
         <div className="flex justify-center">
           <img 
-            src="https://images.unsplash.com/photo-1605902711622-cfb43c44311d?auto=format&fit=crop&w=500&q=60" 
+            src= {aboutImg} 
             alt="About Illustration" 
             className="rounded-2xl shadow-lg w-full md:w-96"
           />

@@ -34,13 +34,13 @@ const Footer = () => {
         <div>
           <h3 className="text-lg font-semibold text-[#1E293B] mb-4">Follow Us</h3>
           <div className="flex space-x-4">
-            <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-[#F1F5F9] text-[#475569] hover:bg-[#2563EB] hover:text-white transition">
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 flex items-center justify-center rounded-full bg-[#F1F5F9] text-[#475569] hover:bg-[#2563EB] hover:text-white transition">
               <FaFacebookF size={16} />
             </a>
-            <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-[#F1F5F9] text-[#475569] hover:bg-[#2563EB] hover:text-white transition">
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 flex items-center justify-center rounded-full bg-[#F1F5F9] text-[#475569] hover:bg-[#2563EB] hover:text-white transition">
               <FaInstagram size={16} />
             </a>
-            <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-[#F1F5F9] text-[#475569] hover:bg-[#2563EB] hover:text-white transition">
+            <a href="https://x.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 flex items-center justify-center rounded-full bg-[#F1F5F9] text-[#475569] hover:bg-[#2563EB] hover:text-white transition">
               <FaTwitter size={16} />
             </a>
           </div>

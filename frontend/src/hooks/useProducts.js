@@ -34,8 +34,23 @@ export function useProducts() {
       setError("Failed to delete product");
     }
   };
+  const addProduct = async (newProduct) => {
+    try{
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(newProduct) 
+      })
+      if(!res.ok) throw new Error("Failed to add product")
+        const added = await res.json();
+      setProducts([...products, added]);
+    }catch(err){
+      console.log(err)
+      setError("Failed to add product")
+    }
+  }
 
   useEffect(() => { fetchProducts(); }, []);
 
-  return { products, loading, error, deleteProduct };
+  return { products, loading, error, deleteProduct, addProduct };
 }

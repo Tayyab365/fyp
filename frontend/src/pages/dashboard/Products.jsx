@@ -10,7 +10,6 @@ const Products = () => {
 
   return (
     <div className="space-y-8">
-      {/* Header */}
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold text-gray-800">Products</h1>
         <button
@@ -21,11 +20,9 @@ const Products = () => {
         </button>
       </div>
 
-      {/* Loading / Error */}
       {loading && <p className="text-gray-500">Loading products...</p>}
       {error && <p className="text-red-500">{error}</p>}
 
-      {/* Table */}
       {!loading && !error && (
         <div className="overflow-x-auto bg-white rounded-xl shadow-sm border border-gray-200">
           <table className="w-full text-sm text-left">
@@ -48,7 +45,10 @@ const Products = () => {
                   <td className="py-2 px-4">${product.price}</td>
                   <td className="py-2 px-4">{product.stock ?? "N/A"}</td>
                   <td className="py-2 px-4 flex gap-2">
-                    <button onClick={() => setEditProduct(product)} className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 transition">
+                    <button
+                      onClick={() => setEditProduct(product)}
+                      className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 transition"
+                    >
                       Edit
                     </button>
                     <button
@@ -62,10 +62,14 @@ const Products = () => {
               ))}
             </tbody>
           </table>
-              
-              {showModal && <AddProduct onClose = {() => setShowModal(false)}/>}
-              {editProduct && <EditProduct product = {editProduct} onClose={() => setEditProduct(false)}/>}
 
+          {showModal && <AddProduct onClose={() => setShowModal(false)} />}
+          {editProduct && (
+            <EditProduct
+              product={editProduct}
+              onClose={() => setEditProduct(false)}
+            />
+          )}
         </div>
       )}
     </div>

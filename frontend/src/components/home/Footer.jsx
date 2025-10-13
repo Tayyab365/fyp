@@ -15,32 +15,62 @@ const Footer = () => {
           </p>
         </div>
         <div>
-          <h3 className="text-lg font-semibold text-[#1E293B] mb-4">Quick Links</h3>
+          <h3 className="text-lg font-semibold text-[#1E293B] mb-4">
+            Quick Links
+          </h3>
           <ul className="space-y-2 text-sm">
             <li>
-              <Link to="/" className="hover:text-[#2563EB] text-[#475569]">Home</Link>
+              <Link to="/" className="hover:text-[#2563EB] text-[#475569]">
+                Home
+              </Link>
             </li>
             <li>
-              <Link to="/shop" className="hover:text-[#2563EB] text-[#475569]">Shop</Link>
+              <Link to="/shop" className="hover:text-[#2563EB] text-[#475569]">
+                Shop
+              </Link>
             </li>
             <li>
-              <Link to="/about" className="hover:text-[#2563EB] text-[#475569]">About</Link>
+              <Link to="/about" className="hover:text-[#2563EB] text-[#475569]">
+                About
+              </Link>
             </li>
             <li>
-              <Link to="/contact" className="hover:text-[#2563EB] text-[#475569]">Contact</Link>
+              <Link
+                to="/contact"
+                className="hover:text-[#2563EB] text-[#475569]"
+              >
+                Contact
+              </Link>
             </li>
           </ul>
         </div>
         <div>
-          <h3 className="text-lg font-semibold text-[#1E293B] mb-4">Follow Us</h3>
+          <h3 className="text-lg font-semibold text-[#1E293B] mb-4">
+            Follow Us
+          </h3>
           <div className="flex space-x-4">
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 flex items-center justify-center rounded-full bg-[#F1F5F9] text-[#475569] hover:bg-[#2563EB] hover:text-white transition">
+            <a
+              href="https://facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-10 h-10 flex items-center justify-center rounded-full bg-[#F1F5F9] text-[#475569] hover:bg-[#2563EB] hover:text-white transition"
+            >
               <FaFacebookF size={16} />
             </a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 flex items-center justify-center rounded-full bg-[#F1F5F9] text-[#475569] hover:bg-[#2563EB] hover:text-white transition">
+            <a
+              href="https://instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-10 h-10 flex items-center justify-center rounded-full bg-[#F1F5F9] text-[#475569] hover:bg-[#2563EB] hover:text-white transition"
+            >
               <FaInstagram size={16} />
             </a>
-            <a href="https://x.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 flex items-center justify-center rounded-full bg-[#F1F5F9] text-[#475569] hover:bg-[#2563EB] hover:text-white transition">
+            <a
+              href="https://x.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-10 h-10 flex items-center justify-center rounded-full bg-[#F1F5F9] text-[#475569] hover:bg-[#2563EB] hover:text-white transition"
+            >
               <FaTwitter size={16} />
             </a>
           </div>

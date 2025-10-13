@@ -1,49 +1,57 @@
 import React, { useContext } from "react";
-import {cartContext} from "../../Context/CartContext";
+import { cartContext } from "../../Context/CartContext";
 import { calculateCartTotal } from "../../utils/cartUtils";
 import { useNavigate } from "react-router-dom";
 
+const OrderSummary = ({ formData, setFormData }) => {
+  const { cartItems, clearCart } = useContext(cartContext);
+  const { subTotal, shipping, total, tax } = calculateCartTotal(
+    cartItems,
+    true
+  );
+  const navigate = useNavigate();
 
-const OrderSummary = ({formData, setFormData}) => {
-    const { cartItems, clearCart } = useContext(cartContext);
-    const {subTotal, shipping, total, tax} = calculateCartTotal(cartItems,true);
-    const navigate = useNavigate();
-
-    const handlePlaceOrder = () => {
-      if(!formData.fullName || !formData.email || !formData.phone || !formData.address || !formData.city){
-        alert("Please fill all the fields");
-        return;
-      }
-      if(cartItems.length === 0){
-        alert("Your cart is empty. Please add items before placing an order.")
-        return;
-      }
-      const order = {
-        customer: formData,
-        cartItems,
-        orderSummary: {subTotal, shipping, total, tax},
-        date: new Date().toLocaleString(),
-      }
-      
-      localStorage.setItem("orderData", JSON.stringify(order));
-
-      // alert("Order placed successfully");
-      clearCart();
-      setFormData({
-        fullName: '',
-        email: '',
-        phone: '',
-        address: '',
-        city: '',
-        paymentMethod: 'Cash on Delivery',
-        cardNumber: '',
-        expiry: '',
-        cvv: '',
-        easypaisaNumber: ''
-      })
-      navigate("/order-success");
-      // console.log("Order Data: ", order);
+  const handlePlaceOrder = () => {
+    if (
+      !formData.fullName ||
+      !formData.email ||
+      !formData.phone ||
+      !formData.address ||
+      !formData.city
+    ) {
+      alert("Please fill all the fields");
+      return;
     }
+    if (cartItems.length === 0) {
+      alert("Your cart is empty. Please add items before placing an order.");
+      return;
+    }
+    const order = {
+      customer: formData,
+      cartItems,
+      orderSummary: { subTotal, shipping, total, tax },
+      date: new Date().toLocaleString(),
+    };
+
+    localStorage.setItem("orderData", JSON.stringify(order));
+
+    // alert("Order placed successfully");
+    clearCart();
+    setFormData({
+      fullName: "",
+      email: "",
+      phone: "",
+      address: "",
+      city: "",
+      paymentMethod: "Cash on Delivery",
+      cardNumber: "",
+      expiry: "",
+      cvv: "",
+      easypaisaNumber: "",
+    });
+    navigate("/order-success");
+    // console.log("Order Data: ", order);
+  };
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 max-h-[500px] overflow-y-auto">
@@ -70,7 +78,10 @@ const OrderSummary = ({formData, setFormData}) => {
         </div>
       </div>
 
-      <button onClick={handlePlaceOrder} className="w-full mt-5 bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-medium py-2.5 rounded-md transition duration-200">
+      <button
+        onClick={handlePlaceOrder}
+        className="w-full mt-5 bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-medium py-2.5 rounded-md transition duration-200"
+      >
         Place Order
       </button>
     </div>

@@ -1,34 +1,33 @@
 import React, { useState } from "react";
 import { useProducts } from "../../hooks/useProducts";
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
 
-const EditProduct = ({onClose, product}) => {
+const EditProduct = ({ onClose, product }) => {
+  const { updateProduct } = useProducts();
+  const [form, setForm] = useState({
+    title: product?.title || "",
+    price: product?.price || "",
+    category: product?.category || "",
+    stock: product?.stock || "",
+    image: product?.image || "",
+    description: product?.description || "",
+    title: product?.title || "",
+  });
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
-    const {updateProduct} = useProducts();
-    const [form, setForm] = useState({
-        title: product?.title || "",
-        price: product?.price || "",
-        category: product?.category || "",
-        stock: product?.stock || "",
-        image: product?.image || "",
-        description: product?.description || "",
-        title: product?.title || "",
-    })
-    const handleChange = (e) => {
-        setForm({...form, [e.target.name]: e.target.value});
-    }
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const payload = {
-            ...form,
-            price: Number(form.price),
-            stock: Number(form.stock)
-        }
-        await updateProduct(product.id, payload);
-        toast.success("Product Updated successfully")
-        onClose();
-    }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const payload = {
+      ...form,
+      price: Number(form.price),
+      stock: Number(form.stock),
+    };
+    await updateProduct(product.id, payload);
+    toast.success("Product Updated successfully");
+    onClose();
+  };
 
   return (
     <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
@@ -37,8 +36,9 @@ const EditProduct = ({onClose, product}) => {
           Edit Product
         </h2>
         <button
-        onClick={onClose}
-        className="absolute top-2 right-3 text-gray-500 hover:text-gray-700 text-xl">
+          onClick={onClose}
+          className="absolute top-2 right-3 text-gray-500 hover:text-gray-700 text-xl"
+        >
           ×
         </button>
 
@@ -87,7 +87,6 @@ const EditProduct = ({onClose, product}) => {
             onChange={handleChange}
             className="w-full border p-2 rounded min-h-20"
           ></textarea>
-
           <button
             type="submit"
             className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"

@@ -1,4 +1,4 @@
-import React, { useContext, useState} from "react";
+import React, { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useProduct } from "../hooks/useProduct";
 import { cartContext } from "../Context/CartContext";
@@ -6,22 +6,32 @@ import { cartContext } from "../Context/CartContext";
 const ProductDetails = () => {
   const { id } = useParams();
 
-  const {product, loading} = useProduct(id);
-  const {dispatch} = useContext(cartContext);
+  const { product, loading } = useProduct(id);
+  const { dispatch } = useContext(cartContext);
   const [quantity, setQuantity] = useState(1);
 
   const addToCart = () => {
-    dispatch({type: "ADD_ITEM", payload: {...product, quantity}})
-  }
+    dispatch({ type: "ADD_ITEM", payload: { ...product, quantity } });
+  };
 
-  if(loading) return <p className="text-center font-bold text-xl mt-24">Loading...</p>
-  if (!product) return <p className="text-center font-bold text-xl mt-24">Product Not found 😕</p>;
+  if (loading)
+    return <p className="text-center font-bold text-xl mt-24">Loading...</p>;
+  if (!product)
+    return (
+      <p className="text-center font-bold text-xl mt-24">
+        Product Not found 😕
+      </p>
+    );
 
   return (
     <div className="max-w-6xl mx-auto mt-20 p-6">
       <div className="grid md:grid-cols-2 gap-10">
         <div className="flex items-center justify-center bg-white rounded-xl shadow-lg p-6">
-          <img src={product.image} alt={product.title} className="max-h-[450px] object-contain transition-transform duration-300 hover:scale-105"/>
+          <img
+            src={product.image}
+            alt={product.title}
+            className="max-h-[450px] object-contain transition-transform duration-300 hover:scale-105"
+          />
         </div>
         <div className="flex flex-col justify-between">
           <div>
@@ -52,7 +62,10 @@ const ProductDetails = () => {
             </div>
           </div>
           <div className="flex flex-col sm:flex-row gap-4">
-            <button onClick={addToCart} className="flex-1 py-3 rounded-lg bg-[#2563EB] text-white font-semibold hover:bg-[#1D4ED8] transition">
+            <button
+              onClick={addToCart}
+              className="flex-1 py-3 rounded-lg bg-[#2563EB] text-white font-semibold hover:bg-[#1D4ED8] transition"
+            >
               Add to Cart
             </button>
             <button className="flex-1 py-3 rounded-lg bg-green-500 text-white font-semibold hover:bg-green-600 transition">

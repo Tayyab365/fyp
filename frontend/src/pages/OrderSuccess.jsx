@@ -35,37 +35,48 @@ const OrderSuccess = () => {
           Order Details
         </h2>
         <p className="text-sm text-gray-600">
-          <span className="font-medium text-[#1E293B]">Name:</span> {order.customer.fullName}
+          <span className="font-medium text-[#1E293B]">Name:</span>{" "}
+          {order.customer.fullName}
         </p>
         <p className="text-sm text-gray-600">
-          <span className="font-medium text-[#1E293B]">Contact Number:</span> {order.customer.phone}
+          <span className="font-medium text-[#1E293B]">Contact Number:</span>{" "}
+          {order.customer.phone}
         </p>
         <p className="text-sm text-gray-600">
-          <span className="font-medium text-[#1E293B]">Address:</span> {order.customer.address}
+          <span className="font-medium text-[#1E293B]">Address:</span>{" "}
+          {order.customer.address}
         </p>
         <p className="text-sm text-gray-600">
-          <span className="font-medium text-[#1E293B]">Total:</span> ${order.orderSummary.total.toFixed(2)}
+          <span className="font-medium text-[#1E293B]">Total:</span> $
+          {order.orderSummary.total.toFixed(2)}
         </p>
         <p className="text-sm text-gray-600">
           <span className="font-medium text-[#1E293B]">Date:</span> {order.date}
         </p>
 
         {order.customer.paymentMethod === "Cash on Delivery" && (
-        <p className="text-sm text-gray-600">
-            <span className="font-medium text-[#1E293B]">Payment Method:</span> Cash on Delivery
-        </p>
+          <p className="text-sm text-gray-600">
+            <span className="font-medium text-[#1E293B]">Payment Method:</span>{" "}
+            Cash on Delivery
+          </p>
         )}
 
         {order.customer.paymentMethod === "Credit/Debit Card" && (
-        <p className="text-sm text-gray-600">
-            <span className="font-medium text-[#1E293B]">Bank Account Number:</span> {order.customer.cardNumber}
-        </p>
+          <p className="text-sm text-gray-600">
+            <span className="font-medium text-[#1E293B]">
+              Bank Account Number:
+            </span>{" "}
+            {order.customer.cardNumber}
+          </p>
         )}
 
         {order.customer.paymentMethod === "Easypaisa / JazzCash" && (
-        <p className="text-sm text-gray-600">
-            <span className="font-medium text-[#1E293B]">Easypaisa/Jazzcash Number:</span> {order.customer.easypaisaNumber}
-        </p>
+          <p className="text-sm text-gray-600">
+            <span className="font-medium text-[#1E293B]">
+              Easypaisa/Jazzcash Number:
+            </span>{" "}
+            {order.customer.easypaisaNumber}
+          </p>
         )}
       </div>
 
@@ -73,8 +84,9 @@ const OrderSuccess = () => {
         className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-6 py-2 rounded-md font-medium transition duration-200"
         onClick={() => {
           localStorage.removeItem("orderData");
-          navigate("/")
-        }}>
+          navigate("/");
+        }}
+      >
         Back to Home
       </button>
     </div>

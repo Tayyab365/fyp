@@ -2,7 +2,6 @@ import React from "react";
 import { useUsers } from "../../hooks/useUsers";
 
 const Users = () => {
- 
   const { users, loading, error } = useUsers();
 
   return (
@@ -35,7 +34,11 @@ const Users = () => {
                 <td className="py-2 px-4">{user.name}</td>
                 <td className="py-2 px-4">{user.email}</td>
                 <td className="py-2 px-4">{user.role}</td>
-                <td className={`py-2 px-4 ${user.status === "Active" ? "text-green-600" : "text-red-600"}`}>
+                <td
+                  className={`py-2 px-4 ${
+                    user.status === "Active" ? "text-green-600" : "text-red-600"
+                  }`}
+                >
                   {user.status}
                 </td>
                 <td className="py-2 px-4">{user.registered}</td>

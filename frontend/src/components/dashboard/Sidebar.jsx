@@ -4,15 +4,30 @@ import { LayoutDashboard, Package, ShoppingCart, Users } from "lucide-react";
 
 const Sidebar = () => {
   const links = [
-    { path: "/dashboard", label: "Dashboard", icon: <LayoutDashboard size={18} /> },
-    { path: "/dashboard/products", label: "Products", icon: <Package size={18} /> },
-    { path: "/dashboard/orders", label: "Orders", icon: <ShoppingCart size={18} /> },
+    {
+      path: "/dashboard",
+      label: "Dashboard",
+      icon: <LayoutDashboard size={18} />,
+    },
+    {
+      path: "/dashboard/products",
+      label: "Products",
+      icon: <Package size={18} />,
+    },
+    {
+      path: "/dashboard/orders",
+      label: "Orders",
+      icon: <ShoppingCart size={18} />,
+    },
     { path: "/dashboard/users", label: "Users", icon: <Users size={18} /> },
   ];
 
   return (
     <div className="w-64 bg-white  p-5">
-      <NavLink to="/" className="text-2xl px-5 font-bold text-blue-600 mb-8 block">
+      <NavLink
+        to="/"
+        className="text-2xl px-5 font-bold text-blue-600 mb-8 block"
+      >
         <span className="text-black">Shop</span>Ease
       </NavLink>
 
@@ -21,7 +36,7 @@ const Sidebar = () => {
           <NavLink
             key={link.path}
             to={link.path}
-            end = {link.path === "/dashboard"}
+            end={link.path === "/dashboard"}
             className={({ isActive }) =>
               `flex items-center gap-3 px-4 py-2 rounded-lg transition-all duration-200 ${
                 isActive

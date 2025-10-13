@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { useProducts } from "../../hooks/useProducts";
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
 
-const AddProduct = ({onClose}) => {
-
+const AddProduct = ({ onClose }) => {
   const { addProduct } = useProducts();
 
   const [form, setForm] = useState({
@@ -13,15 +12,15 @@ const AddProduct = ({onClose}) => {
     stock: "",
     image: "",
     description: "",
-  })
+  });
 
   const handleChange = (e) => {
-    setForm({...form, [e.target.name]: e.target.value});
-  }
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await addProduct(form)
+    await addProduct(form);
     toast.success("Product added successfully");
     setForm({
       title: "",
@@ -30,10 +29,9 @@ const AddProduct = ({onClose}) => {
       stock: "",
       image: "",
       description: "",
-    })
+    });
     onClose();
-  }
-
+  };
 
   return (
     <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
@@ -42,8 +40,9 @@ const AddProduct = ({onClose}) => {
           Add New Product
         </h2>
         <button
-        onClick={onClose}
-        className="absolute top-2 right-3 text-gray-500 hover:text-gray-700 text-xl">
+          onClick={onClose}
+          className="absolute top-2 right-3 text-gray-500 hover:text-gray-700 text-xl"
+        >
           ×
         </button>
 
@@ -92,7 +91,6 @@ const AddProduct = ({onClose}) => {
             onChange={handleChange}
             className="w-full border p-2 rounded min-h-20"
           ></textarea>
-
           <button
             type="submit"
             className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"

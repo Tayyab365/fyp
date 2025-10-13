@@ -1,13 +1,17 @@
 import React from "react";
 
-const Sidebar = ({setSelectedCategory}) => {
-  
-  const categories = ["All", "keyboard", "Mouse", "Headset", "Chair", "Monitors"];
-
+const Sidebar = ({ setSelectedCategory }) => {
+  const categories = [
+    "All",
+    "keyboard",
+    "Mouse",
+    "Headset",
+    "Chair",
+    "Monitors",
+  ];
 
   return (
     <div>
-      
       <div className="hidden md:block w-64 h-screen sticky top-20 border-r border-gray-200 px-6 py-10 mt-12">
         <h2 className="text-xl font-bold text-[#1E293B] mb-6">Categories</h2>
         <ul className="space-y-3 text-[#475569] text-md">
@@ -30,7 +34,8 @@ const Sidebar = ({setSelectedCategory}) => {
             <button
               key={i}
               className="py-2 px-3 rounded-lg bg-gray-100 text-[#1E293B] text-sm hover:bg-[#2563EB] hover:text-white transition"
-              onClick={() => setSelectedCategory(cat)}>
+              onClick={() => setSelectedCategory(cat)}
+            >
               {cat}
             </button>
           ))}

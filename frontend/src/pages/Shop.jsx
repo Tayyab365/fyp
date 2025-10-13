@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 
 const Shop = () => {
   const location = useLocation();
-  const initialCategory = location.state?.category || "All"
+  const initialCategory = location.state?.category || "All";
   const [selectedCategory, setSelectedCategory] = useState(initialCategory);
 
   return (
@@ -14,7 +14,7 @@ const Shop = () => {
         <Sidebar setSelectedCategory={setSelectedCategory} />
       </div>
       <div className="flex-1 py-6">
-        <ProductCard selectedCategory = {selectedCategory}/>
+        <ProductCard selectedCategory={selectedCategory} />
       </div>
     </div>
   );

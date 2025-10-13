@@ -1,7 +1,8 @@
 // src/hooks/useProducts.js
 import { useEffect, useState } from "react";
 
-const API_URL = "https://67ff575158f18d7209f0cc07.mockapi.io/gamingstore/products";
+const API_URL =
+  "https://67ff575158f18d7209f0cc07.mockapi.io/gamingstore/products";
 
 export function useProducts() {
   const [products, setProducts] = useState([]);
@@ -28,7 +29,7 @@ export function useProducts() {
     try {
       const res = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
       if (!res.ok) throw new Error("Failed to delete product");
-      setProducts(products.filter(p => p.id !== id));
+      setProducts(products.filter((p) => p.id !== id));
     } catch (err) {
       console.error(err);
       setError("Failed to delete product");
@@ -36,37 +37,39 @@ export function useProducts() {
   };
 
   const addProduct = async (newProduct) => {
-    try{
+    try {
       const res = await fetch(API_URL, {
         method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(newProduct)
-      })
-      if(!res.ok) throw new Error("Failed to add product")
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newProduct),
+      });
+      if (!res.ok) throw new Error("Failed to add product");
       const data = await res.json();
-      setProducts([...products, data])
-    }catch(err){
-      console.log(err)
-      setError("Failed to add product")
+      setProducts([...products, data]);
+    } catch (err) {
+      console.log(err);
+      setError("Failed to add product");
     }
-  }
+  };
 
   const updateProduct = async (id, updateProduct) => {
-    try{
-      const res = await fetch(`${API_URL}/${id}`,{
+    try {
+      const res = await fetch(`${API_URL}/${id}`, {
         method: "PUT",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(updateProduct)
-      })
-      if(!res.ok) throw new Error("Failed to update product");
-      setProducts(products.map(p => p.id === id ? data : p))
-    }catch(err){
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updateProduct),
+      });
+      if (!res.ok) throw new Error("Failed to update product");
+      setProducts(products.map((p) => (p.id === id ? data : p)));
+    } catch (err) {
       console.log(err);
-      setError("Failed to update product")
+      setError("Failed to update product");
     }
-  }
+  };
 
-  useEffect(() => { fetchProducts(); }, []);
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   return { products, loading, error, deleteProduct, addProduct, updateProduct };
 }

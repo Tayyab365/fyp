@@ -4,10 +4,8 @@ import { calculateCartTotal } from "../../utils/cartUtils";
 import { Link } from "react-router-dom";
 
 const CartSummary = () => {
-
   const { cartItems } = useContext(cartContext);
-  const {subTotal, shipping, total} = calculateCartTotal(cartItems, false);
-
+  const { subTotal, shipping, total } = calculateCartTotal(cartItems, false);
 
   return (
     <div className="bg-white rounded-lg shadow-md p-4 sticky top-28">
@@ -24,7 +22,10 @@ const CartSummary = () => {
         <span>Total</span>
         <span>${total.toFixed(2)}</span>
       </div>
-      <Link to="/checkout" className="w-full py-2.5 bg-[#2563EB] text-white font-semibold rounded-lg hover:bg-[#1D4ED8] transition text-center inline-block">
+      <Link
+        to="/checkout"
+        className="w-full py-2.5 bg-[#2563EB] text-white font-semibold rounded-lg hover:bg-[#1D4ED8] transition text-center inline-block"
+      >
         Checkout
       </Link>
     </div>

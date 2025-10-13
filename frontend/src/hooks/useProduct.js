@@ -11,7 +11,9 @@ export function useProduct(id) {
       setError(null);
 
       try {
-        const res = await fetch(`https://67ff575158f18d7209f0cc07.mockapi.io/gamingstore/products/${id}`);
+        const res = await fetch(
+          `https://67ff575158f18d7209f0cc07.mockapi.io/gamingstore/products/${id}`
+        );
         if (!res.ok) {
           throw new Error(`Failed to fetch products: ${res.status}`);
         }
@@ -25,7 +27,7 @@ export function useProduct(id) {
       }
     };
 
-    if(id) fetchProduct();
+    if (id) fetchProduct();
   }, [id]);
 
   return { product, loading, error };

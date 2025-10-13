@@ -8,6 +8,8 @@ const Products = () => {
   const [showModal, setShowModal] = useState(false);
   const [editProduct, setEditProduct] = useState(null);
 
+  if (loading) return <p className="text-gray-600">Loading Products...</p>;
+
   return (
     <div className="space-y-8">
       <div className="flex justify-between items-center">
@@ -20,7 +22,6 @@ const Products = () => {
         </button>
       </div>
 
-      {loading && <p className="text-gray-500">Loading products...</p>}
       {error && <p className="text-red-500">{error}</p>}
 
       {!loading && !error && (

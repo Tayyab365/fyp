@@ -6,11 +6,12 @@ const Orders = () => {
   const { orders, loading, error, deleteOrder } = useOrders();
   const [selectedOrder, setSelectedOrder] = useState(null);
 
+  if (loading) return <p className="text-gray-600">Loading Orders...</p>;
+
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold text-gray-600">Orders</h1>
 
-      {loading && <p className="text-gray-500">Loading products...</p>}
       {error && <p className="text-red-500">{error}</p>}
 
       <div className="overflow-x-auto bg-white rounded-xl shadow-sm border border-gray-200">

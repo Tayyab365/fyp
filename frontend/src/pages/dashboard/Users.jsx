@@ -4,6 +4,8 @@ import { useUsers } from "../../hooks/useUsers";
 const Users = () => {
   const { users, loading, error } = useUsers();
 
+  if (loading) return <p className="text-gray-600">Loading Users...</p>;
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">

@@ -31,7 +31,7 @@ const Users = () => {
       </div>
       <div className="bg-white/70 backdrop-blur-lg border border-gray-200 rounded-xl shadow-sm overflow-hidden">
         <table className="min-w-full text-sm text-gray-700">
-          <thead className="bg-gray-50 border-b text-gray-600 text-xs uppercase tracking-wider">
+          <thead className="bg-gray-100 text-gray-700 uppercase text-xs font-semibold tracking-wider">
             <tr>
               <th className="py-3 px-4 text-left">#</th>
               <th className="py-3 px-4 text-left">Name</th>
@@ -52,8 +52,12 @@ const Users = () => {
                   className="border-b hover:bg-blue-50/50 transition-colors"
                 >
                   <td className="py-3 px-4 text-gray-500">{index + 1}</td>
-                  <td className="py-3 px-4 font-medium text-gray-900 flex items-center gap-2 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">
-                    <span className="truncate">{user.name}</span>
+                  <td className="py-3 px-4">
+                    <div className="flex items-center gap-2 max-w-[200px] overflow-hidden whitespace-nowrap">
+                      <span className="font-medium text-gray-900 truncate">
+                        {user.name}
+                      </span>
+                    </div>
                   </td>
                   <td className="py-3 px-4">{user.email}</td>
                   <td className="py-3 px-4">

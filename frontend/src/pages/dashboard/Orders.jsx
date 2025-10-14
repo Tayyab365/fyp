@@ -22,7 +22,7 @@ const Orders = () => {
       </div>
       <div className="overflow-x-auto bg-white rounded-2xl shadow-md border border-gray-200">
         <table className="w-full text-sm text-left border-collapse">
-          <thead className="bg-gray-100 text-gray-700 uppercase text-xs font-semibold">
+          <thead className="bg-gray-100 text-gray-700 uppercase text-xs font-semibold tracking-wider">
             <tr>
               <th className="py-3 px-5">Order ID</th>
               <th className="py-3 px-5">Customer</th>

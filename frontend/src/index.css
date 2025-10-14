@@ -1,5 +1,26 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+/* {Poppins font} */
+/* https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap */
+
+/* {inter Font} */
+/* https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap */
+
+/* {Montserrat Font} */
+/* https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap */
+
+/* {Nunito Sans Font} */
+/* https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&display=swap */
+
+/* {Urbanist Font} */
+/* https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700&display=swap */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+  font-family: "inter", sans-serif;
+}
 
 /* bg-gradient-to-r from-blue-100 via-white to-blue-100 */

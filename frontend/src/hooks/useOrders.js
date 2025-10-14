@@ -39,6 +39,7 @@ export function useOrders() {
   };
 
   const deleteOrder = async (id) => {
+    toast.dismiss();
     try {
       // const res = await fetch(`${API_URL}/${id}`, {
       //   method: "DELETE",
@@ -49,6 +50,7 @@ export function useOrders() {
     } catch (err) {
       console.log(err);
       setError("Failed to delete order");
+      toast.error("Failed to delete order");
     }
   };
 

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useProducts } from "../../hooks/useProducts";
 import AddProduct from "./AddProduct";
 import EditProduct from "./EditProduct";
+import { Edit2, Trash2 } from "lucide-react";
 
 const Products = () => {
   const { products, loading, error, deleteProduct } = useProducts();
@@ -9,66 +10,84 @@ const Products = () => {
   const [editProduct, setEditProduct] = useState(null);
 
   if (loading) return <p className="text-gray-600">Loading Products...</p>;
+  if (error)
+    return (
+      <p className="text-red-500 text-sm bg-red-50 border border-red-200 p-2 rounded-lg">
+        {error}
+      </p>
+    );
 
   return (
-    <div className="space-y-8">
-      <div className="flex justify-between items-center">
+    <div className=" bg-gray-50 min-h-screen space-y-8">
+      <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-gray-800">Products</h1>
         <button
           onClick={() => setShowModal(true)}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+          className="bg-blue-500 text-white px-5 py-2.5 rounded-lg hover:bg-blue-600 active:scale-95 shadow-sm transition"
         >
           + Add Product
         </button>
       </div>
-
-      {error && <p className="text-red-500">{error}</p>}
-
       {!loading && !error && (
-        <div className="overflow-x-auto bg-white rounded-xl shadow-sm border border-gray-200">
-          <table className="w-full text-sm text-left">
-            <thead className="bg-gray-100">
+        <div className="overflow-x-auto bg-white rounded-2xl shadow-md border border-gray-200">
+          <table className="w-full text-sm text-left border-collapse">
+            <thead className="bg-gray-100 text-gray-700 uppercase text-xs font-semibold">
               <tr>
-                <th className="py-2 px-4">#</th>
-                <th className="py-2 px-4">Name</th>
-                <th className="py-2 px-4">Category</th>
-                <th className="py-2 px-4">Price</th>
-                <th className="py-2 px-4">Stock</th>
-                <th className="py-2 px-4">Actions</th>
+                <th className="py-3 px-5">#</th>
+                <th className="py-3 px-5">Name</th>
+                <th className="py-3 px-5">Category</th>
+                <th className="py-3 px-5">Price</th>
+                <th className="py-3 px-5">Stock</th>
+                <th className="py-3 px-5 text-center">Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="text-gray-600">
               {products.map((product, index) => (
-                <tr key={product.id} className="border-t hover:bg-gray-50">
-                  <td className="py-2 px-4">{index + 1}</td>
-                  <td className="py-2 px-4">{product.title}</td>
-                  <td className="py-2 px-4">{product.category}</td>
-                  <td className="py-2 px-4">${product.price}</td>
-                  <td className="py-2 px-4">{product.stock ?? "N/A"}</td>
-                  <td className="py-2 px-4 flex gap-2">
+                <tr
+                  key={product.id}
+                  className="border-t hover:bg-gray-50 transition-colors duration-200"
+                >
+                  <td className="py-3 px-5 font-medium text-gray-800">
+                    {index + 1}
+                  </td>
+                  <td className="py-3 px-5">{product.title}</td>
+                  <td className="py-3 px-5">{product.category}</td>
+                  <td className="py-3 px-5 font-semibold text-gray-700">
+                    ${product.price}
+                  </td>
+                  <td className="py-3 px-5">
+                    {product.stock ?? (
+                      <span className="text-gray-400 italic">N/A</span>
+                    )}
+                  </td>
+                  <td className="py-3 px-5 flex justify-center gap-3">
                     <button
                       onClick={() => setEditProduct(product)}
-                      className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 transition"
+                      title="Edit Product"
+                      className="flex items-center gap-1 bg-blue-500 text-white px-3 py-1.5 rounded-lg hover:bg-blue-600 active:scale-95 shadow-sm transition"
                     >
-                      Edit
+                      <Edit2 size={15} />
+                      <span>Edit</span>
                     </button>
+
                     <button
                       onClick={() => deleteProduct(product.id)}
-                      className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 transition"
+                      title="Delete Product"
+                      className="flex items-center gap-1 bg-red-500 text-white px-3 py-1.5 rounded-lg hover:bg-red-600 active:scale-95 shadow-sm transition"
                     >
-                      Delete
+                      <Trash2 size={15} />
+                      <span>Delete</span>
                     </button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-
           {showModal && <AddProduct onClose={() => setShowModal(false)} />}
           {editProduct && (
             <EditProduct
               product={editProduct}
-              onClose={() => setEditProduct(false)}
+              onClose={() => setEditProduct(null)}
             />
           )}
         </div>

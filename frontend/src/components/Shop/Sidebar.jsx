@@ -1,14 +1,7 @@
 import React from "react";
 
 const Sidebar = ({ setSelectedCategory }) => {
-  const categories = [
-    "All",
-    "keyboard",
-    "Mouse",
-    "Headset",
-    "Chair",
-    "Monitors",
-  ];
+  const categories = ["All", "keyboard", "Mouse", "Headset", "Chair", "Laptop"];
 
   return (
     <div>

@@ -21,7 +21,6 @@ const AddProduct = ({ onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await addProduct(form);
-    toast.success("Product added successfully");
     setForm({
       title: "",
       price: "",

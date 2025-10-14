@@ -36,6 +36,7 @@ export function useProducts() {
     } catch (err) {
       console.error(err);
       setError("Failed to delete product");
+      toast.error("Failed to delete product");
     }
   };
 
@@ -54,10 +55,12 @@ export function useProducts() {
     } catch (err) {
       console.log(err);
       setError("Failed to add product");
+      toast.error("Failed to add Product");
     }
   };
 
   const updateProduct = async (id, updateProduct) => {
+    toast.dismiss();
     try {
       const res = await fetch(`${API_URL}/${id}`, {
         method: "PUT",
@@ -67,9 +70,11 @@ export function useProducts() {
       if (!res.ok) throw new Error("Failed to update product");
       const data = res.json();
       setProducts(products.map((p) => (p.id === id ? data : p)));
+      toast.success("Product updated successfully");
     } catch (err) {
       console.log(err);
       setError("Failed to update product");
+      toast.error("Failed to updated product");
     }
   };
 

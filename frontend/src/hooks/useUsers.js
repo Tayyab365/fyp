@@ -39,6 +39,7 @@ export function useUsers() {
     } catch (err) {
       console.log(err);
       setError("Failed to add User");
+      toast.error("Failed to add User");
     }
   };
 
@@ -50,9 +51,55 @@ export function useUsers() {
       });
       if (!res.ok) throw new Error("Failed to delete user");
       setUsers((prev) => prev.filter((user) => user.id !== id));
-      toast.success("User deleted successfully!");
+      toast.success("User deleted successfully");
     } catch (err) {
       console.log(err);
+      setError("Failed to delete user");
+      toast.error("Failed to delete user");
+    }
+  };
+
+  const editUser = async (id, updatedUser) => {
+    toast.dismiss();
+    try {
+      const res = await fetch(`${API_URL}/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedUser),
+      });
+      if (!res.ok) throw new Error("Failed to edit user");
+      const data = await res.json();
+      setUsers(users.map((user) => (user.id === id ? data : user)));
+      toast.success("User updated successfully");
+    } catch (err) {
+      console.log(err);
+      setError("Failed to edit user");
+      toast.error("Failed to edit user");
+    }
+  };
+
+  const toggleUserStatus = async (id, currentStatus) => {
+    const updateStatus = currentStatus === "Active" ? "Block" : "Active";
+    const updatedUser = { status: updateStatus };
+    toast.dismiss();
+    try {
+      const res = await fetch(`${API_URL}/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedUser),
+      });
+      if (!res.ok) throw new Error("Failed to update user status");
+      const data = await res.json();
+      setUsers(users.map((user) => (user.id === id ? data : user)));
+      toast.success(
+        `User ${
+          updateStatus === "Active" ? "Unblocked" : "Blocked"
+        } successfully`
+      );
+    } catch (err) {
+      console.log(err);
+      setError("Failed to update user status");
+      toast.error("Failed to update user status");
     }
   };
 
@@ -60,5 +107,13 @@ export function useUsers() {
     fetchUsers();
   }, []);
 
-  return { users, loading, error, addUser, deleteUser };
+  return {
+    users,
+    loading,
+    error,
+    addUser,
+    deleteUser,
+    editUser,
+    toggleUserStatus,
+  };
 }

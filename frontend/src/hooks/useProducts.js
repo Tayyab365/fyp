@@ -1,5 +1,6 @@
 // src/hooks/useProducts.js
 import { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 
 const API_URL =
   "https://67ff575158f18d7209f0cc07.mockapi.io/gamingstore/products";
@@ -26,10 +27,12 @@ export function useProducts() {
   };
 
   const deleteProduct = async (id) => {
+    toast.dismiss();
     try {
       const res = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
       if (!res.ok) throw new Error("Failed to delete product");
       setProducts(products.filter((p) => p.id !== id));
+      toast.success("Product deleted successfully!");
     } catch (err) {
       console.error(err);
       setError("Failed to delete product");
@@ -37,6 +40,7 @@ export function useProducts() {
   };
 
   const addProduct = async (newProduct) => {
+    toast.dismiss();
     try {
       const res = await fetch(API_URL, {
         method: "POST",
@@ -46,6 +50,7 @@ export function useProducts() {
       if (!res.ok) throw new Error("Failed to add product");
       const data = await res.json();
       setProducts([...products, data]);
+      toast.success("Product added successfully!");
     } catch (err) {
       console.log(err);
       setError("Failed to add product");
@@ -60,6 +65,7 @@ export function useProducts() {
         body: JSON.stringify(updateProduct),
       });
       if (!res.ok) throw new Error("Failed to update product");
+      const data = res.json();
       setProducts(products.map((p) => (p.id === id ? data : p)));
     } catch (err) {
       console.log(err);

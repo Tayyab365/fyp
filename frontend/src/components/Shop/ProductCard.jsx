@@ -56,12 +56,12 @@ const ProductCard = ({ selectedCategory }) => {
             <div className="w-full mb-4 flex items-center justify-center overflow-hidden rounded-lg bg-gray-50 h-40 sm:h-48 md:h-56">
               <img
                 src={product.image}
-                alt={product.title}
+                alt={product.name}
                 className="max-h-full max-w-full object-contain"
               />
             </div>
             <h3 className="text-sm md:text-base font-semibold text-[#1E293B] mb-2 line-clamp-2">
-              {product.title}
+              {product.name}
             </h3>
             <p className="text-[#2563EB] font-bold text-lg md:text-xl mb-4">
               ${product.price}
@@ -74,7 +74,7 @@ const ProductCard = ({ selectedCategory }) => {
                 Add to Cart
               </button>
               <Link
-                to={`/product-details/${product.id}`}
+                to={`/product-details/${product._id}`}
                 className="w-full sm:flex-1 py-1.5 text-center rounded-lg bg-white border border-[#2563EB] text-[#2563EB] font-semibold text-sm md:text-base hover:bg-[#2563EB] hover:text-white transition"
               >
                 View Product

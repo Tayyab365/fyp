@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-const API_URL =
-  "https://67ff575158f18d7209f0cc07.mockapi.io/gamingstore/products";
+const API_URL = "http://localhost:5000/api/products";
 
 export function useOrders() {
   const [orders, setOrders] = useState([]);
@@ -17,11 +16,11 @@ export function useOrders() {
       if (!res.ok) throw new Error(`Failed to fetch orders: ${res.status}`);
       const data = await res.json();
 
-      const mockOrders = data.slice(0, 10).map((item, index) => ({
+      const mockOrders = data.products.slice(0, 10).map((item, index) => ({
         id: `#${1000 + index}`,
         customer: `Customer ${index + 1}`,
         products: `${Math.floor(Math.random() * 5) + 1} items`,
-        amount: `$${(item.price * (Math.floor(Math.random() * 3) + 1)).toFixed(
+        amount: `${(item.price * (Math.floor(Math.random() * 3) + 1)).toFixed(
           2
         )}`,
         status: ["Pending", "Completed", "Cancelled"][

@@ -7,7 +7,15 @@ const router = express.Router();
 // GET all (with simple search / filter / pagination support)
 router.get("/", async (req, res) => {
   try {
-    const { search, category, minPrice, maxPrice, page = 1, limit = 20, sort } = req.query;
+    const {
+      search,
+      category,
+      minPrice,
+      maxPrice,
+      page = 1,
+      limit,
+      sort,
+    } = req.query;
     const query = {};
 
     if (search) query.name = { $regex: search, $options: "i" };
@@ -25,7 +33,12 @@ router.get("/", async (req, res) => {
     const products = await cursor;
     const total = await Product.countDocuments(query);
 
-    res.json({ products, total, page: Number(page), pages: Math.ceil(total / limit) });
+    res.json({
+      products,
+      total,
+      page: Number(page),
+      pages: Math.ceil(total / limit),
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -56,7 +69,9 @@ router.post("/", async (req, res) => {
 // PUT update product
 router.put("/:id", async (req, res) => {
   try {
-    const updated = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const updated = await Product.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
     if (!updated) return res.status(404).json({ message: "Product not found" });
     res.json(updated);
   } catch (error) {

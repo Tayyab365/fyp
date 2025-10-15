@@ -13,13 +13,13 @@ const CartItem = ({ item }) => {
       <div className="flex-shrink-0 mb-3 md:mb-0 md:mr-4 w-24 h-24">
         <img
           src={item.image}
-          alt={item.title}
+          alt={item.name}
           className="w-full h-full object-contain rounded-md"
         />
       </div>
       <div className="flex-1 text-center md:text-left mb-3 md:mb-0">
         <h3 className="text-md font-semibold text-gray-900 mb-1">
-          {item.title}
+          {item.name}
         </h3>
         <p className="text-[#2563EB] font-bold text-lg">${item.price}</p>
       </div>

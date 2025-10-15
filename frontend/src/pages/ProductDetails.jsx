@@ -29,14 +29,14 @@ const ProductDetails = () => {
         <div className="flex items-center justify-center bg-white rounded-xl shadow-lg p-6">
           <img
             src={product.image}
-            alt={product.title}
+            alt={product.name}
             className="max-h-[450px] object-contain transition-transform duration-300 hover:scale-105"
           />
         </div>
         <div className="flex flex-col justify-between">
           <div>
             <h1 className="text-3xl font-bold text-gray-900 mb-2">
-              {product.title}
+              {product.name}
             </h1>
             <div className="flex items-center mb-4">
               <span className="text-yellow-400">★★★★☆</span>

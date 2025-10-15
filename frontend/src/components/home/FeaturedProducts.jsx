@@ -5,14 +5,14 @@ const FeaturedProducts = () => {
   const [products, setProducts] = useState([]);
   const { dispatch } = useContext(cartContext);
 
-  const api_url =
-    "https://67ff575158f18d7209f0cc07.mockapi.io/gamingstore/products";
+  const API_URL = "http://localhost:5000/api/products";
 
   useEffect(() => {
-    fetch(api_url)
+    fetch(API_URL)
       .then((res) => res.json())
       .then((data) => {
-        setProducts(data.slice(0, 4));
+        const list = Array.isArray(data) ? data : data.products;
+        setProducts(list.slice(0, 4));
       })
       .catch((err) => console.log(err));
   }, []);
@@ -33,13 +33,13 @@ const FeaturedProducts = () => {
               <div className="h-40 w-full mb-4 flex items-center justify-center overflow-hidden rounded-lg bg-white">
                 <img
                   src={product.image}
-                  alt={product.title}
+                  alt={product.name}
                   className="max-h-full max-w-full object-contain rounded-lg"
                 />
               </div>
 
               <h3 className="text-sm md:text-base font-semibold text-[#1E293B] mb-2 line-clamp-2">
-                {product.title}
+                {product.name}
               </h3>
 
               <div className="mt-auto">

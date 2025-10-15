@@ -2,8 +2,7 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 
-const API_URL =
-  "https://67ff575158f18d7209f0cc07.mockapi.io/gamingstore/products";
+const API_URL = "http://localhost:5000/api/products";
 
 export function useProducts() {
   const [products, setProducts] = useState([]);
@@ -17,7 +16,8 @@ export function useProducts() {
       const res = await fetch(API_URL);
       if (!res.ok) throw new Error(`Failed to fetch products: ${res.status}`);
       const data = await res.json();
-      setProducts(data);
+      const list = Array.isArray(data) ? data : data.products;
+      setProducts(list);
     } catch (err) {
       console.error(err);
       setError(err.message || "Something went wrong");
@@ -31,7 +31,7 @@ export function useProducts() {
     try {
       const res = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
       if (!res.ok) throw new Error("Failed to delete product");
-      setProducts(products.filter((p) => p.id !== id));
+      setProducts(products.filter((p) => p._id !== id));
       toast.success("Product deleted successfully!");
     } catch (err) {
       console.error(err);
@@ -68,8 +68,8 @@ export function useProducts() {
         body: JSON.stringify(updateProduct),
       });
       if (!res.ok) throw new Error("Failed to update product");
-      const data = res.json();
-      setProducts(products.map((p) => (p.id === id ? data : p)));
+      const data = await res.json();
+      setProducts(products.map((p) => (p._id === id ? data : p)));
       toast.success("Product updated successfully");
     } catch (err) {
       console.log(err);

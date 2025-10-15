@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-export function useProduct(id) {
-  const [product, setProduct] = useState([]);
+export function useProduct(_id) {
+  const [product, setProduct] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -11,9 +11,7 @@ export function useProduct(id) {
       setError(null);
 
       try {
-        const res = await fetch(
-          `https://67ff575158f18d7209f0cc07.mockapi.io/gamingstore/products/${id}`
-        );
+        const res = await fetch(`http://localhost:5000/api/products/${_id}`);
         if (!res.ok) {
           throw new Error(`Failed to fetch products: ${res.status}`);
         }
@@ -27,8 +25,8 @@ export function useProduct(id) {
       }
     };
 
-    if (id) fetchProduct();
-  }, [id]);
+    if (_id) fetchProduct();
+  }, [_id]);
 
   return { product, loading, error };
 }

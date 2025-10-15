@@ -44,13 +44,13 @@ const Products = () => {
             <tbody className="text-gray-600">
               {products.map((product, index) => (
                 <tr
-                  key={product.id}
+                  key={product._id}
                   className="border-t hover:bg-gray-50 transition-colors duration-200"
                 >
                   <td className="py-3 px-5 font-medium text-gray-800">
                     {index + 1}
                   </td>
-                  <td className="py-3 px-5">{product.title}</td>
+                  <td className="py-3 px-5">{product.name}</td>
                   <td className="py-3 px-5">{product.category}</td>
                   <td className="py-3 px-5 font-semibold text-gray-700">
                     ${product.price}

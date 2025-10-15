@@ -7,7 +7,7 @@ import headsetImage from "../../assets/categories images/headset.jpg";
 
 const ProductCategory = () => {
   const categories = [
-    { id: 1, name: "Chairs", image: laptopImage, category: "chair" },
+    { id: 1, name: "Laptops", image: laptopImage, category: "laptop" },
     { id: 2, name: "Keyboards", image: keyboardImage, category: "keyboard" },
     { id: 3, name: "Mouse", image: mouseImage, category: "mouse" },
     { id: 4, name: "Headsets", image: headsetImage, category: "headset" },

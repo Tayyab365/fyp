@@ -17,6 +17,16 @@ const AddUser = ({ onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (
+      !form.name ||
+      !form.email ||
+      !form.password ||
+      !form.role ||
+      !form.status
+    ) {
+      alert("Please fill all fields before submitting");
+      return;
+    }
     await addUser(form);
     setForm({
       name: "",

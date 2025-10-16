@@ -16,7 +16,7 @@ const EditUser = ({ onClose, user }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await editUser(user.id, form);
+    await editUser(user._id, form);
     onClose();
   };
 

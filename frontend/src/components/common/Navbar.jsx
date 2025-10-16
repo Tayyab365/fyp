@@ -97,7 +97,7 @@ const Navbar = () => {
           </li>
 
           {/* ✅ Dashboard only for Admin */}
-          {user?.role === "admin" && (
+          {user?.role === "Admin" && (
             <li>
               <NavLink
                 to="/dashboard"
@@ -183,7 +183,7 @@ const Navbar = () => {
           </NavLink>
 
           {/* ✅ Dashboard for Admin (Mobile View) */}
-          {user?.role === "admin" && (
+          {user?.role === "Admin" && (
             <NavLink
               to="/dashboard"
               className="block hover:text-[#2563EB] transition"

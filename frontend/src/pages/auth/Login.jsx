@@ -31,6 +31,7 @@ const Login = () => {
     try {
       const res = await login(formData);
       toast.success("Login successful!");
+      console.log("User after login:", res.user);
 
       // Example: token/user handle if needed later
       localStorage.setItem("token", res.token);

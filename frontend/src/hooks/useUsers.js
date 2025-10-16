@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-const API_URL = "https://67ff575158f18d7209f0cc07.mockapi.io/gamingstore/users";
+const API_URL = "http://localhost:5000/api/users";
 
 export function useUsers() {
   const [users, setUsers] = useState([]);
@@ -43,14 +43,14 @@ export function useUsers() {
     }
   };
 
-  const deleteUser = async (id) => {
+  const deleteUser = async (_id) => {
     toast.dismiss();
     try {
-      const res = await fetch(`${API_URL}/${id}`, {
+      const res = await fetch(`${API_URL}/${_id}`, {
         method: "DELETE",
       });
       if (!res.ok) throw new Error("Failed to delete user");
-      setUsers((prev) => prev.filter((user) => user.id !== id));
+      setUsers((prev) => prev.filter((user) => user._id !== _id));
       toast.success("User deleted successfully");
     } catch (err) {
       console.log(err);
@@ -59,17 +59,17 @@ export function useUsers() {
     }
   };
 
-  const editUser = async (id, updatedUser) => {
+  const editUser = async (_id, updatedUser) => {
     toast.dismiss();
     try {
-      const res = await fetch(`${API_URL}/${id}`, {
+      const res = await fetch(`${API_URL}/${_id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedUser),
       });
       if (!res.ok) throw new Error("Failed to edit user");
       const data = await res.json();
-      setUsers(users.map((user) => (user.id === id ? data : user)));
+      setUsers(users.map((user) => (user._id === _id ? data : user)));
       toast.success("User updated successfully");
     } catch (err) {
       console.log(err);
@@ -78,19 +78,19 @@ export function useUsers() {
     }
   };
 
-  const toggleUserStatus = async (id, currentStatus) => {
+  const toggleUserStatus = async (_id, currentStatus) => {
     const updateStatus = currentStatus === "Active" ? "Block" : "Active";
     const updatedUser = { status: updateStatus };
     toast.dismiss();
     try {
-      const res = await fetch(`${API_URL}/${id}`, {
+      const res = await fetch(`${API_URL}/${_id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedUser),
       });
       if (!res.ok) throw new Error("Failed to update user status");
       const data = await res.json();
-      setUsers(users.map((user) => (user.id === id ? data : user)));
+      setUsers(users.map((user) => (user._id === _id ? data : user)));
       toast.success(
         `User ${
           updateStatus === "Active" ? "Unblocked" : "Blocked"

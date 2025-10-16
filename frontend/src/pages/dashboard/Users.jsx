@@ -48,7 +48,7 @@ const Users = () => {
             {users.length > 0 ? (
               users.map((user, index) => (
                 <tr
-                  key={user.id}
+                  key={user._id}
                   className="border-b hover:bg-blue-50/50 transition-colors"
                 >
                   <td className="py-3 px-4 text-gray-500">{index + 1}</td>
@@ -99,7 +99,7 @@ const Users = () => {
 
                     <button
                       title={user.status === "Active" ? "Block" : "Unblock"}
-                      onClick={() => toggleUserStatus(user.id, user.status)}
+                      onClick={() => toggleUserStatus(user._id, user.status)}
                       className={`p-1.5 text-white rounded-md shadow-sm active:scale-95 transition ${
                         user.status === "Active"
                           ? "bg-yellow-500 hover:bg-yellow-600"
@@ -123,7 +123,7 @@ const Users = () => {
 
                     <button
                       title="Delete"
-                      onClick={() => deleteUser(user.id)}
+                      onClick={() => deleteUser(user._id)}
                       className="p-1.5 bg-red-500 text-white rounded-md hover:bg-red-600 active:scale-95 shadow-sm transition"
                     >
                       <Trash2 size={14} />

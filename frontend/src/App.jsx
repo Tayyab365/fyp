@@ -15,11 +15,14 @@ import Products from "./pages/dashboard/Products";
 import Orders from "./pages/dashboard/Orders";
 import Users from "./pages/dashboard/Users";
 import AddProduct from "./pages/dashboard/AddProduct";
-import { Toaster } from "react-hot-toast";
 import EditProduct from "./pages/dashboard/EditProduct";
 import AuthLayout from "./DashboardLayout/AuthLayout";
 import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
+import { Toaster } from "react-hot-toast";
+
+// ✅ Import ProtectedRoute
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -34,6 +37,7 @@ const App = () => {
     <BrowserRouter>
       <ScrollToTop />
       <Routes>
+        {/* Public Routes */}
         <Route
           path="/"
           element={
@@ -107,12 +111,21 @@ const App = () => {
           }
         />
 
+        {/* Auth Routes */}
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
         </Route>
 
-        <Route path="/dashboard" element={<DashboardLayout />}>
+        {/* ✅ Protected Admin Dashboard */}
+        <Route
+          path="/dashboard/*"
+          element={
+            <ProtectedRoute allowedRole="admin">
+              <DashboardLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<DashboardHome />} />
           <Route path="products" element={<Products />} />
           <Route path="orders" element={<Orders />} />
@@ -121,6 +134,7 @@ const App = () => {
           <Route path="edit-product" element={<EditProduct />} />
         </Route>
       </Routes>
+
       <Toaster position="center-center" reverseOrder={false} />
     </BrowserRouter>
   );

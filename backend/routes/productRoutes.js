@@ -1,6 +1,7 @@
 // backend/routes/productRoutes.js
 import express from "express";
 import Product from "../models/Product.js";
+import { adminOnly, protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
@@ -56,7 +57,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // POST create new product
-router.post("/", async (req, res) => {
+router.post("/", protect, adminOnly, async (req, res) => {
   try {
     const product = new Product(req.body);
     const saved = await product.save();
@@ -67,7 +68,7 @@ router.post("/", async (req, res) => {
 });
 
 // PUT update product
-router.put("/:id", async (req, res) => {
+router.put("/:id", protect, adminOnly, async (req, res) => {
   try {
     const updated = await Product.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
@@ -80,7 +81,7 @@ router.put("/:id", async (req, res) => {
 });
 
 // DELETE product
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", protect, adminOnly, async (req, res) => {
   try {
     const deleted = await Product.findByIdAndDelete(req.params.id);
     if (!deleted) return res.status(404).json({ message: "Product not found" });

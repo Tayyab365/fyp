@@ -40,9 +40,11 @@ const ProductDetails = () => {
             </h1>
             <div className="flex items-center mb-4">
               <span className="text-yellow-400">★★★★☆</span>
-              <span className="ml-2 text-sm text-gray-500">(120 reviews)</span>
+              <span className="ml-2 text-sm text-gray-500">
+                {product.numReviews}
+              </span>
             </div>
-            <p className="text-3xl font-bold text-[#2563EB] mb-4">
+            <p className="text-2xl font-bold text-[#2563EB] mb-4">
               ${product.price}
             </p>
             <ul className="list-disc list-inside text-gray-700 mb-6 space-y-2">

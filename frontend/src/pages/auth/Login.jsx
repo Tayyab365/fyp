@@ -1,38 +1,80 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
+import toast from "react-hot-toast";
+import { login } from "../../hooks/useAuth";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+
+  // 🔹 Single state for both fields
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  // 🔹 Dynamic handleChange
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const { email, password } = formData;
+    if (!email || !password) {
+      toast.error("Please fill all fields!");
+      return;
+    }
+
+    try {
+      const res = await login(formData);
+      toast.success("Login successful!");
+
+      // Example: token/user handle if needed later
+      localStorage.setItem("token", res.token);
+      localStorage.setItem("user", JSON.stringify(res.user));
+      navigate("/");
+    } catch (err) {
+      toast.error(err.message || "Invalid credentials!");
+    }
+  };
 
   return (
-    <div>
-      <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">
+    // <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+      <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
         Login
       </h2>
-      <form className="space-y-4">
-        {/* Email */}
+
+      <form onSubmit={handleSubmit} className="space-y-4">
+        {/* Email Field */}
         <div>
-          <label className="block text-sm font-medium text-gray-600 mb-1">
-            Email
-          </label>
+          <label className="block text-gray-700 font-medium mb-1">Email</label>
           <input
             type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
             placeholder="you@example.com"
-            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+            className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
           />
         </div>
 
-        {/* Password */}
+        {/* Password Field */}
         <div>
-          <label className="block text-sm font-medium text-gray-600 mb-1">
+          <label className="block text-gray-700 font-medium mb-1">
             Password
           </label>
           <div className="relative">
             <input
               type={showPassword ? "text" : "password"}
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
               placeholder="********"
-              className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none pr-10"
+              className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none pr-10"
             />
             <span
               onClick={() => setShowPassword(!showPassword)}
@@ -43,8 +85,8 @@ const Login = () => {
           </div>
         </div>
 
-        {/* Remember + Forgot */}
-        <div className="flex items-center justify-between text-sm">
+        {/* Remember Me & Forgot Password */}
+        <div className="flex items-center justify-between text-sm text-gray-600">
           <label className="flex items-center gap-2">
             <input type="checkbox" className="accent-blue-600" />
             Remember Me
@@ -63,27 +105,15 @@ const Login = () => {
         </button>
       </form>
 
-      {/* Divider */}
-      <div className="flex items-center justify-center mt-6">
-        <div className="w-1/4 border-t border-gray-300"></div>
-        <span className="mx-2 text-gray-500 text-sm">or</span>
-        <div className="w-1/4 border-t border-gray-300"></div>
-      </div>
-
-      {/* Google Button (Optional) */}
-      <button className="w-full mt-4 flex items-center justify-center gap-2 border border-gray-300 py-3 rounded-lg hover:bg-gray-50 transition">
-        <img src="/google-icon.svg" alt="Google" className="w-5 h-5" />
-        Continue with Google
-      </button>
-
       {/* Signup Link */}
-      <p className="text-center mt-4 text-sm text-gray-600">
+      <p className="text-center text-sm text-gray-600 mt-4">
         Don’t have an account?{" "}
         <Link to="/signup" className="text-blue-600 hover:underline">
           Sign up
         </Link>
       </p>
     </div>
+    // </div>
   );
 };
 

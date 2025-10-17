@@ -15,14 +15,14 @@ const AddProduct = ({ onClose }) => {
   });
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value.trimStart() }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await addProduct(form);
-      // reset only after successful add
       setForm({
         name: "",
         price: "",
@@ -33,7 +33,6 @@ const AddProduct = ({ onClose }) => {
       });
       onClose();
     } catch (err) {
-      // addProduct already shows a toast; still keep console for debugging
       console.error("Add product failed:", err);
       toast.error("Failed to add product");
     }
@@ -41,7 +40,7 @@ const AddProduct = ({ onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
-      <div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-md relative">
+      <div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-md relative max-h-[90vh] overflow-y-auto">
         <h2 className="text-2xl font-bold mb-4 text-gray-800 text-center">
           Add New Product
         </h2>
@@ -90,6 +89,7 @@ const AddProduct = ({ onClose }) => {
             onChange={handleChange}
             className="w-full border p-2 rounded"
           />
+
           <textarea
             name="description"
             placeholder="Description"
@@ -97,6 +97,7 @@ const AddProduct = ({ onClose }) => {
             onChange={handleChange}
             className="w-full border p-2 rounded min-h-20"
           ></textarea>
+
           <button
             type="submit"
             className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"

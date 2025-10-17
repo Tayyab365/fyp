@@ -18,7 +18,7 @@ const Products = () => {
     );
 
   return (
-    <div className=" bg-gray-50 min-h-screen space-y-8">
+    <div className="bg-gray-50 min-h-screen space-y-8">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-gray-800">Products</h1>
         <button
@@ -28,12 +28,14 @@ const Products = () => {
           + Add Product
         </button>
       </div>
+
       {!loading && !error && (
         <div className="overflow-x-auto bg-white rounded-2xl shadow-md border border-gray-200">
           <table className="w-full text-sm text-left border-collapse">
             <thead className="bg-gray-100 text-gray-700 uppercase text-xs font-semibold tracking-wider">
               <tr>
                 <th className="py-3 px-5">#</th>
+                <th className="py-3 px-5">Image</th> {/* ✅ Added */}
                 <th className="py-3 px-5">Name</th>
                 <th className="py-3 px-5">Category</th>
                 <th className="py-3 px-5">Price</th>
@@ -41,6 +43,7 @@ const Products = () => {
                 <th className="py-3 px-5 text-center">Actions</th>
               </tr>
             </thead>
+
             <tbody className="text-gray-600">
               {products.map((product, index) => (
                 <tr
@@ -50,6 +53,21 @@ const Products = () => {
                   <td className="py-3 px-5 font-medium text-gray-800">
                     {index + 1}
                   </td>
+
+                  {/* ✅ Image column */}
+                  <td className="py-3 px-5">
+                    {product.image ? (
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="w-14 h-14 object-cover rounded border"
+                        onError={(e) => (e.target.style.display = "none")}
+                      />
+                    ) : (
+                      <span className="text-gray-400 italic">No image</span>
+                    )}
+                  </td>
+
                   <td className="py-3 px-5">{product.name}</td>
                   <td className="py-3 px-5">
                     {product.category.charAt(0).toUpperCase() +
@@ -86,6 +104,7 @@ const Products = () => {
               ))}
             </tbody>
           </table>
+
           {showModal && <AddProduct onClose={() => setShowModal(false)} />}
           {editProduct && (
             <EditProduct

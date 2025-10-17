@@ -1,4 +1,3 @@
-// src/hooks/useProducts.js
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 
@@ -11,27 +10,22 @@ export function useProducts() {
 
   const token = localStorage.getItem("token");
 
-  // ✅ Fetch products safely
   const fetchProducts = async () => {
     setLoading(true);
     setError(null);
     try {
       const res = await fetch(API_URL);
       const data = await res.json();
-
-      // Agar response object me "products" array hai to wo use karo
-      const list = Array.isArray(data) ? data : data.products || [];
+      const list = Array.isArray(data) ? data : data.products;
       setProducts(list);
     } catch (err) {
       console.error(err);
       setError("Failed to fetch products");
-      setProducts([]); // map error avoid
     } finally {
       setLoading(false);
     }
   };
 
-  // ✅ Add new product (with token fix + error toast)
   const addProduct = async (newProduct) => {
     toast.dismiss();
     try {
@@ -43,13 +37,8 @@ export function useProducts() {
         },
         body: JSON.stringify(newProduct),
       });
-
       const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message || "Failed to add product");
-      }
-
+      if (!res.ok) throw new Error(data.message || "Failed to add product");
       setProducts([...products, data]);
       toast.success("Product added successfully!");
     } catch (err) {
@@ -59,7 +48,6 @@ export function useProducts() {
     }
   };
 
-  // ✅ Update product
   const updateProduct = async (_id, updatedProduct) => {
     toast.dismiss();
     try {
@@ -71,13 +59,8 @@ export function useProducts() {
         },
         body: JSON.stringify(updatedProduct),
       });
-
       const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message || "Failed to update product");
-      }
-
+      if (!res.ok) throw new Error(data.message || "Failed to update product");
       setProducts(products.map((p) => (p._id === _id ? data : p)));
       toast.success("Product updated successfully!");
     } catch (err) {
@@ -87,7 +70,6 @@ export function useProducts() {
     }
   };
 
-  // ✅ Delete product
   const deleteProduct = async (_id) => {
     toast.dismiss();
     try {
@@ -97,13 +79,8 @@ export function useProducts() {
           Authorization: `Bearer ${token}`,
         },
       });
-
       const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message || "Failed to delete product");
-      }
-
+      if (!res.ok) throw new Error(data.message || "Failed to delete product");
       setProducts(products.filter((p) => p._id !== _id));
       toast.success("Product deleted successfully!");
     } catch (err) {

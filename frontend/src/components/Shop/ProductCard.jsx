@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { useProducts } from "../../hooks/useProducts";
 import { cartContext } from "../../Context/CartContext";
@@ -6,6 +6,7 @@ import { cartContext } from "../../Context/CartContext";
 const ProductCard = ({ selectedCategory }) => {
   const { products, loading } = useProducts();
   const [sortOptions, setSortOptions] = useState("");
+  const [visibleCount, setVisibleCount] = useState(9); // 👈 initially 9 products
   const { dispatch } = useContext(cartContext);
 
   const addToCart = (product) => {
@@ -15,6 +16,7 @@ const ProductCard = ({ selectedCategory }) => {
   if (loading)
     return <p className="font-bold text-xl mt-24 pl-24">Loading products...</p>;
 
+  // ✅ Filter by category
   const filteredCategories =
     selectedCategory === "All"
       ? [...products]
@@ -24,11 +26,15 @@ const ProductCard = ({ selectedCategory }) => {
             item.category.toLowerCase().includes(selectedCategory.toLowerCase())
         );
 
+  // ✅ Sorting
   if (sortOptions === "lowToHigh") {
     filteredCategories.sort((a, b) => a.price - b.price);
   } else if (sortOptions === "highToLow") {
     filteredCategories.sort((a, b) => b.price - a.price);
   }
+
+  // ✅ Show limited products
+  const visibleProducts = filteredCategories.slice(0, visibleCount);
 
   return (
     <div className="px-4 md:px-10">
@@ -47,10 +53,11 @@ const ProductCard = ({ selectedCategory }) => {
         </select>
       </div>
 
+      {/* ✅ Product Cards Grid */}
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {filteredCategories.map((product) => (
+        {visibleProducts.map((product) => (
           <div
-            key={product.id}
+            key={product._id}
             className="bg-white rounded-lg shadow-md hover:shadow-xl transition-transform duration-300 hover:-translate-y-2 p-5 flex flex-col border border-[#E2E8F0]"
           >
             <div className="w-full mb-4 flex items-center justify-center overflow-hidden rounded-lg bg-gray-50 h-40 sm:h-48 md:h-56">
@@ -83,6 +90,18 @@ const ProductCard = ({ selectedCategory }) => {
           </div>
         ))}
       </div>
+
+      {/* ✅ Load More Button */}
+      {visibleCount < filteredCategories.length && (
+        <div className="text-center my-10">
+          <button
+            onClick={() => setVisibleCount(visibleCount + 9)}
+            className="px-6 py-2 bg-[#2563EB] text-white rounded-lg hover:bg-[#1D4ED8] transition"
+          >
+            Load More
+          </button>
+        </div>
+      )}
     </div>
   );
 };

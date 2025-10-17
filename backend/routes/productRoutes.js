@@ -29,7 +29,7 @@ router.get("/", async (req, res) => {
 
     if (sort === "price_asc") cursor = cursor.sort({ price: 1 });
     else if (sort === "price_desc") cursor = cursor.sort({ price: -1 });
-    else cursor = cursor.sort({ createdAt: -1 });
+    else cursor = cursor.sort({ createdAt: 1 });
 
     const products = await cursor;
     const total = await Product.countDocuments(query);

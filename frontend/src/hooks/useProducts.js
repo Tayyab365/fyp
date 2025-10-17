@@ -9,72 +9,107 @@ export function useProducts() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const token = localStorage.getItem("token");
+
+  // ✅ Fetch products safely
   const fetchProducts = async () => {
     setLoading(true);
     setError(null);
     try {
       const res = await fetch(API_URL);
-      if (!res.ok) throw new Error(`Failed to fetch products: ${res.status}`);
       const data = await res.json();
-      const list = Array.isArray(data) ? data : data.products;
+
+      // Agar response object me "products" array hai to wo use karo
+      const list = Array.isArray(data) ? data : data.products || [];
       setProducts(list);
     } catch (err) {
       console.error(err);
-      setError(err.message || "Something went wrong");
+      setError("Failed to fetch products");
+      setProducts([]); // map error avoid
     } finally {
       setLoading(false);
     }
   };
 
-  const deleteProduct = async (id) => {
-    toast.dismiss();
-    try {
-      const res = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
-      if (!res.ok) throw new Error("Failed to delete product");
-      setProducts(products.filter((p) => p._id !== id));
-      toast.success("Product deleted successfully!");
-    } catch (err) {
-      console.error(err);
-      setError("Failed to delete product");
-      toast.error("Failed to delete product");
-    }
-  };
-
+  // ✅ Add new product (with token fix + error toast)
   const addProduct = async (newProduct) => {
     toast.dismiss();
     try {
       const res = await fetch(API_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify(newProduct),
       });
-      if (!res.ok) throw new Error("Failed to add product");
+
       const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Failed to add product");
+      }
+
       setProducts([...products, data]);
       toast.success("Product added successfully!");
     } catch (err) {
-      console.log(err);
+      console.error(err);
       setError("Failed to add product");
-      toast.error("Failed to add Product");
+      toast.error(err.message || "Failed to add product");
     }
   };
 
-  const updateProduct = async (id, updateProduct) => {
+  // ✅ Update product
+  const updateProduct = async (_id, updatedProduct) => {
     toast.dismiss();
     try {
-      const res = await fetch(`${API_URL}/${id}`, {
+      const res = await fetch(`${API_URL}/${_id}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updateProduct),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(updatedProduct),
       });
-      if (!res.ok) throw new Error("Failed to update product");
+
       const data = await res.json();
-      setProducts(products.map((p) => (p._id === id ? data : p)));
-      toast.success("Product updated successfully");
+
+      if (!res.ok) {
+        throw new Error(data.message || "Failed to update product");
+      }
+
+      setProducts(products.map((p) => (p._id === _id ? data : p)));
+      toast.success("Product updated successfully!");
     } catch (err) {
-      console.log(err);
+      console.error(err);
       setError("Failed to update product");
-      toast.error("Failed to updated product");
+      toast.error(err.message || "Failed to update product");
+    }
+  };
+
+  // ✅ Delete product
+  const deleteProduct = async (_id) => {
+    toast.dismiss();
+    try {
+      const res = await fetch(`${API_URL}/${_id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Failed to delete product");
+      }
+
+      setProducts(products.filter((p) => p._id !== _id));
+      toast.success("Product deleted successfully!");
+    } catch (err) {
+      console.error(err);
+      setError("Failed to delete product");
+      toast.error(err.message || "Failed to delete product");
     }
   };
 
@@ -82,5 +117,5 @@ export function useProducts() {
     fetchProducts();
   }, []);
 
-  return { products, loading, error, deleteProduct, addProduct, updateProduct };
+  return { products, loading, error, addProduct, updateProduct, deleteProduct };
 }

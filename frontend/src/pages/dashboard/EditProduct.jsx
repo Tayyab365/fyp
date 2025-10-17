@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 const EditProduct = ({ onClose, product }) => {
   const { updateProduct } = useProducts();
   const [form, setForm] = useState({
-    title: product?.title || "",
+    name: product?.name || "",
     price: product?.price || "",
     category: product?.category || "",
     stock: product?.stock || "",
@@ -24,7 +24,7 @@ const EditProduct = ({ onClose, product }) => {
       price: Number(form.price),
       stock: Number(form.stock),
     };
-    await updateProduct(product.id, payload);
+    await updateProduct(product._id, payload);
     toast.success("Product Updated successfully");
     onClose();
   };
@@ -44,9 +44,9 @@ const EditProduct = ({ onClose, product }) => {
 
         <form onSubmit={handleSubmit} className="space-y-3">
           <input
-            name="title"
+            name="name"
             placeholder="Title"
-            value={form.title}
+            value={form.name}
             onChange={handleChange}
             className="w-full border p-2 rounded"
           />

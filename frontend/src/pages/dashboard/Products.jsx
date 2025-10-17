@@ -51,7 +51,10 @@ const Products = () => {
                     {index + 1}
                   </td>
                   <td className="py-3 px-5">{product.name}</td>
-                  <td className="py-3 px-5">{product.category}</td>
+                  <td className="py-3 px-5">
+                    {product.category.charAt(0).toUpperCase() +
+                      product.category.slice(1)}
+                  </td>
                   <td className="py-3 px-5 font-semibold text-gray-700">
                     ${product.price}
                   </td>
@@ -71,7 +74,7 @@ const Products = () => {
                     </button>
 
                     <button
-                      onClick={() => deleteProduct(product.id)}
+                      onClick={() => deleteProduct(product._id)}
                       title="Delete Product"
                       className="flex items-center gap-1 bg-red-500 text-white px-3 py-1.5 rounded-lg hover:bg-red-600 active:scale-95 shadow-sm transition"
                     >

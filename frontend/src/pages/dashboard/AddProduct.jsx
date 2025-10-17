@@ -6,7 +6,7 @@ const AddProduct = ({ onClose }) => {
   const { addProduct } = useProducts();
 
   const [form, setForm] = useState({
-    title: "",
+    name: "",
     price: "",
     category: "",
     stock: "",
@@ -20,16 +20,23 @@ const AddProduct = ({ onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await addProduct(form);
-    setForm({
-      title: "",
-      price: "",
-      category: "",
-      stock: "",
-      image: "",
-      description: "",
-    });
-    onClose();
+    try {
+      await addProduct(form);
+      // reset only after successful add
+      setForm({
+        name: "",
+        price: "",
+        category: "",
+        stock: "",
+        image: "",
+        description: "",
+      });
+      onClose();
+    } catch (err) {
+      // addProduct already shows a toast; still keep console for debugging
+      console.error("Add product failed:", err);
+      toast.error("Failed to add product");
+    }
   };
 
   return (
@@ -47,16 +54,16 @@ const AddProduct = ({ onClose }) => {
 
         <form onSubmit={handleSubmit} className="space-y-3">
           <input
-            name="title"
+            name="name"
             placeholder="Title"
-            value={form.title}
+            value={form.name ?? ""}
             onChange={handleChange}
             className="w-full border p-2 rounded"
           />
           <input
             name="category"
             placeholder="Category"
-            value={form.category}
+            value={form.category ?? ""}
             onChange={handleChange}
             className="w-full border p-2 rounded"
           />
@@ -64,7 +71,7 @@ const AddProduct = ({ onClose }) => {
             name="price"
             placeholder="Price"
             type="number"
-            value={form.price}
+            value={form.price ?? ""}
             onChange={handleChange}
             className="w-full border p-2 rounded"
           />
@@ -72,21 +79,21 @@ const AddProduct = ({ onClose }) => {
             name="stock"
             placeholder="Stock"
             type="number"
-            value={form.stock}
+            value={form.stock ?? ""}
             onChange={handleChange}
             className="w-full border p-2 rounded"
           />
           <input
             name="image"
             placeholder="Image URL"
-            value={form.image}
+            value={form.image ?? ""}
             onChange={handleChange}
             className="w-full border p-2 rounded"
           />
           <textarea
             name="description"
             placeholder="Description"
-            value={form.description}
+            value={form.description ?? ""}
             onChange={handleChange}
             className="w-full border p-2 rounded min-h-20"
           ></textarea>

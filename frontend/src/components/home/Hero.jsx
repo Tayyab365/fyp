@@ -5,7 +5,7 @@ import heroimage from "../../assets/images/heroimage1.png";
 
 const Hero = () => {
   return (
-    <section className="text-sm bg-gradient-to-r from-[#EFF6FF] to-[#DBEAFE]">
+    <section className="text-sm bg-gradient-to-r from-blue-100 via-white to-blue-100">
       <div className="container mx-auto px-6 py-20 flex flex-col md:flex-row items-center justify-between">
         <div className="md:w-1/2 text-center md:text-left space-y-6">
           <h1 className="!text-5xl md:text-6xl font-extrabold leading-tight text-[#1E293B]">

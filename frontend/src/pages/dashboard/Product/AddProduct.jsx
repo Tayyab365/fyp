@@ -1,38 +1,48 @@
 import React, { useState } from "react";
-import { useProducts } from "../../hooks/useProducts";
+import { useProducts } from "../../../hooks/useProducts";
 import toast from "react-hot-toast";
 
-const EditProduct = ({ onClose, product }) => {
-  const { updateProduct } = useProducts();
+const AddProduct = ({ onClose }) => {
+  const { addProduct } = useProducts();
+
   const [form, setForm] = useState({
-    name: product?.name || "",
-    price: product?.price || "",
-    category: product?.category || "",
-    stock: product?.stock || "",
-    image: product?.image || "",
-    description: product?.description || "",
-    title: product?.title || "",
+    name: "",
+    price: "",
+    category: "",
+    stock: "",
+    image: "",
+    description: "",
   });
+
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value.trimStart() }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const payload = {
-      ...form,
-      price: Number(form.price),
-      stock: Number(form.stock),
-    };
-    await updateProduct(product._id, payload);
-    onClose();
+    try {
+      await addProduct(form);
+      setForm({
+        name: "",
+        price: "",
+        category: "",
+        stock: "",
+        image: "",
+        description: "",
+      });
+      onClose();
+    } catch (err) {
+      console.error("Add product failed:", err);
+      toast.error("Failed to add product");
+    }
   };
 
   return (
     <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
-      <div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-md relative">
+      <div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-md relative max-h-[90vh] overflow-y-auto">
         <h2 className="text-2xl font-bold mb-4 text-gray-800 text-center">
-          Edit Product
+          Add New Product
         </h2>
         <button
           onClick={onClose}
@@ -45,14 +55,14 @@ const EditProduct = ({ onClose, product }) => {
           <input
             name="name"
             placeholder="Title"
-            value={form.name}
+            value={form.name ?? ""}
             onChange={handleChange}
             className="w-full border p-2 rounded"
           />
           <input
             name="category"
             placeholder="Category"
-            value={form.category}
+            value={form.category ?? ""}
             onChange={handleChange}
             className="w-full border p-2 rounded"
           />
@@ -60,7 +70,7 @@ const EditProduct = ({ onClose, product }) => {
             name="price"
             placeholder="Price"
             type="number"
-            value={form.price}
+            value={form.price ?? ""}
             onChange={handleChange}
             className="w-full border p-2 rounded"
           />
@@ -68,29 +78,31 @@ const EditProduct = ({ onClose, product }) => {
             name="stock"
             placeholder="Stock"
             type="number"
-            value={form.stock}
+            value={form.stock ?? ""}
             onChange={handleChange}
             className="w-full border p-2 rounded"
           />
           <input
             name="image"
             placeholder="Image URL"
-            value={form.image}
+            value={form.image ?? ""}
             onChange={handleChange}
             className="w-full border p-2 rounded"
           />
+
           <textarea
             name="description"
             placeholder="Description"
-            value={form.description}
+            value={form.description ?? ""}
             onChange={handleChange}
             className="w-full border p-2 rounded min-h-20"
           ></textarea>
+
           <button
             type="submit"
             className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
           >
-            Edit Product
+            Add Product
           </button>
         </form>
       </div>
@@ -98,4 +110,4 @@ const EditProduct = ({ onClose, product }) => {
   );
 };
 
-export default EditProduct;
+export default AddProduct;

@@ -51,6 +51,15 @@ router.post("/login", async (req, res) => {
         .status(404)
         .json({ success: false, message: "User not found" });
 
+    if (user.status === "Blocked") {
+      return res
+        .status(403)
+        .json({
+          success: false,
+          message: "Your account has been blocked. Please contact admin.",
+        });
+    }
+
     // Compare password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch)

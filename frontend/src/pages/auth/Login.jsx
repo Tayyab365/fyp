@@ -36,6 +36,7 @@ const Login = () => {
       // Example: token/user handle if needed later
       localStorage.setItem("token", res.token);
       localStorage.setItem("user", JSON.stringify(res.user));
+      localStorage.setItem("userId", res.user.id);
       navigate("/");
     } catch (err) {
       toast.error(err.message || "Invalid credentials!");

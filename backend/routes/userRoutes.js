@@ -1,5 +1,6 @@
 import express from "express";
 import User from "../models/User.js";
+import bcrypt from "bcryptjs";
 
 const router = express.Router();
 
@@ -16,11 +17,34 @@ router.get("/", async (req, res) => {
 // 🔹 Add new user
 router.post("/", async (req, res) => {
   try {
-    console.log("Incoming user data:", req.body);
-    const newUser = new User(req.body);
+    const { name, email, password, role, status } = req.body;
+
+    // Validate required fields
+    if (!name || !email || !password) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    // Check if user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: "User already exists" });
+    }
+
+    // Hash password before saving
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newUser = new User({
+      name,
+      email,
+      password: hashedPassword,
+      role: role || "User",
+      status: status || "Active",
+    });
+
     await newUser.save();
     res.status(201).json(newUser);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: "Error creating user", error });
   }
 });
@@ -50,6 +74,32 @@ router.put("/:id", async (req, res) => {
     res.status(200).json(updatedUser);
   } catch (error) {
     res.status(500).json({ message: "Error updating user", error });
+  }
+});
+
+// PUT /api/users/:id/reset-password
+router.put("/:id/reset-password", async (req, res) => {
+  try {
+    const { newPassword } = req.body;
+    if (!newPassword) {
+      return res.status(400).json({ message: "New password is required" });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      { password: hashedPassword },
+      { new: true }
+    );
+
+    if (!updatedUser)
+      return res.status(404).json({ message: "User not found" });
+
+    res.json({ message: "Password reset successfully", user: updatedUser });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error during password reset" });
   }
 });
 

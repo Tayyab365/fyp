@@ -1,0 +1,62 @@
+import express from "express";
+import Order from "../models/Order.js";
+
+const router = express.Router();
+
+// ✅ Create Order
+router.post("/", async (req, res) => {
+  try {
+    const newOrder = new Order(req.body);
+    const savedOrder = await newOrder.save();
+
+    res.status(201).json({
+      success: true,
+      message: "Order placed successfully",
+      order: savedOrder,
+    });
+  } catch (error) {
+    console.error("Error creating order:", error.message);
+    res.status(500).json({
+      success: false,
+      message: "Error creating order",
+      error: error.message,
+    });
+  }
+});
+
+// ✅ Get All Orders
+router.get("/", async (req, res) => {
+  try {
+    const orders = await Order.find().sort({ createdAt: -1 });
+    res.status(200).json({ success: true, orders });
+  } catch (error) {
+    console.error("Error fetching orders:", error.message);
+    res.status(500).json({
+      success: false,
+      message: "Error fetching orders",
+      error: error.message,
+    });
+  }
+});
+
+// ✅ Delete Order (added safely)
+router.delete("/:id", async (req, res) => {
+  try {
+    const deleted = await Order.findByIdAndDelete(req.params.id);
+    if (!deleted)
+      return res
+        .status(404)
+        .json({ success: false, message: "Order not found" });
+
+    res.json({ success: true, message: "Order deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting order:", error.message);
+    res.status(500).json({
+      success: false,
+      message: "Error deleting order",
+      error: error.message,
+    });
+  }
+});
+
+export default router;

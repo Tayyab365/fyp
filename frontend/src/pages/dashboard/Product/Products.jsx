@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useProducts } from "../../hooks/useProducts";
+import { useProducts } from "../../../hooks/useProducts";
 import AddProduct from "./AddProduct";
 import EditProduct from "./EditProduct";
 import { Edit2, Trash2 } from "lucide-react";

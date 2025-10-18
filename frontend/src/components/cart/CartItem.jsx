@@ -5,7 +5,7 @@ const CartItem = ({ item }) => {
   const { dispatch } = useContext(cartContext);
 
   const removeItem = () => {
-    dispatch({ type: "REMOVE_ITEM", payload: item.id });
+    dispatch({ type: "REMOVE_ITEM", payload: item._id });
   };
 
   return (
@@ -26,7 +26,9 @@ const CartItem = ({ item }) => {
       <div className="flex flex-col sm:flex-row items-center gap-2">
         <div className="flex items-center gap-1">
           <button
-            onClick={() => dispatch({ type: "DECREASE_QTY", payload: item.id })}
+            onClick={() =>
+              dispatch({ type: "DECREASE_QTY", payload: item._id })
+            }
             className="w-7 h-7 flex items-center justify-center bg-gray-200 rounded hover:bg-gray-300 transition"
           >
             -
@@ -38,7 +40,9 @@ const CartItem = ({ item }) => {
             className="w-10 text-center border rounded focus:outline-none focus:ring-2 focus:ring-[#2563EB]"
           />
           <button
-            onClick={() => dispatch({ type: "INCREASE_QTY", payload: item.id })}
+            onClick={() =>
+              dispatch({ type: "INCREASE_QTY", payload: item._id })
+            }
             className="w-7 h-7 flex items-center justify-center bg-gray-200 rounded hover:bg-gray-300 transition"
           >
             +

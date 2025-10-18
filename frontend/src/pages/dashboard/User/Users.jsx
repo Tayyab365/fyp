@@ -1,14 +1,16 @@
 import React, { useState } from "react";
-import { useUsers } from "../../hooks/useUsers";
 import AddUser from "./AddUser";
 import { Pencil, Trash2, Lock, Unlock, RefreshCw } from "lucide-react";
 import EditUser from "./EditUser";
 import toast from "react-hot-toast";
+import ResetPasswordModal from "./ResetPasswordModal";
+import { useUsers } from "../../../hooks/useUsers";
 
 const Users = () => {
   const { users, loading, error, deleteUser, toggleUserStatus } = useUsers();
   const [showModal, setShowModal] = useState(false);
   const [editUser, setEditUser] = useState(null);
+  const [resetUserId, setResetUserId] = useState(null);
 
   if (loading) return <p className="text-gray-600">Loading Users...</p>;
   if (error)
@@ -115,7 +117,7 @@ const Users = () => {
 
                     <button
                       title="Reset Password"
-                      onClick={() => toast.success("Password reset link sent")}
+                      onClick={() => setResetUserId(user._id)}
                       className="p-1.5 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 active:scale-95 shadow-sm transition"
                     >
                       <RefreshCw size={14} />
@@ -148,6 +150,11 @@ const Users = () => {
       {editUser && (
         <EditUser user={editUser} onClose={() => setEditUser(null)} />
       )}
+      <ResetPasswordModal
+        userId={resetUserId}
+        isOpen={!!resetUserId}
+        onClose={() => setResetUserId(null)}
+      />
     </div>
   );
 };

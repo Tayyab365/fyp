@@ -32,14 +32,19 @@ export function useUsers() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newUser),
       });
-      if (!res.ok) throw new Error("Failed to add User");
+
       const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Failed to add user");
+      }
+
       setUsers([...users, data]);
       toast.success("User added successfully");
     } catch (err) {
-      console.log(err);
-      setError("Failed to add User");
-      toast.error("Failed to add User");
+      console.error(err);
+      setError(err.message);
+      toast.error(err.message || "Failed to add user");
     }
   };
 
@@ -79,8 +84,10 @@ export function useUsers() {
   };
 
   const toggleUserStatus = async (_id, currentStatus) => {
-    const updateStatus = currentStatus === "Active" ? "Block" : "Active";
-    const updatedUser = { status: updateStatus };
+    // 👇 Make sure we use consistent status values with backend
+    const newStatus = currentStatus === "Active" ? "Blocked" : "Active";
+    const updatedUser = { status: newStatus };
+
     toast.dismiss();
     try {
       const res = await fetch(`${API_URL}/${_id}`, {
@@ -88,16 +95,20 @@ export function useUsers() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedUser),
       });
+
       if (!res.ok) throw new Error("Failed to update user status");
+
       const data = await res.json();
-      setUsers(users.map((user) => (user._id === _id ? data : user)));
+
+      // 👇 Update frontend list instantly
+      setUsers((prev) => prev.map((user) => (user._id === _id ? data : user)));
+
+      // 👇 Dynamic toast based on new status
       toast.success(
-        `User ${
-          updateStatus === "Active" ? "Unblocked" : "Blocked"
-        } successfully`
+        `User ${newStatus === "Active" ? "unblocked" : "blocked"} successfully`
       );
     } catch (err) {
-      console.log(err);
+      console.error(err);
       setError("Failed to update user status");
       toast.error("Failed to update user status");
     }

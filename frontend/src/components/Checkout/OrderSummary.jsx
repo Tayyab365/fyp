@@ -2,16 +2,19 @@ import React, { useContext } from "react";
 import { cartContext } from "../../Context/CartContext";
 import { calculateCartTotal } from "../../utils/cartUtils";
 import { useNavigate } from "react-router-dom";
+import { useOrders } from "../../hooks/useOrders";
+import toast from "react-hot-toast";
 
 const OrderSummary = ({ formData, setFormData }) => {
   const { cartItems, clearCart } = useContext(cartContext);
+  const { placeOrder } = useOrders();
   const { subTotal, shipping, total, tax } = calculateCartTotal(
     cartItems,
     true
   );
   const navigate = useNavigate();
 
-  const handlePlaceOrder = () => {
+  const handlePlaceOrder = async () => {
     if (
       !formData.fullName ||
       !formData.email ||
@@ -19,38 +22,46 @@ const OrderSummary = ({ formData, setFormData }) => {
       !formData.address ||
       !formData.city
     ) {
-      alert("Please fill all the fields");
+      toast.error("Please fill all the fields");
       return;
     }
+
     if (cartItems.length === 0) {
-      alert("Your cart is empty. Please add items before placing an order.");
+      toast.error(
+        "Your cart is empty. Please add items before placing an order."
+      );
       return;
     }
+
     const order = {
+      userId: localStorage.getItem("userId"),
       customer: formData,
       cartItems,
       orderSummary: { subTotal, shipping, total, tax },
-      date: new Date().toLocaleString(),
+      status: "Pending",
+      date: new Date().toLocaleDateString(),
     };
 
-    localStorage.setItem("orderData", JSON.stringify(order));
-
-    // alert("Order placed successfully");
-    clearCart();
-    setFormData({
-      fullName: "",
-      email: "",
-      phone: "",
-      address: "",
-      city: "",
-      paymentMethod: "Cash on Delivery",
-      cardNumber: "",
-      expiry: "",
-      cvv: "",
-      easypaisaNumber: "",
-    });
-    navigate("/order-success");
-    // console.log("Order Data: ", order);
+    try {
+      await placeOrder(order);
+      localStorage.setItem("orderData", JSON.stringify(order));
+      clearCart();
+      setFormData({
+        fullName: "",
+        email: "",
+        phone: "",
+        address: "",
+        city: "",
+        paymentMethod: "Cash on Delivery",
+        cardNumber: "",
+        expiry: "",
+        cvv: "",
+        easypaisaNumber: "",
+      });
+      navigate("/order-success");
+    } catch (err) {
+      console.error("Order placement failed", err);
+    }
   };
 
   return (

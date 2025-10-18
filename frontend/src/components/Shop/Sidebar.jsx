@@ -1,38 +1,77 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 
 const Sidebar = ({ setSelectedCategory }) => {
-  const categories = ["All", "keyboard", "Mouse", "Headset", "Chair", "Laptop"];
+  const categories = [
+    { label: "All", value: "All" },
+    { label: "Laptop", value: "laptop" },
+    { label: "Mouse", value: "mouse" },
+    { label: "Keyboard", value: "keyboard" },
+    { label: "Chair", value: "chair" },
+    { label: "Light", value: "light" },
+    { label: "Monitor", value: "monitor" },
+    { label: "Console", value: "console" },
+    { label: "Headset", value: "headset" },
+    { label: "Graphic Card", value: "graphic-card" },
+    { label: "Xbox", value: "xbox" },
+  ];
+
+  const [selected, setSelected] = useState("All");
+  const detailsRef = useRef(null);
 
   return (
-    <div>
-      <div className="hidden md:block w-64 h-screen sticky top-20 border-r border-gray-200 px-6 py-10 mt-12">
-        <h2 className="text-xl font-bold text-[#1E293B] mb-6">Categories</h2>
-        <ul className="space-y-3 text-[#475569] text-md">
-          {categories.map((cat, i) => (
-            <li
-              key={i}
-              className="cursor-pointer hover:text-[#2563EB]"
-              onClick={() => setSelectedCategory(cat)}
-            >
-              {cat}
-            </li>
-          ))}
-        </ul>
+    <div className="bg-white md:w-64 md:sticky md:top-20 border-r border-gray-200 md:h-[calc(100vh-6rem)] md:rounded-xl shadow-sm px-6">
+      <h2 className="text-xl font-bold text-[#1E293B] mb-6">Categories</h2>
+
+      <div className="hidden md:flex flex-col">
+        <div className="group max-h-[320px] overflow-y-auto pr-2 custom-scrollbar hover:overflow-y-auto">
+          <div className="flex flex-wrap gap-2">
+            {categories.map((cat, i) => (
+              <button
+                key={i}
+                onClick={() => {
+                  setSelected(cat.label);
+                  setSelectedCategory(cat.value);
+                }}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                  selected === cat.label
+                    ? "bg-blue-600 text-white"
+                    : "bg-gray-100 text-gray-700 hover:bg-blue-100"
+                }`}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
 
-      <div className="md:hidden bg-white px-4 py-6">
-        <h2 className="text-lg font-bold text-[#1E293B] mb-4">Categories</h2>
-        <div className="grid grid-cols-2 gap-3">
-          {categories.map((cat, i) => (
-            <button
-              key={i}
-              className="py-2 px-3 rounded-lg bg-gray-100 text-[#1E293B] text-sm hover:bg-[#2563EB] hover:text-white transition"
-              onClick={() => setSelectedCategory(cat)}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
+      <div className="md:hidden bg-white px-4 py-4 border-t border-gray-200">
+        <details ref={detailsRef} className="border border-gray-300 rounded-lg">
+          <summary className="p-3 font-semibold text-gray-800 cursor-pointer flex justify-between items-center">
+            {selected}
+            <span className="text-gray-500">▼</span>
+          </summary>
+
+          <div className="flex flex-wrap gap-2 p-3 border-t border-gray-200">
+            {categories.map((cat, i) => (
+              <button
+                key={i}
+                onClick={() => {
+                  setSelected(cat.label);
+                  setSelectedCategory(cat.value);
+                  if (detailsRef.current) detailsRef.current.open = false;
+                }}
+                className={`px-3 py-2 rounded-full text-sm transition-all duration-200 ${
+                  selected === cat.label
+                    ? "bg-blue-600 text-white"
+                    : "bg-gray-100 text-gray-700 hover:bg-blue-100"
+                }`}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
+        </details>
       </div>
     </div>
   );

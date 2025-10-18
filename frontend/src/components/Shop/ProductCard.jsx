@@ -6,7 +6,7 @@ import { cartContext } from "../../Context/CartContext";
 const ProductCard = ({ selectedCategory }) => {
   const { products, loading } = useProducts();
   const [sortOptions, setSortOptions] = useState("");
-  const [visibleCount, setVisibleCount] = useState(9); // 👈 initially 9 products
+  const [visibleCount, setVisibleCount] = useState(9);
   const { dispatch } = useContext(cartContext);
 
   const addToCart = (product) => {
@@ -16,7 +16,6 @@ const ProductCard = ({ selectedCategory }) => {
   if (loading)
     return <p className="font-bold text-xl mt-24 pl-24">Loading products...</p>;
 
-  // ✅ Filter by category
   const filteredCategories =
     selectedCategory === "All"
       ? [...products]
@@ -26,14 +25,12 @@ const ProductCard = ({ selectedCategory }) => {
             item.category.toLowerCase().includes(selectedCategory.toLowerCase())
         );
 
-  // ✅ Sorting
   if (sortOptions === "lowToHigh") {
     filteredCategories.sort((a, b) => a.price - b.price);
   } else if (sortOptions === "highToLow") {
     filteredCategories.sort((a, b) => b.price - a.price);
   }
 
-  // ✅ Show limited products
   const visibleProducts = filteredCategories.slice(0, visibleCount);
 
   return (
@@ -52,28 +49,29 @@ const ProductCard = ({ selectedCategory }) => {
           <option value="highToLow">High to Low</option>
         </select>
       </div>
-
-      {/* ✅ Product Cards Grid */}
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {visibleProducts.map((product) => (
           <div
             key={product._id}
             className="bg-white rounded-lg shadow-md hover:shadow-xl transition-transform duration-300 hover:-translate-y-2 p-5 flex flex-col border border-[#E2E8F0]"
           >
-            <div className="w-full mb-4 flex items-center justify-center overflow-hidden rounded-lg bg-gray-50 h-40 sm:h-48 md:h-56">
+            <div className="h-40 w-full mb-4 flex items-center justify-center overflow-hidden rounded-lg bg-white">
               <img
                 src={product.image}
                 alt={product.name}
-                className="max-h-full max-w-full object-contain"
+                className="max-h-full max-w-full object-contain rounded-lg"
               />
             </div>
-            <h3 className="text-sm md:text-base font-semibold text-[#1E293B] mb-2 line-clamp-2">
-              {product.name}
-            </h3>
-            <p className="text-[#2563EB] font-bold text-lg md:text-xl mb-4">
-              ${product.price}
-            </p>
-            <div className="flex flex-col sm:flex-row gap-2 mt-auto">
+            <div className="flex flex-col flex-grow justify-between">
+              <h3 className="text-sm md:text-base font-semibold text-[#1E293B] line-clamp-2 min-h-[44px]">
+                {product.name}
+              </h3>
+
+              <p className="text-[#2563EB] font-bold !text-lg md:text-xl mt-2">
+                ${product.price}
+              </p>
+            </div>
+            <div className="mt-4 flex flex-col sm:flex-row gap-2">
               <button
                 onClick={() => addToCart(product)}
                 className="w-full sm:flex-1 py-1.5 rounded-lg bg-[#2563EB] text-white font-semibold text-sm md:text-base hover:bg-[#1D4ED8] transition"
@@ -90,8 +88,6 @@ const ProductCard = ({ selectedCategory }) => {
           </div>
         ))}
       </div>
-
-      {/* ✅ Load More Button */}
       {visibleCount < filteredCategories.length && (
         <div className="text-center my-10">
           <button

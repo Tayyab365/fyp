@@ -23,4 +23,22 @@
   font-family: "inter", sans-serif;
 }
 
+/* index.css ya App.css me add karo */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  border-radius: 10px;
+}
+
+.custom-scrollbar:hover::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1; /* light gray on hover */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 /* bg-gradient-to-r from-blue-100 via-white to-blue-100 */

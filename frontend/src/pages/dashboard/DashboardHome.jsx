@@ -11,10 +11,9 @@ const DashboardHome = () => {
 
   const loading = loadingProducts || loadingOrders || loadingUsers;
 
-  const revenue = orders.reduce((sum, order) => {
-    const amt = order.amount ?? "0";
-    const num = parseFloat(String(amt).replace(/[^0-9.-]+/g, "") || 0);
-    return num + sum;
+  const revenue = orders.reduce((num, order) => {
+    const total = order.orderSummary?.total || 0;
+    return num + total;
   }, 0);
 
   const stats = [
@@ -40,8 +39,6 @@ const DashboardHome = () => {
     },
   ];
 
-  const recentOrders = [...orders].slice(-5).reverse();
-
   if (loading) return <p className="text-gray-600">Loading dashboard...</p>;
 
   return (
@@ -65,59 +62,6 @@ const DashboardHome = () => {
             <div className="p-3 bg-gray-50 rounded-lg">{stat.icon}</div>
           </div>
         ))}
-      </div>
-
-      <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
-        <h2 className="text-lg font-semibold text-gray-800 mb-5 flex items-center justify-between">
-          Recent Orders
-          <span className="text-sm font-normal text-gray-500">
-            Showing last 5 orders
-          </span>
-        </h2>
-
-        {recentOrders.length > 0 ? (
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm text-left">
-              <thead className="bg-gray-100 text-gray-700 uppercase text-xs font-semibold">
-                <tr>
-                  <th className="py-3 px-4">Order ID</th>
-                  <th className="py-3 px-4">Customer</th>
-                  <th className="py-3 px-4">Amount</th>
-                  <th className="py-3 px-4">Status</th>
-                </tr>
-              </thead>
-              <tbody className="text-gray-700">
-                {recentOrders.map((order) => (
-                  <tr
-                    key={order.id}
-                    className="border-t hover:bg-gray-50 transition-colors duration-200"
-                  >
-                    <td className="py-3 px-4 font-medium">{order.id}</td>
-                    <td className="py-3 px-4">{order.customer}</td>
-                    <td className="py-3 px-4 font-semibold text-gray-800">
-                      {order.amount}
-                    </td>
-                    <td
-                      className={`py-3 px-4 font-medium ${
-                        order.status === "Completed"
-                          ? "text-green-600"
-                          : order.status === "Pending"
-                          ? "text-yellow-600"
-                          : "text-gray-500"
-                      }`}
-                    >
-                      {order.status}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        ) : (
-          <p className="text-center text-gray-500 italic py-6">
-            No recent orders found
-          </p>
-        )}
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useOrders } from "../../../hooks/useOrders";
-import OrderModel from "./OrderModel";
+import OrderDetail from "./OrderDetail";
 import { Eye, Trash2 } from "lucide-react";
 
 const Orders = () => {
@@ -55,7 +55,7 @@ const Orders = () => {
                   className="border-t hover:bg-gray-50 transition-colors duration-200"
                 >
                   <td className="py-3 px-5 font-medium text-gray-800">
-                    {order._id.slice(-6)} {/* short id */}
+                    #{order._id.slice(-6)}
                   </td>
 
                   <td className="py-3 px-5">
@@ -108,9 +108,9 @@ const Orders = () => {
         </table>
       </div>
 
-      {/* Order Modal */}
+      {/* Order Detail Modal */}
       {selectedOrder && (
-        <OrderModel
+        <OrderDetail
           order={selectedOrder}
           onClose={() => setSelectedOrder(null)}
         />

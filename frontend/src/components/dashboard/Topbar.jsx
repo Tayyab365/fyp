@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Topbar = () => {
   const navigate = useNavigate();
@@ -7,9 +7,9 @@ const Topbar = () => {
   return (
     <div className="w-full bg-white shadow-sm px-6 py-3 flex justify-between items-center flex-wrap">
       {/* Left Side: Website name same as sidebar position */}
-      <h1 className="text-2xl font-bold text-blue-600">
+      <NavLink to="/" className="text-2xl font-bold text-blue-600">
         <span className="text-black">Shop</span>Ease
-      </h1>
+      </NavLink>
 
       {/* Right Side: Button */}
       <button

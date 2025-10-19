@@ -8,6 +8,7 @@ export function useOrders() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // ✅ Fetch All Orders
   const fetchOrders = async () => {
     setLoading(true);
     setError(null);
@@ -24,6 +25,7 @@ export function useOrders() {
     }
   };
 
+  // ✅ Place New Order
   const placeOrder = async (order) => {
     setLoading(true);
     try {
@@ -48,6 +50,7 @@ export function useOrders() {
     }
   };
 
+  // ✅ Delete Order
   const deleteOrder = async (_id) => {
     toast.dismiss();
     try {
@@ -65,9 +68,34 @@ export function useOrders() {
     }
   };
 
+  // ✅ Update Order Status (for Mark Completed / Cancel)
+  const updateOrderStatus = async (id, status) => {
+    try {
+      const res = await fetch(`${API_URL}/${id}/status`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        toast.success(data.message || `Order marked as ${status}`);
+        setOrders((prev) =>
+          prev.map((o) => (o._id === id ? { ...o, status } : o))
+        );
+      } else {
+        toast.error(data.message || "Failed to update status");
+      }
+    } catch (err) {
+      toast.error("Error updating order status");
+      console.error(err);
+    }
+  };
+
   useEffect(() => {
     fetchOrders();
   }, []);
 
-  return { orders, loading, error, deleteOrder, placeOrder };
+  return { orders, loading, error, deleteOrder, placeOrder, updateOrderStatus };
 }

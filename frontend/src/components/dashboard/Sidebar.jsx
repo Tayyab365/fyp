@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
   Package,
@@ -7,10 +7,12 @@ import {
   Users,
   Menu,
   X,
+  LogOut,
 } from "lucide-react";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const links = [
     {
@@ -30,6 +32,13 @@ const Sidebar = () => {
     },
     { path: "/dashboard/users", label: "Users", icon: <Users size={18} /> },
   ];
+
+  // ✅ Logout function (same as Navbar)
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
 
   return (
     <>
@@ -84,6 +93,17 @@ const Sidebar = () => {
             </NavLink>
           ))}
         </nav>
+
+        {/* ✅ Logout Button */}
+        <div className="mt-6 border-t pt-4">
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-2 w-full text-red-600 font-semibold hover:text-red-700 px-4 py-2 rounded-lg hover:bg-red-50 transition-all"
+          >
+            <LogOut size={18} />
+            Logout
+          </button>
+        </div>
       </div>
     </>
   );

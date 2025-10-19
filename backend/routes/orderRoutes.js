@@ -39,7 +39,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// ✅ Delete Order (added safely)
+// ✅ Delete Order
 router.delete("/:id", async (req, res) => {
   try {
     const deleted = await Order.findByIdAndDelete(req.params.id);
@@ -54,6 +54,38 @@ router.delete("/:id", async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Error deleting order",
+      error: error.message,
+    });
+  }
+});
+
+// ✅ Update Order Status (Mark Completed / Cancel)
+router.put("/:id/status", async (req, res) => {
+  try {
+    const { status } = req.body;
+    const order = await Order.findByIdAndUpdate(
+      req.params.id,
+      { status },
+      { new: true }
+    );
+
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        message: "Order not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: `Order marked as ${status}`,
+      order,
+    });
+  } catch (error) {
+    console.error("Error updating order status:", error);
+    res.status(500).json({
+      success: false,
+      message: "Error updating order status",
       error: error.message,
     });
   }

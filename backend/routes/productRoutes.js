@@ -1,4 +1,3 @@
-// backend/routes/productRoutes.js
 import express from "express";
 import Product from "../models/Product.js";
 import { adminOnly, protect } from "../middleware/authMiddleware.js";
@@ -86,6 +85,35 @@ router.delete("/:id", protect, adminOnly, async (req, res) => {
     const deleted = await Product.findByIdAndDelete(req.params.id);
     if (!deleted) return res.status(404).json({ message: "Product not found" });
     res.json({ message: "Product deleted" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// ✅ ADD REVIEW (only new addition)
+router.post("/:id/reviews", protect, async (req, res) => {
+  try {
+    const { rating, comment } = req.body;
+    const product = await Product.findById(req.params.id);
+
+    if (!product) return res.status(404).json({ message: "Product not found" });
+
+    const review = {
+      name: req.user.name, // from token middleware
+      rating: Number(rating),
+      comment,
+      user: req.user._id.toString(),
+    };
+
+    product.reviews.push(review);
+    product.numReviews = product.reviews.length;
+    product.rating =
+      product.reviews.reduce((acc, item) => acc + item.rating, 0) /
+      product.reviews.length;
+
+    await product.save();
+
+    res.status(201).json({ message: "Review added successfully", product });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

@@ -9,7 +9,10 @@ const Products = () => {
   const [showModal, setShowModal] = useState(false);
   const [editProduct, setEditProduct] = useState(null);
 
-  if (loading) return <p className="text-gray-600">Loading Products...</p>;
+  if (loading)
+    return (
+      <p className="text-gray-600 text-center mt-6">Loading Products...</p>
+    );
   if (error)
     return (
       <p className="text-red-500 text-sm bg-red-50 border border-red-200 p-2 rounded-lg">
@@ -81,7 +84,7 @@ const Products = () => {
                       <span className="text-gray-400 italic">N/A</span>
                     )}
                   </td>
-                  <td className="py-3 px-5 flex justify-center gap-3">
+                  <td className="py-6 px-5 flex justify-center gap-3">
                     <button
                       onClick={() => setEditProduct(product)}
                       title="Edit Product"

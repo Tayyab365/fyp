@@ -15,6 +15,7 @@ const OrderSummary = ({ formData, setFormData }) => {
   const navigate = useNavigate();
 
   const handlePlaceOrder = async () => {
+    toast.dismiss();
     if (
       !formData.fullName ||
       !formData.email ||

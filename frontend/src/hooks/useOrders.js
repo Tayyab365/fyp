@@ -93,9 +93,35 @@ export function useOrders() {
     }
   };
 
+  const fetchUserOrdersCount = async () => {
+    try {
+      const res = await fetch(`${API_URL}/user-orders-count`);
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        return data.data; // [{ _id: userId, totalOrders: number }]
+      } else {
+        toast.error("Failed to fetch user order counts");
+        return [];
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("Error fetching user order counts");
+      return [];
+    }
+  };
+
   useEffect(() => {
     fetchOrders();
   }, []);
 
-  return { orders, loading, error, deleteOrder, placeOrder, updateOrderStatus };
+  return {
+    orders,
+    loading,
+    error,
+    deleteOrder,
+    placeOrder,
+    updateOrderStatus,
+    fetchUserOrdersCount,
+  };
 }

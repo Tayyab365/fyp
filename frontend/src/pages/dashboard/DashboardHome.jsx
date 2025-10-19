@@ -39,7 +39,10 @@ const DashboardHome = () => {
     },
   ];
 
-  if (loading) return <p className="text-gray-600">Loading dashboard...</p>;
+  if (loading)
+    return (
+      <p className="text-gray-600 text-center mt-6">Loading dashboard...</p>
+    );
 
   return (
     <div className="space-y-8">

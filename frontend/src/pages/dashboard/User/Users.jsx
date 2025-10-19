@@ -1,18 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AddUser from "./AddUser";
 import { Pencil, Trash2, Lock, Unlock, RefreshCw } from "lucide-react";
 import EditUser from "./EditUser";
 import toast from "react-hot-toast";
 import ResetPasswordModal from "./ResetPasswordModal";
 import { useUsers } from "../../../hooks/useUsers";
+import { useOrders } from "../../../hooks/useOrders";
 
 const Users = () => {
   const { users, loading, error, deleteUser, toggleUserStatus } = useUsers();
   const [showModal, setShowModal] = useState(false);
   const [editUser, setEditUser] = useState(null);
   const [resetUserId, setResetUserId] = useState(null);
+  const { fetchUserOrdersCount } = useOrders();
+  const [orderCounts, setOrderCounts] = useState({});
 
-  if (loading) return <p className="text-gray-600">Loading Users...</p>;
+  useEffect(() => {
+    const loadCounts = async () => {
+      try {
+        const counts = await fetchUserOrdersCount();
+        const mapped = {};
+        counts.forEach((item) => {
+          mapped[item._id] = item.totalOrders;
+        });
+        setOrderCounts(mapped);
+      } catch (err) {
+        console.error(err);
+        toast.error("Failed to load order counts");
+      }
+    };
+    loadCounts();
+  }, [fetchUserOrdersCount]);
+
+  if (loading)
+    return <p className="text-gray-600 text-center mt-6">Loading Users...</p>;
   if (error)
     return (
       <p className="text-red-500 text-sm bg-red-50 border border-red-200 p-2 rounded-lg">
@@ -88,7 +109,7 @@ const Users = () => {
                     {user.registered || "—"}
                   </td> */}
                   <td className="py-3 px-4 text-center font-semibold text-gray-700">
-                    {user.orders?.length || 0}
+                    {orderCounts[user._id] ?? 0}
                   </td>
                   <td className="py-3 px-4 flex justify-center gap-2">
                     <button
@@ -146,6 +167,7 @@ const Users = () => {
           </tbody>
         </table>
       </div>
+
       {showModal && <AddUser onClose={() => setShowModal(false)} />}
       {editUser && (
         <EditUser user={editUser} onClose={() => setEditUser(null)} />

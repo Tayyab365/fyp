@@ -91,4 +91,21 @@ router.put("/:id/status", async (req, res) => {
   }
 });
 
+router.get("/user-orders-count", async (req, res) => {
+  try {
+    const result = await Order.aggregate([
+      { $group: { _id: "$userId", totalOrders: { $sum: 1 } } },
+    ]);
+
+    res.json({ success: true, data: result });
+  } catch (error) {
+    console.error("Error fetching user order count:", error.message);
+    res.status(500).json({
+      success: false,
+      message: "Error fetching user order count",
+      error: error.message,
+    });
+  }
+});
+
 export default router;

@@ -14,7 +14,9 @@ const ProductCard = ({ selectedCategory }) => {
   };
 
   if (loading)
-    return <p className="font-bold text-xl mt-24 pl-24">Loading products...</p>;
+    return (
+      <p className="mt-24 text-gray-600 text-center">Loading products...</p>
+    );
 
   const filteredCategories =
     selectedCategory === "All"

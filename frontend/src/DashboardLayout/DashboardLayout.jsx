@@ -1,21 +1,25 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
-import Sidebar from "../components/dashboard/Sidebar";
 import Topbar from "../components/dashboard/Topbar";
+import Sidebar from "../components/dashboard/Sidebar";
+import { Outlet } from "react-router-dom";
 
 const DashboardLayout = () => {
   return (
-    <div className="flex min-h-screen bg-gray-50 text-gray-800">
-      <div className="w-64 bg-white shadow-sm sticky top-0 h-screen">
-        <Sidebar />
+    <div className="bg-[#F8FAFC] min-h-screen">
+      {/* 🔹 Fixed Topbar */}
+      <div className="fixed top-0 left-0 w-full z-40">
+        <Topbar />
       </div>
 
-      <div className="flex-1 flex flex-col">
-        <div className="sticky top-0 z-10 bg-white">
-          <Topbar />
+      {/* 🔹 Sidebar + Content Area */}
+      <div className="flex pt-[72px]">
+        {/* Sidebar (sticky like shop sidebar) */}
+        <div className="hidden md:block w-64 h-[calc(100vh-72px)] sticky top-[72px]">
+          <Sidebar />
         </div>
 
-        <div className="flex-1 overflow-auto p-6">
+        {/* Main Content Area */}
+        <div className="flex-1 p-6 md:ml-0">
           <Outlet />
         </div>
       </div>

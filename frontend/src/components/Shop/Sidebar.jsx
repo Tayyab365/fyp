@@ -19,7 +19,7 @@ const Sidebar = ({ setSelectedCategory }) => {
   const detailsRef = useRef(null);
 
   return (
-    <div className="bg-white md:w-64 md:sticky md:top-20 border-r border-gray-200 md:h-[calc(100vh-6rem)] md:rounded-xl shadow-sm px-6">
+    <div className="bg-white md:w-64 md:sticky md:top-[60px] border-r border-gray-200 md:h-[calc(100vh-60px)] shadow-sm px-6 pt-6">
       <h2 className="text-xl font-bold text-[#1E293B] mb-6">Categories</h2>
 
       <div className="hidden md:flex flex-col">

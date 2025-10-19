@@ -33,7 +33,7 @@ const Sidebar = () => {
     { path: "/dashboard/users", label: "Users", icon: <Users size={18} /> },
   ];
 
-  // ✅ Logout function (same as Navbar)
+  // ✅ Logout function
   const handleLogout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
@@ -42,7 +42,7 @@ const Sidebar = () => {
 
   return (
     <>
-      {/* 🔹 Hamburger (Left side of ShopEase, visible only on mobile) */}
+      {/* 🔹 Mobile Hamburger */}
       <button
         onClick={() => setIsOpen(true)}
         className="md:hidden fixed top-4 left-4 z-50 bg-blue-600 text-white p-2 rounded-md"
@@ -50,7 +50,7 @@ const Sidebar = () => {
         <Menu size={20} />
       </button>
 
-      {/* 🔹 Overlay (when sidebar opens) */}
+      {/* 🔹 Overlay for mobile */}
       {isOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-40 z-40 md:hidden"
@@ -58,13 +58,18 @@ const Sidebar = () => {
         ></div>
       )}
 
-      {/* 🔹 Sidebar */}
+      {/* 🔹 Sidebar Container */}
       <div
-        className={`fixed top-[60px] left-0 h-[calc(100vh-60px)] w-64 bg-white border-r border-gray-200 p-5 z-50 transform transition-transform duration-300 
-        ${isOpen ? "translate-x-0" : "-translate-x-full"} 
-        md:translate-x-0 md:static md:block`}
+        className={`bg-white border-r border-gray-200 p-5 h-full transition-transform duration-300 
+        md:translate-x-0 md:static md:block
+        ${
+          isOpen
+            ? "translate-x-0 fixed top-0 left-0 z-50 w-64 h-screen"
+            : "-translate-x-full"
+        } 
+        md:w-64 md:h-[calc(100vh-60px)] md:fixed md:top-[60px] md:left-0 shadow-sm`}
       >
-        {/* Close button (mobile only) */}
+        {/* Close Button (Mobile Only) */}
         <button
           onClick={() => setIsOpen(false)}
           className="md:hidden absolute top-4 right-4 text-gray-600 hover:text-gray-800"
@@ -73,18 +78,18 @@ const Sidebar = () => {
         </button>
 
         {/* Sidebar Links */}
-        <nav className="space-y-2 mt-5">
+        <nav className="space-y-2">
           {links.map((link) => (
             <NavLink
               key={link.path}
               to={link.path}
               end={link.path === "/dashboard"}
-              onClick={() => setIsOpen(false)} // close sidebar when navigating (mobile)
+              onClick={() => setIsOpen(false)}
               className={({ isActive }) =>
                 `flex items-center gap-3 px-4 py-2 rounded-lg transition-all duration-200 ${
                   isActive
                     ? "bg-blue-100 text-blue-700 font-semibold"
-                    : "hover:bg-blue-50 hover:text-blue-700"
+                    : "hover:bg-blue-50 hover:text-blue-700 text-gray-700"
                 }`
               }
             >
@@ -94,8 +99,8 @@ const Sidebar = () => {
           ))}
         </nav>
 
-        {/* ✅ Logout Button */}
-        <div className="mt-6 border-t pt-4">
+        {/* 🔹 Logout Button */}
+        <div className="mt-8 border-t pt-4">
           <button
             onClick={handleLogout}
             className="flex items-center gap-2 w-full text-red-600 font-semibold hover:text-red-700 px-4 py-2 rounded-lg hover:bg-red-50 transition-all"

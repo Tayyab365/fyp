@@ -23,6 +23,8 @@ import { Toaster } from "react-hot-toast";
 
 // ✅ Import ProtectedRoute
 import ProtectedRoute from "./components/ProtectedRoute";
+import ForgotPassword from "./pages/auth/ForgotPassword";
+import ResetPassword from "./pages/auth/ResetPassword";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -115,6 +117,8 @@ const App = () => {
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
         </Route>
 
         {/* ✅ Protected Admin Dashboard */}

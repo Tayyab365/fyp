@@ -37,7 +37,7 @@ router.post("/signup", async (req, res) => {
       email,
       password: hashedPassword,
       verificationCode,
-      expiresAt: Date.now() + 15 * 60 * 1000, // expires in 15 min
+      expiresAt: new Date(Date.now() + 15 * 60 * 1000),
     });
     await tempUser.save();
 
@@ -272,37 +272,37 @@ router.post("/reset-password", async (req, res) => {
 });
 
 // ✅ Test Mail Route
-router.get("/test-mail", async (req, res) => {
-  try {
-    const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: process.env.SMTP_PORT,
-      secure: false,
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
-    });
+// router.get("/test-mail", async (req, res) => {
+//   try {
+//     const transporter = nodemailer.createTransport({
+//       host: process.env.SMTP_HOST,
+//       port: process.env.SMTP_PORT,
+//       secure: false,
+//       auth: {
+//         user: process.env.SMTP_USER,
+//         pass: process.env.SMTP_PASS,
+//       },
+//     });
 
-    await transporter.sendMail({
-      from: process.env.SMTP_FROM,
-      to: process.env.SMTP_USER,
-      subject: "Test Email from FYP",
-      text: "This is a test email from your FYP backend",
-    });
+//     await transporter.sendMail({
+//       from: process.env.SMTP_FROM,
+//       to: process.env.SMTP_USER,
+//       subject: "Test Email from FYP",
+//       text: "This is a test email from your FYP backend",
+//     });
 
-    res.status(200).json({
-      success: true,
-      message: "Test email sent successfully!",
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      success: false,
-      message: "Failed to send email",
-      error: error.message,
-    });
-  }
-});
+//     res.status(200).json({
+//       success: true,
+//       message: "Test email sent successfully!",
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({
+//       success: false,
+//       message: "Failed to send email",
+//       error: error.message,
+//     });
+//   }
+// });
 
 export default router;

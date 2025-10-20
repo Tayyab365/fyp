@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import Navbar from "./components/common/Navbar";
@@ -26,6 +26,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import ResetPassword from "./pages/auth/ResetPassword";
 import VerifyEmail from "./pages/auth/VerifyEmail";
+import ChatbotButton from "./components/Chatbot/ChatbotButton";
+import ChatWindow from "./components/Chatbot/ChatWindow";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -36,6 +38,9 @@ const ScrollToTop = () => {
 };
 
 const App = () => {
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const toggleChat = () => setIsChatOpen(!isChatOpen);
+
   return (
     <BrowserRouter>
       <ScrollToTop />
@@ -142,6 +147,9 @@ const App = () => {
       </Routes>
 
       <Toaster position="center-center" reverseOrder={false} />
+
+      <ChatbotButton onToggle={toggleChat} isOpen={isChatOpen} />
+      {isChatOpen && <ChatWindow onClose={toggleChat} />}
     </BrowserRouter>
   );
 };

@@ -20,14 +20,14 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     toast.dismiss();
+
     try {
       const res = await signup(formData);
       console.log("Signup response:", res);
 
-      if (res?.success) {
-        toast.success(res.message || "Signup successful!");
-        setFormData({ name: "", email: "", password: "" }); // clear inputs
-        navigate("/login");
+      if (res.success) {
+        toast.success("Verification code sent to your email!");
+        navigate(`/verify-email?email=${res.email}`); // ✅ backend se aaya email use karo
       } else {
         toast.error(res.message || "Signup failed");
       }

@@ -25,9 +25,22 @@ const userSchema = new mongoose.Schema(
       enum: ["Active", "Blocked"],
       default: "Active",
     },
+
+    status: {
+      type: String,
+      enum: ["Active", "Blocked"],
+      default: "Active",
+    },
+
+    // verification fields
+    emailVerified: { type: Boolean, default: false },
+    emailVerificationCode: String,
+    emailVerificationExpires: Date,
+
     resetPasswordToken: String,
     resetPasswordExpires: Date,
   },
+
   { timestamps: true }
 );
 

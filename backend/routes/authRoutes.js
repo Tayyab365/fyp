@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 import crypto from "crypto";
 import nodemailer from "nodemailer";
+import TempUser from "../models/TempUser.js";
 
 const router = express.Router();
 
@@ -12,32 +13,112 @@ router.post("/signup", async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
+    // 1️⃣ Check if user already exists in real users
     const existingUser = await User.findOne({ email });
     if (existingUser)
       return res
         .status(400)
         .json({ success: false, message: "User already exists" });
 
+    // 2️⃣ Delete any old temp user
+    await TempUser.deleteOne({ email });
+
+    // 3️⃣ Generate 6-digit verification code
+    const verificationCode = Math.floor(
+      100000 + Math.random() * 900000
+    ).toString();
+
+    // 4️⃣ Hash password temporarily
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUser = new User({
+    // 5️⃣ Save temp user
+    const tempUser = new TempUser({
       name,
       email,
       password: hashedPassword,
+      verificationCode,
+      expiresAt: Date.now() + 15 * 60 * 1000, // expires in 15 min
+    });
+    await tempUser.save();
+
+    // 6️⃣ Send verification email
+    const transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port: process.env.SMTP_PORT,
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
     });
 
-    await newUser.save();
+    await transporter.sendMail({
+      from: `"GameStore Support" <${process.env.SMTP_FROM}>`,
+      to: email,
+      subject: "Verify your GameStore Account",
+      html: `
+        <h3>Hi ${name},</h3>
+        <p>Your verification code is:</p>
+        <h2>${verificationCode}</h2>
+        <p>This code will expire in 15 minutes.</p>
+      `,
+    });
 
-    res.status(201).json({
+    res.status(200).json({
       success: true,
-      message: "Signup successful!",
+      message: "Verification code sent to your email.",
+      email,
     });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      success: false,
-      message: "Server error during signup",
+    console.error("Signup Error:", error);
+    res
+      .status(500)
+      .json({ success: false, message: "Server error during signup" });
+  }
+});
+
+router.post("/verify-email", async (req, res) => {
+  try {
+    const { email, code } = req.body;
+
+    // 1️⃣ Find temp user
+    const tempUser = await TempUser.findOne({ email });
+    if (!tempUser)
+      return res
+        .status(400)
+        .json({ success: false, message: "No signup request found" });
+
+    // 2️⃣ Check if code matches and not expired
+    if (tempUser.verificationCode !== code)
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid verification code" });
+
+    if (tempUser.expiresAt < Date.now())
+      return res
+        .status(400)
+        .json({ success: false, message: "Verification code expired" });
+
+    // 3️⃣ Move temp user → real user
+    const newUser = new User({
+      name: tempUser.name,
+      email: tempUser.email,
+      password: tempUser.password,
+      role: "Customer",
     });
+    await newUser.save();
+
+    // 4️⃣ Delete temp user
+    await TempUser.deleteOne({ email });
+
+    res.status(200).json({
+      success: true,
+      message: "Email verified successfully! You can now log in.",
+    });
+  } catch (error) {
+    console.error("Verification Error:", error);
+    res
+      .status(500)
+      .json({ success: false, message: "Server error during verification" });
   }
 });
 
@@ -50,6 +131,7 @@ router.post("/login", async (req, res) => {
     console.log("Entered Password:", password);
 
     const user = await User.findOne({ email });
+
     if (!user)
       return res
         .status(404)
@@ -63,7 +145,11 @@ router.post("/login", async (req, res) => {
         message: "Your account has been blocked. Please contact admin.",
       });
     }
-
+    // if (!user.emailVerified) {
+    //   return res
+    //     .status(403)
+    //     .json({ success: false, message: "Please verify your email first." });
+    // }
     // Compare passwords
     const isMatch = await bcrypt.compare(password, user.password);
     console.log("Password Match Result:", isMatch);

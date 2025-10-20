@@ -4,6 +4,7 @@ import axios from "axios";
 
 dotenv.config();
 const router = express.Router();
+console.log("🔑 OpenAI Key Exists?", !!process.env.OPENAI_API_KEY);
 
 // ✅ Chat Route
 router.post("/", async (req, res) => {
@@ -14,6 +15,24 @@ router.post("/", async (req, res) => {
       return res
         .status(400)
         .json({ success: false, error: "Message required" });
+    }
+
+    // ✅ DUMMY MODE for local testing
+    if (!process.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY === "test") {
+      console.log("💡 Dummy mode active");
+      let dummyReply = "";
+
+      if (message.toLowerCase().includes("hello"))
+        dummyReply = "Hi there! How can I help you today?";
+      else if (message.toLowerCase().includes("price"))
+        dummyReply = "Our gaming products start from Rs. 5,000.";
+      else if (message.toLowerCase().includes("controller"))
+        dummyReply = "We have PS5, Xbox, and RGB controllers available!";
+      else
+        dummyReply =
+          "I'm your virtual gaming assistant — ask me about any product!";
+
+      return res.json({ success: true, reply: dummyReply });
     }
 
     // ✅ Call OpenAI API (or any AI model)
@@ -41,10 +60,10 @@ router.post("/", async (req, res) => {
     const reply = response.data.choices[0].message.content;
     res.json({ success: true, reply });
   } catch (error) {
-    console.error("Chatbot Error:", error.message);
+    console.error("Chatbot Error:", error.response?.data || error.message);
     res.status(500).json({
       success: false,
-      error: "AI service unavailable. Please try again later.",
+      error: error.response?.data || error.message,
     });
   }
 });

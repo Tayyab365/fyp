@@ -10,6 +10,7 @@ const VerifyEmail = () => {
   const navigate = useNavigate();
 
   const handleVerify = async () => {
+    if (!code.trim()) return toast.error("Please enter the verification code");
     try {
       const res = await API.post("/auth/verify-email", { email, code });
       toast.success(res.data.message);
@@ -20,12 +21,12 @@ const VerifyEmail = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-4 text-center">
+    <div className="flex justify-center items-center px-4 sm:px-6">
+      <div className="bg-white p-6 sm:p-8 rounded-lg shadow-lg w-full max-w-sm sm:max-w-md">
+        <h2 className="text-xl sm:text-2xl font-bold text-center text-gray-800 mb-5">
           Verify Your Email
         </h2>
-        <p className="text-gray-600 text-sm text-center mb-4">
+        <p className="text-gray-600 text-sm sm:text-base text-center mb-4">
           Enter the 6-digit code sent to <b>{email}</b>
         </p>
         <input
@@ -33,11 +34,11 @@ const VerifyEmail = () => {
           value={code}
           onChange={(e) => setCode(e.target.value)}
           placeholder="Enter verification code"
-          className="w-full border border-gray-300 p-3 rounded-lg mb-4"
+          className="w-full border border-gray-300 p-2.5 sm:p-3 rounded-lg mb-4 focus:ring-2 focus:ring-blue-500 outline-none text-sm sm:text-base"
         />
         <button
           onClick={handleVerify}
-          className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700"
+          className="w-full bg-blue-600 text-white py-2.5 sm:py-3 rounded-lg hover:bg-blue-700 transition text-sm sm:text-base"
         >
           Verify Email
         </button>

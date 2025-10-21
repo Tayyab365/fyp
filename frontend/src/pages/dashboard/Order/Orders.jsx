@@ -31,7 +31,7 @@ const Orders = () => {
             No orders found
           </div>
         ) : (
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
             <table className="w-full text-sm text-left border-collapse">
               <thead className="bg-gray-100 text-gray-700 uppercase text-xs font-semibold tracking-wider">
                 <tr>

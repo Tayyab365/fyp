@@ -27,7 +27,7 @@ const Signup = () => {
 
       if (res.success) {
         toast.success("Verification code sent to your email!");
-        navigate(`/verify-email?email=${res.email}`); // ✅ backend se aaya email use karo
+        navigate(`/verify-email?email=${res.email}`);
       } else {
         toast.error(res.message || "Signup failed");
       }
@@ -38,8 +38,8 @@ const Signup = () => {
   };
 
   return (
-    <div>
-      <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">
+    <div className="w-full max-w-md bg-white p-6 sm:p-8 rounded-lg shadow">
+      <h2 className="!text-2xl sm:text-3xl font-bold text-center mb-6 text-gray-800">
         Create Account
       </h2>
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -54,7 +54,7 @@ const Signup = () => {
             placeholder="Your Name"
             value={formData.name}
             onChange={handleChange}
-            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
+            className="w-full p-3 border rounded-lg text-sm sm:text-base focus:ring-2 focus:ring-green-500 outline-none"
           />
         </div>
 
@@ -69,7 +69,7 @@ const Signup = () => {
             placeholder="you@example.com"
             value={formData.email}
             onChange={handleChange}
-            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
+            className="w-full p-3 border rounded-lg text-sm sm:text-base focus:ring-2 focus:ring-green-500 outline-none"
           />
         </div>
 
@@ -85,7 +85,7 @@ const Signup = () => {
               placeholder="********"
               value={formData.password}
               onChange={handleChange}
-              className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none pr-10"
+              className="w-full p-3 border rounded-lg text-sm sm:text-base focus:ring-2 focus:ring-green-500 outline-none pr-10"
             />
             <span
               onClick={() => setShowPassword(!showPassword)}
@@ -99,13 +99,13 @@ const Signup = () => {
         {/* Signup Button */}
         <button
           type="submit"
-          className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition"
+          className="w-full bg-green-600 text-white py-2 sm:py-3 rounded-lg hover:bg-green-700 transition text-sm sm:text-base"
         >
           Sign Up
         </button>
       </form>
 
-      <p className="text-center mt-4 text-sm text-gray-600">
+      <p className="text-center mt-4 text-sm sm:text-base text-gray-600">
         Already have an account?{" "}
         <Link to="/login" className="text-green-600 hover:underline">
           Login

@@ -45,8 +45,8 @@ const Login = () => {
 
   return (
     // <div className="min-h-screen flex items-center justify-center bg-gray-100">
-    <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-      <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
+    <div className="bg-white p-6 sm:p-8 rounded-lg shadow-lg w-full max-w-md">
+      <h2 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-6">
         Login
       </h2>
 
@@ -60,7 +60,7 @@ const Login = () => {
             value={formData.email}
             onChange={handleChange}
             placeholder="you@example.com"
-            className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+            className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-sm sm:text-base"
           />
         </div>
 
@@ -76,7 +76,7 @@ const Login = () => {
               value={formData.password}
               onChange={handleChange}
               placeholder="********"
-              className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none pr-10"
+              className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-sm sm:text-base"
             />
             <span
               onClick={() => setShowPassword(!showPassword)}
@@ -88,7 +88,7 @@ const Login = () => {
         </div>
 
         {/* Remember Me & Forgot Password */}
-        <div className="flex items-center justify-between text-sm text-gray-600">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0 text-sm text-gray-600">
           <label className="flex items-center gap-2">
             <input type="checkbox" className="accent-blue-600" />
             Remember Me
@@ -101,7 +101,7 @@ const Login = () => {
         {/* Login Button */}
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition"
+          className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition text-sm sm:text-base"
         >
           Login
         </button>

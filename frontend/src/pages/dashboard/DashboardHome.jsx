@@ -45,14 +45,16 @@ const DashboardHome = () => {
     );
 
   return (
-    <div className="space-y-8">
-      <h1 className="text-2xl font-bold text-gray-800">Dashboard Overview</h1>
+    <div className="space-y-8 px-3 sm:px-6 lg:px-8">
+      <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 text-center sm:text-left">
+        Dashboard Overview
+      </h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         {stats.map((stat, index) => (
           <div
             key={index}
-            className="flex items-center justify-between bg-white p-5 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition"
+            className="flex flex-col sm:flex-row items-center sm:items-start justify-between bg-white p-5 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition text-center sm:text-left"
           >
             <div>
               <h3 className="text-gray-500 text-sm font-medium">
@@ -62,7 +64,9 @@ const DashboardHome = () => {
                 {stat.value}
               </p>
             </div>
-            <div className="p-3 bg-gray-50 rounded-lg">{stat.icon}</div>
+            <div className="p-3 bg-gray-50 rounded-lg mt-3 sm:mt-0">
+              {stat.icon}
+            </div>
           </div>
         ))}
       </div>

@@ -26,24 +26,26 @@ export default function ResetPassword() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-16 p-6 bg-white rounded-lg shadow">
-      <h2 className="text-2xl font-bold mb-4 text-center">Reset Password</h2>
+    <div className="w-full max-w-md bg-white p-6 sm:p-8 rounded-lg shadow">
+      <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-center text-gray-800">
+        Reset Password
+      </h2>
       <form onSubmit={handleSubmit}>
         <input
           type="password"
           placeholder="New password"
-          className="w-full border p-3 rounded mb-3"
+          className="w-full border border-gray-300 p-3 rounded mb-3 text-sm sm:text-base focus:ring-2 focus:ring-green-500 outline-none"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
         <input
           type="password"
           placeholder="Confirm password"
-          className="w-full border p-3 rounded mb-4"
+          className="w-full border border-gray-300 p-3 rounded mb-4 text-sm sm:text-base focus:ring-2 focus:ring-green-500 outline-none"
           value={confirm}
           onChange={(e) => setConfirm(e.target.value)}
         />
-        <button className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">
+        <button className="w-full bg-green-600 text-white py-2 sm:py-3 rounded hover:bg-green-700 transition text-sm sm:text-base">
           Save New Password
         </button>
       </form>

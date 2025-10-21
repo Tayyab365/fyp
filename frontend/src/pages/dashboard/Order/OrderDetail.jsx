@@ -13,11 +13,13 @@ const OrderDetail = ({ order, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-      <div className="bg-white rounded-2xl shadow-lg w-full max-w-3xl p-6 relative max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 px-2 sm:px-4">
+      <div className="bg-white rounded-2xl shadow-lg w-full max-w-3xl p-4 sm:p-6 relative max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="flex justify-between items-center border-b pb-3">
-          <h2 className="text-xl font-bold">Order #{_id.slice(-6)}</h2>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b pb-3 gap-2">
+          <h2 className="text-lg sm:text-xl font-bold text-gray-800">
+            Order #{_id.slice(-6)}
+          </h2>
           <span
             className={`text-sm font-medium ${
               status === "Completed"
@@ -31,7 +33,7 @@ const OrderDetail = ({ order, onClose }) => {
           </span>
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-2xl font-bold"
+            className="absolute top-3 right-4 text-gray-400 hover:text-gray-600 text-2xl font-bold"
           >
             ×
           </button>
@@ -39,8 +41,10 @@ const OrderDetail = ({ order, onClose }) => {
 
         {/* Customer Info */}
         <div className="mt-4 border-b pb-3">
-          <h3 className="font-semibold mb-2 text-gray-700">Customer Info</h3>
-          <div className="grid sm:grid-cols-2 gap-2 text-sm text-gray-600">
+          <h3 className="font-semibold mb-2 text-gray-700 text-sm sm:text-base">
+            Customer Info
+          </h3>
+          <div className="grid sm:grid-cols-2 gap-2 text-xs sm:text-sm text-gray-600">
             <p>
               <span className="font-medium">Name:</span>{" "}
               {customer?.fullName || "N/A"}
@@ -65,10 +69,12 @@ const OrderDetail = ({ order, onClose }) => {
         </div>
 
         {/* Products */}
-        <div className="mt-4">
-          <h3 className="font-semibold mb-2 text-gray-700">Products</h3>
+        <div className="mt-4 overflow-x-auto">
+          <h3 className="font-semibold mb-2 text-gray-700 text-sm sm:text-base">
+            Products
+          </h3>
           {cartItems.length > 0 ? (
-            <table className="w-full text-sm text-left border">
+            <table className="w-full text-xs sm:text-sm text-left border min-w-[500px] sm:min-w-0">
               <thead className="bg-gray-100 text-gray-700">
                 <tr>
                   <th className="py-2 px-3">Product</th>
@@ -98,7 +104,7 @@ const OrderDetail = ({ order, onClose }) => {
         </div>
 
         {/* Summary */}
-        <div className="mt-4 border-t pt-3 text-sm text-gray-700">
+        <div className="mt-4 border-t pt-3 text-xs sm:text-sm text-gray-700">
           <p>
             <span className="font-medium">Subtotal:</span> $
             {orderSummary?.subTotal?.toFixed(2) || "0.00"}
@@ -122,22 +128,22 @@ const OrderDetail = ({ order, onClose }) => {
         </div>
 
         {/* Footer Buttons */}
-        <div className="mt-6 flex justify-end gap-3">
+        <div className="mt-6 flex flex-wrap justify-end gap-2 sm:gap-3">
           <button
             onClick={() => handleStatusChange("Completed")}
-            className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
+            className="bg-green-600 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-green-700 text-xs sm:text-sm"
           >
             Mark Completed
           </button>
           <button
             onClick={() => handleStatusChange("Cancelled")}
-            className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
+            className="bg-red-500 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-red-600 text-xs sm:text-sm"
           >
             Cancel
           </button>
           <button
             onClick={onClose}
-            className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300"
+            className="bg-gray-200 text-gray-700 px-3 sm:px-4 py-2 rounded-lg hover:bg-gray-300 text-xs sm:text-sm"
           >
             Close
           </button>

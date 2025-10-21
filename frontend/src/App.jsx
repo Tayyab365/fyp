@@ -9,25 +9,25 @@ import Cart from "./pages/Cart";
 import ProductDetails from "./pages/ProductDetails";
 import Checkout from "./pages/Checkout";
 import OrderSuccess from "./pages/OrderSuccess";
-import DashboardLayout from "./DashboardLayout/DashboardLayout";
+import DashboardLayout from "./Layouts/DashboardLayout";
 import DashboardHome from "./pages/dashboard/DashboardHome";
 import Products from "./pages/dashboard/Product/Products";
 import Orders from "./pages/dashboard/Order/Orders";
 import Users from "./pages/dashboard/User/Users";
 import AddProduct from "./pages/dashboard/Product/AddProduct";
 import EditProduct from "./pages/dashboard/Product/EditProduct";
-import AuthLayout from "./DashboardLayout/AuthLayout";
+import AuthLayout from "./Layouts/AuthLayout";
 import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
 import { Toaster } from "react-hot-toast";
-
-// ✅ Import ProtectedRoute
 import ProtectedRoute from "./components/ProtectedRoute";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import ResetPassword from "./pages/auth/ResetPassword";
 import VerifyEmail from "./pages/auth/VerifyEmail";
 import ChatbotButton from "./components/Chatbot/ChatbotButton";
 import ChatWindow from "./components/Chatbot/ChatWindow";
+import NotFound from "./pages/NotFound";
+import MainLayout from "./Layouts/MainLayout";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -45,81 +45,17 @@ const App = () => {
     <BrowserRouter>
       <ScrollToTop />
       <Routes>
-        {/* Public Routes */}
-        <Route
-          path="/"
-          element={
-            <>
-              <Navbar />
-              <Home />
-            </>
-          }
-        />
-        <Route
-          path="/shop"
-          element={
-            <>
-              <Navbar />
-              <Shop />
-            </>
-          }
-        />
-        <Route
-          path="/contact"
-          element={
-            <>
-              <Navbar />
-              <Contact />
-            </>
-          }
-        />
-        <Route
-          path="/about"
-          element={
-            <>
-              <Navbar />
-              <About />
-            </>
-          }
-        />
-        <Route
-          path="/cart"
-          element={
-            <>
-              <Navbar />
-              <Cart />
-            </>
-          }
-        />
-        <Route
-          path="/product-details/:id"
-          element={
-            <>
-              <Navbar />
-              <ProductDetails />
-            </>
-          }
-        />
-        <Route
-          path="/checkout"
-          element={
-            <>
-              <Navbar />
-              <Checkout />
-            </>
-          }
-        />
-        <Route
-          path="order-success"
-          element={
-            <>
-              <Navbar />
-              <OrderSuccess />
-            </>
-          }
-        />
+        <Route element = {<MainLayout/>}>
+          <Route path="/" element={<Home />}/>
+          <Route path="/shop" element={<Shop />}/>
+          <Route path="/contact" element={<Contact />}/>
+          <Route path="/about" element={<About />}/>
+          <Route path="/cart" element={<><Cart /></>}/>
+          <Route path="/product-details/:id" element={<ProductDetails />}/>
+          <Route path="/checkout" element={<Checkout />}/>
+          <Route path="order-success" element={ <OrderSuccess />}/>
+        </Route>
 
-        {/* Auth Routes */}
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
@@ -128,15 +64,7 @@ const App = () => {
           <Route path="/verify-email" element={<VerifyEmail />} />
         </Route>
 
-        {/* ✅ Protected Admin Dashboard */}
-        <Route
-          path="/dashboard/*"
-          element={
-            <ProtectedRoute allowedRole="Admin">
-              <DashboardLayout />
-            </ProtectedRoute>
-          }
-        >
+        <Route path="/dashboard/*"element={<ProtectedRoute allowedRole="Admin"><DashboardLayout /></ProtectedRoute>}>
           <Route index element={<DashboardHome />} />
           <Route path="products" element={<Products />} />
           <Route path="orders" element={<Orders />} />
@@ -144,6 +72,7 @@ const App = () => {
           <Route path="add-product" element={<AddProduct />} />
           <Route path="edit-product" element={<EditProduct />} />
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
 
       <Toaster position="center-center" reverseOrder={false} />

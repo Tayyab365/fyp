@@ -32,7 +32,6 @@ const AddUser = ({ onClose }) => {
 
     try {
       await addUser(form);
-      toast.success("User added successfully");
       setForm({
         name: "",
         email: "",
@@ -49,14 +48,14 @@ const AddUser = ({ onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50 p-4 sm:p-0">
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 w-full max-w-md relative max-h-[90vh] overflow-y-auto">
-        <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100 text-center">
+      <div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-md relative max-h-[90vh] overflow-y-auto">
+        <h2 className="text-2xl font-bold mb-4 text-gray-800 text-center">
           Add New User
         </h2>
 
         <button
           onClick={onClose}
-          className="absolute top-2 right-3 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-white text-xl"
+          className="absolute top-2 right-3 text-gray-500 hover:text-gray-700 text-xl"
         >
           ×
         </button>
@@ -67,14 +66,14 @@ const AddUser = ({ onClose }) => {
             placeholder="Name"
             value={form.name}
             onChange={handleChange}
-            className="w-full border p-2 rounded bg-gray-50 dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600"
+            className="w-full border p-2 rounded"
           />
           <input
             name="email"
             placeholder="Email"
             value={form.email}
             onChange={handleChange}
-            className="w-full border p-2 rounded bg-gray-50 dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600"
+            className="w-full border p-2 rounded"
           />
           <input
             name="password"
@@ -82,14 +81,14 @@ const AddUser = ({ onClose }) => {
             type="text"
             value={form.password}
             onChange={handleChange}
-            className="w-full border p-2 rounded bg-gray-50 dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600"
+            className="w-full border p-2 rounded"
           />
 
           <select
             name="role"
             value={form.role}
             onChange={handleChange}
-            className="w-full border p-2 rounded bg-gray-50 dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600"
+            className="w-full border p-2 rounded"
           >
             <option value="">Select Role</option>
             <option value="Admin">Admin</option>
@@ -100,7 +99,7 @@ const AddUser = ({ onClose }) => {
             name="status"
             value={form.status}
             onChange={handleChange}
-            className="w-full border p-2 rounded bg-gray-50 dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600"
+            className="w-full border p-2 rounded"
           >
             <option value="">Select Status</option>
             <option value="Active">Active</option>
@@ -109,7 +108,7 @@ const AddUser = ({ onClose }) => {
 
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition dark:bg-blue-500 dark:hover:bg-blue-600"
+            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
           >
             Add User
           </button>

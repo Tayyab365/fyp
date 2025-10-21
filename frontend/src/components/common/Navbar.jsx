@@ -53,7 +53,7 @@ const Navbar = () => {
 
   return (
     <nav className="text-sm w-full fixed top-0 left-0 z-50 bg-white text-[#1E293B] shadow-sm ">
-      <div className="flex items-center justify-between px-4 py-3 md:px-8">
+      <div className="flex items-center justify-between px-4 py-3 md:px-4">
         {/* Left Section */}
         <div className="flex items-center space-x-4">
           <button

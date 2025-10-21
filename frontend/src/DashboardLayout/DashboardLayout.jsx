@@ -26,7 +26,7 @@ const DashboardLayout = () => {
       <div className="flex pt-[72px] relative">
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-        <main className="flex-1 p-6 transition-all duration-300 overflow-x-hidden">
+        <main className="flex-1 ml-0 md:ml-64  p-4 transition-all duration-300 overflow-x-hidden">
           <Outlet />
         </main>
       </div>

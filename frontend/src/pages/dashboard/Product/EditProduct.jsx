@@ -27,7 +27,6 @@ const EditProduct = ({ onClose, product }) => {
         stock: Number(form.stock),
       };
       await updateProduct(product._id, payload);
-      toast.success("Product updated successfully");
       onClose();
     } catch (err) {
       console.error("Edit product failed:", err);

@@ -6,7 +6,7 @@ const Topbar = ({ onMenuClick }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="fixed top-0 left-0 w-full bg-white shadow-sm z-50 px-4 sm:px-6 md:px-12 py-3 flex justify-between items-center">
+    <div className="fixed top-0 left-0 w-full bg-white shadow-sm z-50 px-4 sm:px-6 md:px-8 py-3 flex justify-between items-center">
       {/* Left: Hamburger + Logo */}
       <div className="flex items-center gap-3">
         {/* 🔹 Same Hamburger Style as Main Navbar */}

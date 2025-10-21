@@ -1,15 +1,48 @@
 import express from "express";
 import dotenv from "dotenv";
 import axios from "axios";
+import Order from "../models/Order.js";
+import Product from "../models/Product.js";
+import User from "../models/User.js";
 
 dotenv.config();
 const router = express.Router();
-console.log("🔑 OpenAI Key Exists?", !!process.env.OPENAI_API_KEY);
+
+// ✅ Helper: call OpenAI only if key available
+async function getAIResponse(message) {
+  if (!process.env.OPENAI_API_KEY) {
+    return `You said: ${message} (Dummy reply — AI not connected)`;
+  }
+
+  const response = await axios.post(
+    "https://api.openai.com/v1/chat/completions",
+    {
+      model: "gpt-3.5-turbo",
+      messages: [
+        {
+          role: "system",
+          content: `You are an AI assistant for a gaming e-commerce store called GameZone.
+          Only answer questions about products, orders, shipping, and support.
+          If the user asks anything unrelated, reply: "I'm sorry, I can only assist with GameZone store questions."`,
+        },
+        { role: "user", content: message },
+      ],
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+      },
+    }
+  );
+
+  return response.data.choices[0].message.content;
+}
 
 // ✅ Chat Route
 router.post("/", async (req, res) => {
   try {
-    const { message } = req.body;
+    const { message, userId } = req.body;
 
     if (!message) {
       return res
@@ -17,54 +50,40 @@ router.post("/", async (req, res) => {
         .json({ success: false, error: "Message required" });
     }
 
-    // ✅ DUMMY MODE for local testing
-    if (!process.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY === "test") {
-      console.log("💡 Dummy mode active");
-      let dummyReply = "";
+    const lowerMsg = message.toLowerCase();
+    let reply = "";
 
-      if (message.toLowerCase().includes("hello"))
-        dummyReply = "Hi there! How can I help you today?";
-      else if (message.toLowerCase().includes("price"))
-        dummyReply = "Our gaming products start from Rs. 5,000.";
-      else if (message.toLowerCase().includes("controller"))
-        dummyReply = "We have PS5, Xbox, and RGB controllers available!";
-      else
-        dummyReply =
-          "I'm your virtual gaming assistant — ask me about any product!";
-
-      return res.json({ success: true, reply: dummyReply });
+    // 🧠 INTENT DETECTION
+    if (lowerMsg.includes("order")) {
+      if (!userId) {
+        reply = "Please log in to check your orders.";
+      } else {
+        const orders = await Order.find({ userId });
+        if (orders.length === 0) reply = "You have no orders yet.";
+        else {
+          reply = `You have ${orders.length} order(s). Latest: ${
+            orders[orders.length - 1].status || "Processing"
+          }.`;
+        }
+      }
+    } else if (lowerMsg.includes("product") || lowerMsg.includes("items")) {
+      const products = await Product.find().limit(3);
+      const names = products.map((p) => p.name).join(", ");
+      reply = `We currently have products like ${names}. Would you like to see more?`;
+    } else if (lowerMsg.includes("user") || lowerMsg.includes("account")) {
+      const users = await User.countDocuments();
+      reply = `We currently have ${users} registered customers on GameZone.`;
+    } else {
+      // 🧠 fallback to AI
+      reply = await getAIResponse(message);
     }
 
-    // ✅ Call OpenAI API (or any AI model)
-    const response = await axios.post(
-      "https://api.openai.com/v1/chat/completions",
-      {
-        model: "gpt-3.5-turbo",
-        messages: [
-          {
-            role: "system",
-            content:
-              "You are a helpful AI assistant for a gaming products website. Answer briefly and politely.",
-          },
-          { role: "user", content: message },
-        ],
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-        },
-      }
-    );
-
-    const reply = response.data.choices[0].message.content;
     res.json({ success: true, reply });
   } catch (error) {
-    console.error("Chatbot Error:", error.response?.data || error.message);
-    res.status(500).json({
-      success: false,
-      error: error.response?.data || error.message,
-    });
+    console.error("Chatbot Error:", error.message);
+    res
+      .status(500)
+      .json({ success: false, error: "Something went wrong with chatbot." });
   }
 });
 

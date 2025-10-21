@@ -1,16 +1,29 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { cartContext } from "../../Context/CartContext";
+import useTheme from "../../hooks/useTheme";
+import {
+  CircleUserRound,
+  LogOut,
+  Moon,
+  LayoutDashboard,
+  User,
+  Sun,
+} from "lucide-react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef();
+
   const { cartItems } = useContext(cartContext);
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
+  const { theme, toggleTheme } = useTheme();
 
   const uniqueProducts = cartItems.length;
 
-  // ✅ Load user from localStorage (on refresh bhi login info rahe)
+  // ✅ Load user from localStorage
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -18,16 +31,28 @@ const Navbar = () => {
     }
   }, []);
 
+  // ✅ Close dropdown if clicked outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   // ✅ Logout function
   const handleLogout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
     setUser(null);
+    setIsDropdownOpen(false);
     navigate("/login");
   };
 
   return (
-    <nav className="text-sm w-full fixed top-0 left-0 z-50 bg-white text-[#1E293B] shadow-sm">
+    <nav className="text-sm w-full fixed top-0 left-0 z-50 bg-white text-[#1E293B] shadow-sm ">
       <div className="flex items-center justify-between px-4 py-3 md:px-8">
         {/* Left Section */}
         <div className="flex items-center space-x-4">
@@ -95,26 +120,11 @@ const Navbar = () => {
               About
             </NavLink>
           </li>
-
-          {/* ✅ Dashboard only for Admin */}
-          {user?.role === "Admin" && (
-            <li>
-              <NavLink
-                to="/dashboard"
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-[#2563EB] font-semibold border-b-2 border-[#2563EB] pb-1"
-                    : "hover:text-[#2563EB] transition"
-                }
-              >
-                Dashboard
-              </NavLink>
-            </li>
-          )}
         </ul>
 
         {/* Right Section */}
         <div className="flex items-center space-x-3 w-auto">
+          {/* 🛒 Cart */}
           <NavLink
             to="/cart"
             className="relative text-2xl hover:text-[#2563EB] transition"
@@ -127,7 +137,7 @@ const Navbar = () => {
             )}
           </NavLink>
 
-          {/* ✅ Show Login OR Logout */}
+          {/* 👤 Profile / Login */}
           {!user ? (
             <NavLink
               to="/login"
@@ -140,12 +150,64 @@ const Navbar = () => {
               Login
             </NavLink>
           ) : (
-            <button
-              onClick={handleLogout}
-              className="bg-red-500 px-4 py-2 rounded-lg font-semibold text-white hover:bg-red-600 transition"
-            >
-              Logout
-            </button>
+            <div ref={dropdownRef} className="relative">
+              <button
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                className="p-2 rounded-full hover:bg-gray-100 transition"
+              >
+                <User className="w-6 h-6 text-gray-700" />
+              </button>
+
+              {isDropdownOpen && (
+                <div className="absolute right-0 mt-2 w-44 bg-white shadow-lg rounded-lg overflow-hidden z-50 border border-gray-100">
+                  <ul className="text-sm text-gray-700">
+                    <li
+                      onClick={() => {
+                        navigate("/profile");
+                        setIsDropdownOpen(false);
+                      }}
+                      className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    >
+                      My Profile
+                    </li>
+
+                    {/* ✅ Admin Dashboard option */}
+                    {user?.role === "Admin" && (
+                      <li
+                        onClick={() => {
+                          navigate("/dashboard");
+                          setIsDropdownOpen(false);
+                        }}
+                        className="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-2"
+                      >
+                        <LayoutDashboard className="w-4 h-4" /> Dashboard
+                      </li>
+                    )}
+
+                    <button
+                      onClick={toggleTheme}
+                      className="w-full text-left px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+                    >
+                      {theme === "light" ? (
+                        <span className="flex items-center gap-2">
+                          <Moon size={16} /> Dark Mode
+                        </span>
+                      ) : (
+                        <span className="flex items-center gap-2">
+                          <Sun size={16} /> Light Mode
+                        </span>
+                      )}
+                    </button>
+                    <li
+                      onClick={handleLogout}
+                      className="px-4 py-2 text-red-500 hover:bg-gray-100 cursor-pointer flex items-center gap-2"
+                    >
+                      <LogOut className="w-4 h-4" /> Logout
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
           )}
         </div>
       </div>
@@ -182,7 +244,7 @@ const Navbar = () => {
             About
           </NavLink>
 
-          {/* ✅ Dashboard for Admin (Mobile View) */}
+          {/* ✅ Admin Dashboard for Mobile */}
           {user?.role === "Admin" && (
             <NavLink
               to="/dashboard"

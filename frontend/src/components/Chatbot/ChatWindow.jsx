@@ -28,8 +28,10 @@ const ChatWindow = ({ onClose }) => {
     setLoading(true);
 
     try {
+      const userId = localStorage.getItem("userId"); // ya token se decode kar lo
       const res = await axios.post("http://localhost:5000/api/chat", {
         message: input,
+        userId,
       });
 
       if (res.data.success) {

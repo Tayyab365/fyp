@@ -28,6 +28,7 @@ import ChatbotButton from "./components/Chatbot/ChatbotButton";
 import ChatWindow from "./components/Chatbot/ChatWindow";
 import NotFound from "./pages/NotFound";
 import MainLayout from "./Layouts/MainLayout";
+import Profile from "./pages/Profile";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -45,15 +46,23 @@ const App = () => {
     <BrowserRouter>
       <ScrollToTop />
       <Routes>
-        <Route element = {<MainLayout/>}>
-          <Route path="/" element={<Home />}/>
-          <Route path="/shop" element={<Shop />}/>
-          <Route path="/contact" element={<Contact />}/>
-          <Route path="/about" element={<About />}/>
-          <Route path="/cart" element={<><Cart /></>}/>
-          <Route path="/product-details/:id" element={<ProductDetails />}/>
-          <Route path="/checkout" element={<Checkout />}/>
-          <Route path="order-success" element={ <OrderSuccess />}/>
+        <Route element={<MainLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/about" element={<About />} />
+          <Route
+            path="/cart"
+            element={
+              <>
+                <Cart />
+              </>
+            }
+          />
+          <Route path="/product-details/:id" element={<ProductDetails />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="order-success" element={<OrderSuccess />} />
+          <Route path="/profile" element={<Profile />} />
         </Route>
 
         <Route element={<AuthLayout />}>
@@ -64,7 +73,14 @@ const App = () => {
           <Route path="/verify-email" element={<VerifyEmail />} />
         </Route>
 
-        <Route path="/dashboard/*"element={<ProtectedRoute allowedRole="Admin"><DashboardLayout /></ProtectedRoute>}>
+        <Route
+          path="/dashboard/*"
+          element={
+            <ProtectedRoute allowedRole="Admin">
+              <DashboardLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<DashboardHome />} />
           <Route path="products" element={<Products />} />
           <Route path="orders" element={<Orders />} />

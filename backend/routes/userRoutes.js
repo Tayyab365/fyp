@@ -1,6 +1,7 @@
 import express from "express";
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
+import { protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
@@ -100,6 +101,19 @@ router.put("/:id/reset-password", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error during password reset" });
+  }
+});
+
+// 🔹 Get logged-in user profile
+router.get("/profile", protect, async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).select("-password");
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching user profile", error });
   }
 });
 

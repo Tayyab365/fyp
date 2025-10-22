@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
+import ChangePasswordModal from "../components/Profile/ChangePasswordModal";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -114,7 +116,7 @@ const Profile = () => {
               Edit Profile
             </button>
             <button
-              onClick={() => alert("Change password coming soon!")}
+              onClick={() => setIsPasswordModalOpen(true)}
               className="border border-blue-600 text-blue-600 px-5 py-2 rounded-lg font-semibold hover:bg-blue-50 transition w-full sm:w-auto"
             >
               Change Password
@@ -122,6 +124,10 @@ const Profile = () => {
           </div>
         </div>
       </div>
+      <ChangePasswordModal
+        isOpen={isPasswordModalOpen}
+        onClose={() => setIsPasswordModalOpen(false)}
+      />
     </div>
   );
 };

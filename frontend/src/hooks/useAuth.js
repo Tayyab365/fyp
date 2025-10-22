@@ -25,3 +25,30 @@ export const login = async (userData) => {
     throw error.response?.data || { message: "Login failed" };
   }
 };
+
+export const changePassword = async ({ currentPassword, newPassword }) => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await fetch(
+      "http://localhost:5000/api/users/change-password",
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ currentPassword, newPassword }),
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Failed to change password");
+    }
+
+    return data;
+  } catch (error) {
+    throw new Error(error.message || "Something went wrong");
+  }
+};

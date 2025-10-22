@@ -50,6 +50,63 @@ router.post("/", async (req, res) => {
   }
 });
 
+
+// 🔹 Change Password (Protected Route) - NEW ROUTE
+router.put("/change-password", protect, async (req, res) => {
+  try {
+    console.log("🔄 Change password request received"); // Debug log
+    console.log("Request body:", req.body); // Debug log
+    
+    const { currentPassword, newPassword } = req.body;
+
+    // Validate input
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    // Check password length
+    if (newPassword.length < 6) {
+      return res.status(400).json({ message: "Password must be at least 6 characters" });
+    }
+
+    // Get user with password
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    console.log("User found:", user.email); // Debug log
+
+    // Verify current password
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    console.log("Password match:", isMatch); // Debug log
+    
+    if (!isMatch) {
+      return res.status(400).json({ message: "Current password is incorrect" });
+    }
+
+    // Check if new password is same as current
+    const isSamePassword = await bcrypt.compare(newPassword, user.password);
+    if (isSamePassword) {
+      return res.status(400).json({ message: "New password cannot be the same as current password" });
+    }
+
+    // Hash new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    // Update password
+    user.password = hashedPassword;
+    await user.save();
+
+    console.log("✅ Password changed successfully for:", user.email); // Debug log
+
+    res.status(200).json({ message: "Password changed successfully" });
+  } catch (error) {
+    console.error("❌ Change password error:", error);
+    res.status(500).json({ message: "Error changing password", error: error.message });
+  }
+});
+
 // 🔹 Delete user
 router.delete("/:id", async (req, res) => {
   try {
@@ -116,5 +173,7 @@ router.get("/profile", protect, async (req, res) => {
     res.status(500).json({ message: "Error fetching user profile", error });
   }
 });
+
+
 
 export default router;

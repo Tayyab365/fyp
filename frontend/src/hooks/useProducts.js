@@ -3,14 +3,20 @@ import { toast } from "react-hot-toast";
 
 const API_URL = "http://localhost:5000/api/products";
 
+// ✅ Memory cache
+let cachedProducts = null;
+
 export function useProducts() {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [products, setProducts] = useState(cachedProducts || []);
+  const [loading, setLoading] = useState(!cachedProducts);
   const [error, setError] = useState(null);
 
   const token = localStorage.getItem("token");
 
   const fetchProducts = async () => {
+    // ✅ Stop re-fetching if already cached
+    if (cachedProducts) return;
+
     setLoading(true);
     setError(null);
     try {
@@ -18,6 +24,7 @@ export function useProducts() {
       const data = await res.json();
       const list = Array.isArray(data) ? data : data.products;
       setProducts(list);
+      cachedProducts = list; // ✅ store in memory cache
     } catch (err) {
       console.error(err);
       setError("Failed to fetch products");
@@ -39,7 +46,10 @@ export function useProducts() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Failed to add product");
-      setProducts([...products, data]);
+
+      const updated = [...products, data];
+      setProducts(updated);
+      cachedProducts = updated; // ✅ update cache
       toast.success("Product added successfully!");
     } catch (err) {
       console.error(err);
@@ -61,7 +71,10 @@ export function useProducts() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Failed to update product");
-      setProducts(products.map((p) => (p._id === _id ? data : p)));
+
+      const updated = products.map((p) => (p._id === _id ? data : p));
+      setProducts(updated);
+      cachedProducts = updated; // ✅ update cache
       toast.success("Product updated successfully!");
     } catch (err) {
       console.error(err);
@@ -81,7 +94,10 @@ export function useProducts() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Failed to delete product");
-      setProducts(products.filter((p) => p._id !== _id));
+
+      const updated = products.filter((p) => p._id !== _id);
+      setProducts(updated);
+      cachedProducts = updated; // ✅ update cache
       toast.success("Product deleted successfully!");
     } catch (err) {
       console.error(err);

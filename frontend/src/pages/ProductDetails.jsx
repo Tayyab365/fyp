@@ -140,42 +140,61 @@ const ProductDetails = () => {
       </div>
 
       {/* Review Section */}
-      <div className="bg-white dark:bg-[var(--bg-card)] rounded-lg shadow-md dark:shadow-black/40 mt-8 p-4 sm:p-6 border border-gray-100 dark:border-[var(--border-color)]">
-        <h2 className="text-xl font-semibold mb-3 text-gray-800 dark:text-[var(--text-primary)]">
-          Write a Review
-        </h2>
+      {user ? (
+        <div className="bg-white dark:bg-[var(--bg-card)] rounded-lg shadow-md dark:shadow-black/40 mt-8 p-4 sm:p-6 border border-gray-100 dark:border-[var(--border-color)]">
+          <h2 className="text-xl font-semibold mb-3 text-gray-800 dark:text-[var(--text-primary)]">
+            Write a Review
+          </h2>
 
-        <div className="flex gap-1 mb-3">
-          {[1, 2, 3, 4, 5].map((star) => (
-            <button
-              key={star}
-              onClick={() => setRatingValue(star)}
-              className={`text-2xl ${
-                star <= ratingValue
-                  ? "text-yellow-400"
-                  : "text-gray-300 dark:text-[var(--text-muted)]"
-              }`}
-            >
-              ★
-            </button>
-          ))}
+          <div className="flex gap-1 mb-3">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <button
+                key={star}
+                onClick={() => setRatingValue(star)}
+                className={`text-2xl ${
+                  star <= ratingValue
+                    ? "text-yellow-400"
+                    : "text-gray-300 dark:text-[var(--text-muted)]"
+                }`}
+              >
+                ★
+              </button>
+            ))}
+          </div>
+
+          <textarea
+            value={review}
+            onChange={(e) => setReview(e.target.value)}
+            placeholder="Write your thoughts here..."
+            className="w-full border border-gray-300 dark:border-[var(--border-color)] rounded-md p-3 h-28 text-sm bg-white dark:bg-[var(--bg-card)] text-gray-700 dark:text-[var(--text-secondary)] focus:ring-1 focus:ring-[var(--accent-blue)] mb-4 resize-none"
+          />
+
+          <button
+            onClick={submitReview}
+            disabled={submitting}
+            className="bg-[var(--accent-blue)] hover:bg-[var(--accent-hover)] text-white px-5 py-2 rounded-md font-medium"
+          >
+            {submitting ? "Submitting..." : "Submit Review"}
+          </button>
         </div>
-
-        <textarea
-          value={review}
-          onChange={(e) => setReview(e.target.value)}
-          placeholder="Write your thoughts here..."
-          className="w-full border border-gray-300 dark:border-[var(--border-color)] rounded-md p-3 h-28 text-sm bg-white dark:bg-[var(--bg-card)] text-gray-700 dark:text-[var(--text-secondary)] focus:ring-1 focus:ring-[var(--accent-blue)] mb-4 resize-none"
-        />
-
-        <button
-          onClick={submitReview}
-          disabled={submitting}
-          className="bg-[var(--accent-blue)] hover:bg-[var(--accent-hover)] text-white px-5 py-2 rounded-md font-medium"
-        >
-          {submitting ? "Submitting..." : "Submit Review"}
-        </button>
-      </div>
+      ) : (
+        <div className="bg-white dark:bg-[var(--bg-card)] rounded-lg shadow-md dark:shadow-black/40 mt-8 p-4 sm:p-6 border border-gray-100 dark:border-[var(--border-color)] text-center">
+          <h2 className="text-lg font-semibold text-gray-800 dark:text-[var(--text-primary)] mb-2">
+            Want to write a review?
+          </h2>
+          <p className="text-gray-600 dark:text-[var(--text-secondary)] mb-3">
+            Please{" "}
+            <span className="text-[var(--accent-blue)] font-medium">login</span>{" "}
+            to share your experience.
+          </p>
+          <button
+            onClick={() => (window.location.href = "/login")}
+            className="bg-[var(--accent-blue)] hover:bg-[var(--accent-hover)] text-white px-5 py-2 rounded-md font-medium"
+          >
+            Login
+          </button>
+        </div>
+      )}
 
       {/* Customer Reviews */}
       <div className="bg-white dark:bg-[var(--bg-card)] rounded-lg shadow-md dark:shadow-black/40 mt-8 p-4 sm:p-6 border border-gray-100 dark:border-[var(--border-color)]">

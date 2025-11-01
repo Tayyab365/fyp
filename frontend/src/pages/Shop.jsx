@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Sidebar from "../components/Shop/Sidebar";
-import ProductCard from "../components/shop/ProductCard";
+import ProductCard from "../components/Shop/ProductCard.jsx";
 import { useLocation } from "react-router-dom";
 
 const Shop = () => {

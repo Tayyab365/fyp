@@ -36,7 +36,6 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
-    localStorage.removeItem("cart");
     setUser(null);
     setIsDropdownOpen(false);
     navigate("/login");

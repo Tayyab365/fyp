@@ -29,11 +29,10 @@ const Login = () => {
     try {
       const res = await login(formData);
       toast.success("Login successful!");
-      localStorage.removeItem("cartItems");
       localStorage.setItem("token", res.token);
       localStorage.setItem("user", JSON.stringify(res.user));
       localStorage.setItem("userId", res.user.id);
-      window.location.href = "/";
+      navigate("/");
     } catch (err) {
       toast.error(err.message || "Invalid credentials!");
     }

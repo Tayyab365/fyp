@@ -11,7 +11,7 @@ const router = express.Router();
 // ✅ Helper: call OpenAI only if key available
 async function getAIResponse(message) {
   if (!process.env.OPENAI_API_KEY) {
-    return `You said: ${message} (Dummy reply — AI not connected)`;
+    return `You said: ${message}`;
   }
 
   const response = await axios.post(
@@ -21,9 +21,9 @@ async function getAIResponse(message) {
       messages: [
         {
           role: "system",
-          content: `You are an AI assistant for a gaming e-commerce store called GameZone.
+          content: `You are an AI assistant for a gaming e-commerce store called ShopEasee.
           Only answer questions about products, orders, shipping, and support.
-          If the user asks anything unrelated, reply: "I'm sorry, I can only assist with GameZone store questions."`,
+          If the user asks anything unrelated, reply: "I'm sorry, I can only assist with ShopEase store questions."`,
         },
         { role: "user", content: message },
       ],
@@ -72,7 +72,7 @@ router.post("/", async (req, res) => {
       reply = `We currently have products like ${names}. Would you like to see more?`;
     } else if (lowerMsg.includes("user") || lowerMsg.includes("account")) {
       const users = await User.countDocuments();
-      reply = `We currently have ${users} registered customers on GameZone.`;
+      reply = `We currently have ${users} registered customers on ShopEase.`;
     } else {
       // 🧠 fallback to AI
       reply = await getAIResponse(message);

@@ -14,8 +14,8 @@ const ProductCategory = () => {
   ];
 
   return (
-    <div className="bg-[#F8FAFC] py-6 px-4">
-      <h1 className="text-center text-2xl md:text-3xl font-bold text-[#1E293B] mb-10">
+    <div className="bg-white dark:bg-black py-6 px-4 transition-colors duration-300">
+      <h1 className="text-center text-2xl md:text-3xl font-bold text-[#1E293B] dark:text-white mb-10">
         Explore Categories
       </h1>
 
@@ -25,14 +25,14 @@ const ProductCategory = () => {
             key={item.id}
             to={"/shop"}
             state={{ category: item.category.toLowerCase() }}
-            className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md p-5 flex flex-col items-center justify-center cursor-pointer transition-transform hover:-translate-y-1"
+            className="bg-white dark:bg-[#1a1a24] border border-gray-200 dark:border-[#2a2a3a] rounded-lg shadow-sm dark:shadow-black/30 hover:shadow-md dark:hover:shadow-black/50 p-5 flex flex-col items-center justify-center cursor-pointer transition-all hover:-translate-y-1"
           >
             <img
               src={item.image}
               alt={item.name}
               className="h-16 w-16 md:h-20 md:w-20 object-cover rounded-md mb-3"
             />
-            <h3 className="text-sm md:text-base font-semibold text-[#1E293B]">
+            <h3 className="text-sm md:text-base font-semibold text-[#1E293B] dark:text-white">
               {item.name}
             </h3>
           </Link>

@@ -1,18 +1,17 @@
-// src/components/Hero.jsx
 import React from "react";
 import { Link } from "react-router-dom";
 import heroimage from "../../assets/images/heroimage1.png";
 
 const Hero = () => {
   return (
-    <section className="text-sm bg-gradient-to-r from-blue-100 via-white to-blue-100">
+    <section className="text-sm bg-gradient-to-r from-blue-100 via-white to-blue-100 dark:from-black dark:via-[#0d0d12] dark:to-black transition-colors duration-300">
       <div className="container mx-auto px-6 py-20 flex flex-col md:flex-row items-center justify-between">
         <div className="md:w-1/2 text-center md:text-left space-y-6">
-          <h1 className="!text-5xl md:text-6xl font-extrabold leading-tight text-[#1E293B]">
+          <h1 className="!text-5xl md:text-6xl font-extrabold leading-tight text-[#1E293B] dark:text-white">
             Build Your <span className="text-[#2563EB]">Ultimate </span>
             Gaming Setup
           </h1>
-          <p className="text-sm text-[#475569] max-w-lg mx-auto md:mx-0">
+          <p className="text-sm text-[#475569] dark:text-[#b3b3b3] max-w-lg mx-auto md:mx-0">
             High performance gaming laptops, RGB mechanical keyboards, precision
             mice and pro headsets. Everything a gamer needs, in one store.
           </p>
@@ -25,7 +24,7 @@ const Hero = () => {
             </Link>
             <Link
               to="/contact"
-              className="bg-white border border-[#2563EB] text-[#2563EB] hover:bg-[#2563EB] hover:text-white px-6 py-3 rounded-lg font-semibold shadow-sm transition"
+              className="bg-white dark:bg-transparent border border-[#2563EB] text-[#2563EB] hover:bg-[#2563EB] hover:text-white px-6 py-3 rounded-lg font-semibold shadow-sm transition"
             >
               Contact Us
             </Link>
@@ -35,7 +34,7 @@ const Hero = () => {
           <img
             src={heroimage}
             alt="Gaming Gear"
-            className="rounded-lg shadow-xl border border-[#E2E8F0]"
+            className="rounded-lg shadow-xl dark:shadow-black/50 border border-[#E2E8F0] dark:border-[#2a2a3a]"
           />
         </div>
       </div>

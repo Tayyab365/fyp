@@ -23,7 +23,6 @@ const Navbar = () => {
 
   const uniqueProducts = cartItems.length;
 
-  // ✅ Load user from localStorage
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -31,7 +30,6 @@ const Navbar = () => {
     }
   }, []);
 
-  // ✅ Close dropdown if clicked outside
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -42,7 +40,6 @@ const Navbar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // ✅ Logout function
   const handleLogout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
@@ -52,9 +49,8 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="text-sm w-full fixed top-0 left-0 z-50 bg-white text-[#1E293B] shadow-sm ">
+    <nav className="text-sm w-full fixed top-0 left-0 z-50 bg-white dark:bg-[#1a1a24] text-[#1E293B] dark:text-white shadow-sm dark:shadow-black/50 border-b border-transparent dark:border-[#2a2a3a] transition-all duration-300">
       <div className="flex items-center justify-between px-4 py-3 md:px-4">
-        {/* Left Section */}
         <div className="flex items-center space-x-4">
           <button
             className="md:hidden text-2xl"
@@ -66,11 +62,10 @@ const Navbar = () => {
             to="/"
             className="text-2xl font-bold text-[#2563EB] hover:text-[#1D4ED8] transition"
           >
-            <span className="text-black">Shop</span>Ease
+            <span className="text-black dark:text-white">Shop</span>Ease
           </NavLink>
         </div>
 
-        {/* Center Links */}
         <ul className="hidden md:flex space-x-8">
           <li>
             <NavLink
@@ -78,7 +73,7 @@ const Navbar = () => {
               className={({ isActive }) =>
                 isActive
                   ? "text-[#2563EB] font-semibold border-b-2 border-[#2563EB] pb-1"
-                  : "hover:text-[#2563EB] transition"
+                  : "hover:text-[#2563EB] transition dark:text-[#b3b3b3] dark:hover:text-[#2563EB]"
               }
             >
               Home
@@ -90,7 +85,7 @@ const Navbar = () => {
               className={({ isActive }) =>
                 isActive
                   ? "text-[#2563EB] font-semibold border-b-2 border-[#2563EB] pb-1"
-                  : "hover:text-[#2563EB] transition"
+                  : "hover:text-[#2563EB] transition dark:text-[#b3b3b3] dark:hover:text-[#2563EB]"
               }
             >
               Shop
@@ -102,7 +97,7 @@ const Navbar = () => {
               className={({ isActive }) =>
                 isActive
                   ? "text-[#2563EB] font-semibold border-b-2 border-[#2563EB] pb-1"
-                  : "hover:text-[#2563EB] transition"
+                  : "hover:text-[#2563EB] transition dark:text-[#b3b3b3] dark:hover:text-[#2563EB]"
               }
             >
               Contact
@@ -114,7 +109,7 @@ const Navbar = () => {
               className={({ isActive }) =>
                 isActive
                   ? "text-[#2563EB] font-semibold border-b-2 border-[#2563EB] pb-1"
-                  : "hover:text-[#2563EB] transition"
+                  : "hover:text-[#2563EB] transition dark:text-[#b3b3b3] dark:hover:text-[#2563EB]"
               }
             >
               About
@@ -122,9 +117,7 @@ const Navbar = () => {
           </li>
         </ul>
 
-        {/* Right Section */}
         <div className="flex items-center space-x-3 w-auto">
-          {/* 🛒 Cart */}
           <NavLink
             to="/cart"
             className="relative text-2xl hover:text-[#2563EB] transition"
@@ -137,7 +130,6 @@ const Navbar = () => {
             )}
           </NavLink>
 
-          {/* 👤 Profile / Login */}
           {!user ? (
             <NavLink
               to="/login"
@@ -153,32 +145,31 @@ const Navbar = () => {
             <div ref={dropdownRef} className="relative">
               <button
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="p-2 rounded-full hover:bg-gray-100 transition"
+                className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-[#252535] transition"
               >
-                <User className="w-6 h-6 text-gray-700" />
+                <User className="w-6 h-6 text-gray-700 dark:text-[#b3b3b3]" />
               </button>
 
               {isDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-44 bg-white shadow-lg rounded-lg overflow-hidden z-50 border border-gray-100">
-                  <ul className="text-sm text-gray-700">
+                <div className="absolute right-0 mt-2 w-44 bg-white dark:bg-[#252535] shadow-lg dark:shadow-black/50 rounded-lg overflow-hidden z-50 border border-gray-100 dark:border-[#2a2a3a]">
+                  <ul className="text-sm text-gray-700 dark:text-[#b3b3b3]">
                     <li
                       onClick={() => {
                         navigate("/profile");
                         setIsDropdownOpen(false);
                       }}
-                      className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                      className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-[#2a2a3a] cursor-pointer transition"
                     >
                       My Profile
                     </li>
 
-                    {/* ✅ Admin Dashboard option */}
                     {user?.role === "Admin" && (
                       <li
                         onClick={() => {
                           navigate("/dashboard");
                           setIsDropdownOpen(false);
                         }}
-                        className="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-2"
+                        className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-[#2a2a3a] cursor-pointer flex items-center gap-2 transition"
                       >
                         <LayoutDashboard className="w-4 h-4" /> Dashboard
                       </li>
@@ -186,7 +177,7 @@ const Navbar = () => {
 
                     <button
                       onClick={toggleTheme}
-                      className="w-full text-left px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+                      className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-[#2a2a3a] transition"
                     >
                       {theme === "light" ? (
                         <span className="flex items-center gap-2">
@@ -200,7 +191,7 @@ const Navbar = () => {
                     </button>
                     <li
                       onClick={handleLogout}
-                      className="px-4 py-2 text-red-500 hover:bg-gray-100 cursor-pointer flex items-center gap-2"
+                      className="px-4 py-2 text-red-500 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-[#2a2a3a] cursor-pointer flex items-center gap-2 transition"
                     >
                       <LogOut className="w-4 h-4" /> Logout
                     </li>
@@ -212,43 +203,41 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-[#F8FAFC] px-4 py-4 space-y-3 border-t border-[#E2E8F0]">
+        <div className="md:hidden bg-[#F8FAFC] dark:bg-[#252535] px-4 py-4 space-y-3 border-t border-[#E2E8F0] dark:border-[#2a2a3a] transition-colors duration-300">
           <NavLink
             to="/"
-            className="block hover:text-[#2563EB] transition"
+            className="block hover:text-[#2563EB] transition dark:text-[#b3b3b3]"
             onClick={() => setIsOpen(false)}
           >
             Home
           </NavLink>
           <NavLink
             to="/shop"
-            className="block hover:text-[#2563EB] transition"
+            className="block hover:text-[#2563EB] transition dark:text-[#b3b3b3]"
             onClick={() => setIsOpen(false)}
           >
             Shop
           </NavLink>
           <NavLink
             to="/contact"
-            className="block hover:text-[#2563EB] transition"
+            className="block hover:text-[#2563EB] transition dark:text-[#b3b3b3]"
             onClick={() => setIsOpen(false)}
           >
             Contact
           </NavLink>
           <NavLink
             to="/about"
-            className="block hover:text-[#2563EB] transition"
+            className="block hover:text-[#2563EB] transition dark:text-[#b3b3b3]"
             onClick={() => setIsOpen(false)}
           >
             About
           </NavLink>
 
-          {/* ✅ Admin Dashboard for Mobile */}
           {user?.role === "Admin" && (
             <NavLink
               to="/dashboard"
-              className="block hover:text-[#2563EB] transition"
+              className="block hover:text-[#2563EB] transition dark:text-[#b3b3b3]"
               onClick={() => setIsOpen(false)}
             >
               Dashboard

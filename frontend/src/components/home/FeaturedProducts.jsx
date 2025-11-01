@@ -25,9 +25,9 @@ const FeaturedProducts = () => {
   }, []);
 
   return (
-    <section className="bg-[#F8FAFC] py-12 px-4 md:px-6">
+    <section className="bg-[#F8FAFC] dark:bg-[#0d0d12] py-12 px-4 md:px-6 transition-colors duration-300">
       <div className="container mx-auto">
-        <h2 className="text-2xl md:text-3xl font-bold text-[#1E293B] mb-10 text-center">
+        <h2 className="text-2xl md:text-3xl font-bold text-[#1E293B] dark:text-white mb-10 text-center">
           Featured Products
         </h2>
 
@@ -35,9 +35,9 @@ const FeaturedProducts = () => {
           {products.map((product) => (
             <div
               key={product._id}
-              className="bg-white rounded-lg shadow-md hover:shadow-xl transition-transform duration-300 hover:-translate-y-2 p-5 flex flex-col border border-[#E2E8F0] h-full"
+              className="bg-white dark:bg-[#1a1a24] rounded-lg shadow-md dark:shadow-black/50 hover:shadow-xl dark:hover:shadow-black/70 transition-all duration-300 hover:-translate-y-2 p-5 flex flex-col border border-[#E2E8F0] dark:border-[#2a2a3a] h-full"
             >
-              <div className="h-40 w-full mb-4 flex items-center justify-center overflow-hidden rounded-lg bg-white">
+              <div className="h-40 w-full mb-4 flex items-center justify-center overflow-hidden rounded-lg bg-white dark:bg-black">
                 <img
                   src={product.image}
                   alt={product.name}
@@ -45,7 +45,7 @@ const FeaturedProducts = () => {
                 />
               </div>
               <div className="flex flex-col flex-grow justify-between">
-                <h3 className="text-sm md:text-base font-semibold text-[#1E293B] line-clamp-2 min-h-[44px]">
+                <h3 className="text-sm md:text-base font-semibold text-[#1E293B] dark:text-white line-clamp-2 min-h-[44px]">
                   {product.name}
                 </h3>
 
@@ -62,7 +62,7 @@ const FeaturedProducts = () => {
                 </button>
                 <Link
                   to={`/product-details/${product._id}`}
-                  className="w-full sm:flex-1 py-1.5 text-center rounded-lg bg-white border border-[#2563EB] text-[#2563EB] font-semibold text-sm md:text-base hover:bg-[#2563EB] hover:text-white transition"
+                  className="w-full sm:flex-1 py-1.5 text-center rounded-lg bg-white dark:bg-transparent border border-[#2563EB] text-[#2563EB] font-semibold text-sm md:text-base hover:bg-[#2563EB] hover:text-white transition"
                 >
                   View Product
                 </Link>

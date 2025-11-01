@@ -23,6 +23,9 @@
   font-family: "inter", sans-serif;
 }
 
+body {
+  @apply bg-white dark:bg-black text-[#1E293B] dark:text-white;
+}
 /* index.css ya App.css me add karo */
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px;

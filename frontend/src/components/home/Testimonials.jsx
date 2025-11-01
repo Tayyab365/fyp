@@ -1,4 +1,3 @@
-// src/components/Testimonials.jsx
 import React from "react";
 
 const testimonials = [
@@ -24,9 +23,9 @@ const testimonials = [
 
 const Testimonials = () => {
   return (
-    <section className="bg-[#F8FAFC] py-12 px-4">
+    <section className="bg-[#F8FAFC] dark:bg-[#0d0d12] py-12 px-4 transition-colors duration-300">
       <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-2xl md:text-3xl font-bold text-[#1E293B] mb-10">
+        <h2 className="text-2xl md:text-3xl font-bold text-[#1E293B] dark:text-white mb-10">
           What Our Customers Say
         </h2>
 
@@ -34,18 +33,18 @@ const Testimonials = () => {
           {testimonials.map((item) => (
             <div
               key={item.id}
-              className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-transform hover:-translate-y-1"
+              className="bg-white dark:bg-[#1a1a24] p-6 rounded-xl border border-gray-200 dark:border-[#2a2a3a] shadow-sm dark:shadow-black/30 hover:shadow-md dark:hover:shadow-black/50 transition-all hover:-translate-y-1"
             >
               <div className="flex justify-center mb-3 text-yellow-500 text-lg">
                 {"★".repeat(item.rating)}
                 {"☆".repeat(5 - item.rating)}
               </div>
 
-              <p className="text-gray-600 text-sm md:text-base italic mb-4">
+              <p className="text-gray-600 dark:text-[#b3b3b3] text-sm md:text-base italic mb-4">
                 "{item.review}"
               </p>
 
-              <h3 className="font-semibold text-[#1E293B] text-sm md:text-base">
+              <h3 className="font-semibold text-[#1E293B] dark:text-white text-sm md:text-base">
                 {item.name}
               </h3>
             </div>

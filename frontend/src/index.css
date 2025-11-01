@@ -45,3 +45,35 @@ body {
 }
 
 /* bg-gradient-to-r from-blue-100 via-white to-blue-100 */
+
+:root {
+  --bg-page: #ffffff;
+  --bg-section-dark: #f8f9fa;
+  --bg-section-light: #ffffff;
+  --bg-card: #ffffff;
+  --bg-elevated: #f1f5f9;
+  --border-color: #e5e7eb;
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --accent-blue: #2563eb;
+  --accent-hover: #1d4ed8;
+}
+
+.dark {
+  --bg-page: #000000;
+  --bg-section-dark: #0d0d12;
+  --bg-section-light: #000000;
+  --bg-card: #1a1a24;
+  --bg-elevated: #252535;
+  --border-color: #2a2a3a;
+  --text-primary: #ffffff;
+  --text-secondary: #b3b3b3;
+  --text-muted: #808080;
+  --accent-blue: #2563eb;
+  --accent-hover: #1d4ed8;
+}
+
+html {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}

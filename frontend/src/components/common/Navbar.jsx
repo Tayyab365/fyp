@@ -2,14 +2,7 @@ import React, { useContext, useState, useEffect, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { cartContext } from "../../Context/CartContext";
 import useTheme from "../../hooks/useTheme";
-import {
-  CircleUserRound,
-  LogOut,
-  Moon,
-  LayoutDashboard,
-  User,
-  Sun,
-} from "lucide-react";
+import { LogOut, Moon, LayoutDashboard, User, Sun } from "lucide-react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,6 +36,7 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
+    localStorage.removeItem("cart");
     setUser(null);
     setIsDropdownOpen(false);
     navigate("/login");
@@ -130,76 +124,95 @@ const Navbar = () => {
             )}
           </NavLink>
 
-          {!user ? (
-            <NavLink
-              to="/login"
-              className={({ isActive }) =>
-                isActive
-                  ? "bg-[#1D4ED8] px-4 py-2 rounded-lg font-semibold text-white"
-                  : "bg-[#2563EB] px-4 py-2 rounded-lg font-semibold text-white hover:bg-[#1D4ED8] transition"
-              }
+          {/* Profile Dropdown (Always visible) */}
+          <div ref={dropdownRef} className="relative">
+            <button
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-[#252535] transition"
             >
-              Login
-            </NavLink>
-          ) : (
-            <div ref={dropdownRef} className="relative">
-              <button
-                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-[#252535] transition"
-              >
-                <User className="w-6 h-6 text-gray-700 dark:text-[#b3b3b3]" />
-              </button>
+              <User className="w-6 h-6 text-gray-700 dark:text-[#b3b3b3]" />
+            </button>
 
-              {isDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-44 bg-white dark:bg-[#252535] shadow-lg dark:shadow-black/50 rounded-lg overflow-hidden z-50 border border-gray-100 dark:border-[#2a2a3a]">
-                  <ul className="text-sm text-gray-700 dark:text-[#b3b3b3]">
-                    <li
-                      onClick={() => {
-                        navigate("/profile");
-                        setIsDropdownOpen(false);
-                      }}
-                      className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-[#2a2a3a] cursor-pointer transition"
-                    >
-                      My Profile
-                    </li>
-
-                    {user?.role === "Admin" && (
-                      <li
+            {isDropdownOpen && (
+              <div className="absolute right-0 mt-2 w-44 bg-white dark:bg-[#252535] shadow-lg dark:shadow-black/50 rounded-lg overflow-hidden z-50 border border-gray-100 dark:border-[#2a2a3a]">
+                <ul className="text-sm text-gray-700 dark:text-[#b3b3b3]">
+                  {!user ? (
+                    <div>
+                      <button
+                        onClick={toggleTheme}
+                        className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-[#2a2a3a] transition"
+                      >
+                        {theme === "light" ? (
+                          <span className="flex items-center gap-2">
+                            <Moon size={16} /> Dark Mode
+                          </span>
+                        ) : (
+                          <span className="flex items-center gap-2">
+                            <Sun size={16} /> Light Mode
+                          </span>
+                        )}
+                      </button>
+                      <button
                         onClick={() => {
-                          navigate("/dashboard");
+                          navigate("/login");
                           setIsDropdownOpen(false);
                         }}
-                        className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-[#2a2a3a] cursor-pointer flex items-center gap-2 transition"
+                        className="w-full text-left px-4 py-2 text-[#2563EB] hover:bg-gray-100 dark:hover:bg-[#2a2a3a] transition flex items-center gap-2"
                       >
-                        <LayoutDashboard className="w-4 h-4" /> Dashboard
+                        <LogOut className="w-4 h-4 rotate-180" /> Login
+                      </button>
+                    </div>
+                  ) : (
+                    <>
+                      <li
+                        onClick={() => {
+                          navigate("/profile");
+                          setIsDropdownOpen(false);
+                        }}
+                        className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-[#2a2a3a] cursor-pointer transition"
+                      >
+                        My Profile
                       </li>
-                    )}
 
-                    <button
-                      onClick={toggleTheme}
-                      className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-[#2a2a3a] transition"
-                    >
-                      {theme === "light" ? (
-                        <span className="flex items-center gap-2">
-                          <Moon size={16} /> Dark Mode
-                        </span>
-                      ) : (
-                        <span className="flex items-center gap-2">
-                          <Sun size={16} /> Light Mode
-                        </span>
+                      {user?.role === "Admin" && (
+                        <li
+                          onClick={() => {
+                            navigate("/dashboard");
+                            setIsDropdownOpen(false);
+                          }}
+                          className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-[#2a2a3a] cursor-pointer flex items-center gap-2 transition"
+                        >
+                          <LayoutDashboard className="w-4 h-4" /> Dashboard
+                        </li>
                       )}
-                    </button>
-                    <li
-                      onClick={handleLogout}
-                      className="px-4 py-2 text-red-500 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-[#2a2a3a] cursor-pointer flex items-center gap-2 transition"
-                    >
-                      <LogOut className="w-4 h-4" /> Logout
-                    </li>
-                  </ul>
-                </div>
-              )}
-            </div>
-          )}
+
+                      <button
+                        onClick={toggleTheme}
+                        className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-[#2a2a3a] transition"
+                      >
+                        {theme === "light" ? (
+                          <span className="flex items-center gap-2">
+                            <Moon size={16} /> Dark Mode
+                          </span>
+                        ) : (
+                          <span className="flex items-center gap-2">
+                            <Sun size={16} /> Light Mode
+                          </span>
+                        )}
+                      </button>
+
+                      <li
+                        onClick={handleLogout}
+                        className="px-4 py-2 text-red-500 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-[#2a2a3a] cursor-pointer flex items-center gap-2 transition"
+                      >
+                        <LogOut className="w-4 h-4" /> Logout
+                      </li>
+                    </>
+                  )}
+                </ul>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 

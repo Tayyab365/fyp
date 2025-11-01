@@ -13,56 +13,66 @@ const OrderDetail = ({ order, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 px-2 sm:px-4">
-      <div className="bg-white rounded-2xl shadow-lg w-full max-w-3xl p-4 sm:p-6 relative max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 px-2 sm:px-4">
+      <div className="bg-[var(--bg-card)] text-[var(--text-primary)] rounded-2xl shadow-lg w-full max-w-3xl p-4 sm:p-6 relative max-h-[90vh] overflow-y-auto border border-[var(--border-color)]">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b pb-3 gap-2">
-          <h2 className="text-lg sm:text-xl font-bold text-gray-800">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-[var(--border-color)] pb-3 gap-2">
+          <h2 className="text-lg sm:text-xl font-bold text-[var(--text-primary)]">
             Order #{_id.slice(-6)}
           </h2>
           <span
             className={`text-sm font-medium ${
               status === "Completed"
-                ? "text-green-600"
+                ? "text-green-400"
                 : status === "Pending"
-                ? "text-yellow-600"
-                : "text-red-600"
+                ? "text-yellow-400"
+                : "text-red-400"
             }`}
           >
             {status || "Pending"}
           </span>
           <button
             onClick={onClose}
-            className="absolute top-3 right-4 text-gray-400 hover:text-gray-600 text-2xl font-bold"
+            className="absolute top-3 right-4 text-[var(--text-muted)] hover:text-[var(--text-secondary)] text-2xl font-bold"
           >
             ×
           </button>
         </div>
 
         {/* Customer Info */}
-        <div className="mt-4 border-b pb-3">
-          <h3 className="font-semibold mb-2 text-gray-700 text-sm sm:text-base">
+        <div className="mt-4 border-b border-[var(--border-color)] pb-3">
+          <h3 className="font-semibold mb-2 text-[var(--text-secondary)] text-sm sm:text-base">
             Customer Info
           </h3>
-          <div className="grid sm:grid-cols-2 gap-2 text-xs sm:text-sm text-gray-600">
+          <div className="grid sm:grid-cols-2 gap-2 text-xs sm:text-sm text-[var(--text-muted)]">
             <p>
-              <span className="font-medium">Name:</span>{" "}
+              <span className="font-medium text-[var(--text-primary)]">
+                Name:
+              </span>{" "}
               {customer?.fullName || "N/A"}
             </p>
             <p>
-              <span className="font-medium">Email:</span>{" "}
+              <span className="font-medium text-[var(--text-primary)]">
+                Email:
+              </span>{" "}
               {customer?.email || "N/A"}
             </p>
             <p>
-              <span className="font-medium">Phone:</span>{" "}
+              <span className="font-medium text-[var(--text-primary)]">
+                Phone:
+              </span>{" "}
               {customer?.phone || "N/A"}
             </p>
             <p>
-              <span className="font-medium">City:</span>{" "}
+              <span className="font-medium text-[var(--text-primary)]">
+                City:
+              </span>{" "}
               {customer?.city || "N/A"}
             </p>
             <p className="sm:col-span-2">
-              <span className="font-medium">Address:</span>{" "}
+              <span className="font-medium text-[var(--text-primary)]">
+                Address:
+              </span>{" "}
               {customer?.address || "N/A"}
             </p>
           </div>
@@ -70,12 +80,12 @@ const OrderDetail = ({ order, onClose }) => {
 
         {/* Products */}
         <div className="mt-4 overflow-x-auto">
-          <h3 className="font-semibold mb-2 text-gray-700 text-sm sm:text-base">
+          <h3 className="font-semibold mb-2 text-[var(--text-secondary)] text-sm sm:text-base">
             Products
           </h3>
           {cartItems.length > 0 ? (
-            <table className="w-full text-xs sm:text-sm text-left border min-w-[500px] sm:min-w-0">
-              <thead className="bg-gray-100 text-gray-700">
+            <table className="w-full text-xs sm:text-sm text-left border border-[var(--border-color)] min-w-[500px] sm:min-w-0">
+              <thead className="bg-[var(--bg-section-dark)] text-[var(--text-secondary)]">
                 <tr>
                   <th className="py-2 px-3">Product</th>
                   <th className="py-2 px-3">Price</th>
@@ -85,11 +95,16 @@ const OrderDetail = ({ order, onClose }) => {
               </thead>
               <tbody>
                 {cartItems.map((item, index) => (
-                  <tr key={index} className="border-t">
-                    <td className="py-2 px-3">{item.name}</td>
+                  <tr
+                    key={index}
+                    className="border-t border-[var(--border-color)] hover:bg-[var(--bg-elevated)] transition"
+                  >
+                    <td className="py-2 px-3 text-[var(--text-secondary)]">
+                      {item.name}
+                    </td>
                     <td className="py-2 px-3">${item.price}</td>
                     <td className="py-2 px-3">{item.quantity}</td>
-                    <td className="py-2 px-3 font-medium">
+                    <td className="py-2 px-3 font-medium text-[var(--text-primary)]">
                       ${(item.price * item.quantity).toFixed(2)}
                     </td>
                   </tr>
@@ -97,32 +112,40 @@ const OrderDetail = ({ order, onClose }) => {
               </tbody>
             </table>
           ) : (
-            <p className="text-gray-500 italic mt-2">
+            <p className="text-[var(--text-muted)] italic mt-2">
               No products found in this order.
             </p>
           )}
         </div>
 
         {/* Summary */}
-        <div className="mt-4 border-t pt-3 text-xs sm:text-sm text-gray-700">
+        <div className="mt-4 border-t border-[var(--border-color)] pt-3 text-xs sm:text-sm text-[var(--text-secondary)]">
           <p>
-            <span className="font-medium">Subtotal:</span> $
-            {orderSummary?.subTotal?.toFixed(2) || "0.00"}
+            <span className="font-medium text-[var(--text-primary)]">
+              Subtotal:
+            </span>{" "}
+            ${orderSummary?.subTotal?.toFixed(2) || "0.00"}
           </p>
           <p>
-            <span className="font-medium">Shipping:</span> $
-            {orderSummary?.shipping?.toFixed(2) || "0.00"}
+            <span className="font-medium text-[var(--text-primary)]">
+              Shipping:
+            </span>{" "}
+            ${orderSummary?.shipping?.toFixed(2) || "0.00"}
           </p>
           <p>
-            <span className="font-medium">Tax:</span> $
-            {orderSummary?.tax?.toFixed(2) || "0.00"}
+            <span className="font-medium text-[var(--text-primary)]">Tax:</span>{" "}
+            ${orderSummary?.tax?.toFixed(2) || "0.00"}
           </p>
           <p>
-            <span className="font-medium">Total:</span> $
-            {orderSummary?.total?.toFixed(2) || "0.00"}
+            <span className="font-medium text-[var(--text-primary)]">
+              Total:
+            </span>{" "}
+            ${orderSummary?.total?.toFixed(2) || "0.00"}
           </p>
           <p>
-            <span className="font-medium">Date:</span>{" "}
+            <span className="font-medium text-[var(--text-primary)]">
+              Date:
+            </span>{" "}
             {new Date(createdAt).toLocaleString()}
           </p>
         </div>
@@ -137,13 +160,13 @@ const OrderDetail = ({ order, onClose }) => {
           </button>
           <button
             onClick={() => handleStatusChange("Cancelled")}
-            className="bg-red-500 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-red-600 text-xs sm:text-sm"
+            className="bg-red-600 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-red-700 text-xs sm:text-sm"
           >
             Cancel
           </button>
           <button
             onClick={onClose}
-            className="bg-gray-200 text-gray-700 px-3 sm:px-4 py-2 rounded-lg hover:bg-gray-300 text-xs sm:text-sm"
+            className="bg-[var(--bg-elevated)] text-[var(--text-secondary)] px-3 sm:px-4 py-2 rounded-lg hover:bg-[var(--bg-section-dark)] text-xs sm:text-sm border border-[var(--border-color)]"
           >
             Close
           </button>

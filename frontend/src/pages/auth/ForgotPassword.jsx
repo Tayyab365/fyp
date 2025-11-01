@@ -21,19 +21,32 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-16 p-6 bg-white rounded-lg shadow">
-      <h2 className="text-2xl font-bold mb-4 text-center">Forgot Password</h2>
+    <div
+      className="max-w-md mx-auto mt-16 p-6 bg-white dark:bg-[var(--bg-elevated)]
+      rounded-lg shadow border dark:border-[var(--border-color)]
+      transition-colors duration-300"
+    >
+      <h2 className="!text-2xl font-bold mb-4 text-center text-gray-800 dark:text-[var(--text-primary)]">
+        Forgot Password
+      </h2>
+
       <form onSubmit={handleSubmit}>
         <input
           type="email"
-          className="w-full border p-3 rounded mb-4"
+          className="w-full border p-3 rounded mb-4
+          bg-white dark:bg-[var(--bg-card)]
+          text-gray-900 dark:text-[var(--text-primary)]
+          border-gray-300 dark:border-[var(--border-color)]
+          focus:ring-2 focus:ring-blue-600 outline-none"
           placeholder="Enter your registered email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
+
         <button
           disabled={loading}
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+          className="w-full bg-blue-600 text-white py-2 rounded
+          hover:bg-blue-700 transition disabled:opacity-70"
         >
           {loading ? "Sending..." : "Send Reset Link"}
         </button>

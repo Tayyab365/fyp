@@ -26,26 +26,45 @@ export default function ResetPassword() {
   };
 
   return (
-    <div className="w-full max-w-md bg-white p-6 sm:p-8 rounded-lg shadow">
-      <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-center text-gray-800">
+    <div
+      className="w-full max-w-md p-6 sm:p-8 rounded-lg shadow
+      bg-white dark:bg-[var(--bg-elevated)]
+      border dark:border-[var(--border-color)]
+      transition-colors duration-300"
+    >
+      <h2
+        className="!text-2xl sm:text-3xl font-bold mb-4 text-center
+        text-gray-800 dark:text-[var(--text-primary)]"
+      >
         Reset Password
       </h2>
+
       <form onSubmit={handleSubmit}>
         <input
           type="password"
           placeholder="New password"
-          className="w-full border border-gray-300 p-3 rounded mb-3 text-sm sm:text-base focus:ring-2 focus:ring-green-500 outline-none"
+          className="w-full border p-3 rounded mb-3 text-sm sm:text-base
+          bg-white dark:bg-[var(--bg-card)]
+          text-gray-900 dark:text-[var(--text-primary)]
+          border-gray-300 dark:border-[var(--border-color)]
+          focus:ring-2 focus:ring-[var(--accent-blue)] outline-none"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+
         <input
           type="password"
           placeholder="Confirm password"
-          className="w-full border border-gray-300 p-3 rounded mb-4 text-sm sm:text-base focus:ring-2 focus:ring-green-500 outline-none"
+          className="w-full border p-3 rounded mb-4 text-sm sm:text-base
+          bg-white dark:bg-[var(--bg-card)]
+          text-gray-900 dark:text-[var(--text-primary)]
+          border-gray-300 dark:border-[var(--border-color)]
+          focus:ring-2 focus:ring-[var(--accent-blue)] outline-none"
           value={confirm}
           onChange={(e) => setConfirm(e.target.value)}
         />
-        <button className="w-full bg-green-600 text-white py-2 sm:py-3 rounded hover:bg-green-700 transition text-sm sm:text-base">
+
+        <button className="w-full bg-blue-600 text-white py-2 sm:py-3 rounded-lg hover:bg-blue-700 transition text-sm sm:text-base">
           Save New Password
         </button>
       </form>

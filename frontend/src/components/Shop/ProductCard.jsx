@@ -15,7 +15,9 @@ const ProductCard = ({ selectedCategory }) => {
 
   if (loading)
     return (
-      <p className="mt-24 text-gray-600 text-center">Loading products...</p>
+      <p className="mt-24 text-gray-600 dark:text-[#b3b3b3] text-center">
+        Loading products...
+      </p>
     );
 
   const filteredCategories =
@@ -36,28 +38,29 @@ const ProductCard = ({ selectedCategory }) => {
   const visibleProducts = filteredCategories.slice(0, visibleCount);
 
   return (
-    <div className="px-4 md:px-10">
+    <div className="px-4 md:px-10 bg-[#F8FAFC] dark:bg-[#000000] transition-colors duration-300">
       <div className="flex flex-col md:flex-row justify-between pt-10 my-6 items-center gap-4">
-        <h3 className="!text-2xl md:text-4xl font-bold text-[#1E293B] text-center md:text-left">
+        <h3 className="!text-2xl md:text-4xl font-bold text-[#1E293B] dark:text-[#ffffff] text-center md:text-left">
           Shop All Products
         </h3>
         <select
           value={sortOptions}
           onChange={(e) => setSortOptions(e.target.value)}
-          className="text-sm w-full md:w-48 border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-[#2563EB]"
+          className="text-sm w-full md:w-48 border border-gray-300 dark:border-[#2a2a3a] rounded-lg p-2 bg-white dark:bg-[#1a1a24] text-[#1E293B] dark:text-[#b3b3b3] focus:outline-none focus:ring-2 focus:ring-[#2563EB]"
         >
           <option value="">Default</option>
           <option value="lowToHigh">Low to High</option>
           <option value="highToLow">High to Low</option>
         </select>
       </div>
+
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {visibleProducts.map((product) => (
           <div
             key={product._id}
-            className="bg-white rounded-lg shadow-md hover:shadow-xl transition-transform duration-300 hover:-translate-y-2 p-5 flex flex-col border border-[#E2E8F0]"
+            className="bg-white dark:bg-[#1a1a24] rounded-lg shadow-md dark:shadow-black/50 hover:shadow-xl dark:hover:shadow-black/70 transition-transform duration-300 hover:-translate-y-2 p-5 flex flex-col border border-[#E2E8F0] dark:border-[#2a2a3a]"
           >
-            <div className="h-40 w-full mb-4 flex items-center justify-center overflow-hidden rounded-lg bg-white">
+            <div className="h-40 w-full mb-4 flex items-center justify-center overflow-hidden rounded-lg bg-white dark:bg-[#000000]">
               <img
                 src={product.image}
                 alt={product.name}
@@ -65,7 +68,7 @@ const ProductCard = ({ selectedCategory }) => {
               />
             </div>
             <div className="flex flex-col flex-grow justify-between">
-              <h3 className="text-sm md:text-base font-semibold text-[#1E293B] line-clamp-2 min-h-[44px]">
+              <h3 className="text-sm md:text-base font-semibold text-[#1E293B] dark:text-[#ffffff] line-clamp-2 min-h-[44px]">
                 {product.name}
               </h3>
 
@@ -82,7 +85,7 @@ const ProductCard = ({ selectedCategory }) => {
               </button>
               <Link
                 to={`/product-details/${product._id}`}
-                className="w-full sm:flex-1 py-1.5 text-center rounded-lg bg-white border border-[#2563EB] text-[#2563EB] font-semibold text-sm md:text-base hover:bg-[#2563EB] hover:text-white transition"
+                className="w-full sm:flex-1 py-1.5 text-center rounded-lg bg-white dark:bg-transparent border border-[#2563EB] text-[#2563EB] font-semibold text-sm md:text-base hover:bg-[#2563EB] hover:text-white transition"
               >
                 View Product
               </Link>
@@ -90,6 +93,7 @@ const ProductCard = ({ selectedCategory }) => {
           </div>
         ))}
       </div>
+
       {visibleCount < filteredCategories.length && (
         <div className="text-center my-10">
           <button

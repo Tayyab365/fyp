@@ -8,32 +8,38 @@ const Orders = () => {
   const [selectedOrder, setSelectedOrder] = useState(null);
 
   if (loading)
-    return <p className="text-gray-600 text-center mt-6">Loading Orders...</p>;
+    return (
+      <p className="text-[var(--text-secondary)] text-center mt-6">
+        Loading Orders...
+      </p>
+    );
 
   if (error)
     return (
-      <p className="text-red-500 text-sm bg-red-50 border border-red-200 p-3 rounded-lg text-center mt-6">
+      <p className="text-red-400 text-sm bg-[var(--bg-card)] border border-[var(--border-color)] p-3 rounded-lg text-center mt-6">
         {error}
       </p>
     );
 
   return (
-    <div className="bg-gray-50 min-h-screen space-y-8">
+    <div className="bg-[var(--bg-page)] min-h-screen space-y-8 text-[var(--text-primary)]">
       {/* Header */}
       <div className="flex sm:flex-row px-2">
-        <h1 className="text-2xl font-bold text-gray-800">Orders</h1>
+        <h1 className="text-2xl font-bold text-[var(--text-primary)]">
+          Orders
+        </h1>
       </div>
 
       {/* Orders Table */}
-      <div className="bg-white rounded-2xl shadow-md border border-gray-200 overflow-hidden">
+      <div className="bg-[var(--bg-card)] rounded-2xl shadow-md border border-[var(--border-color)] overflow-hidden">
         {orders.length === 0 ? (
-          <div className="py-12 text-center text-gray-500 italic">
+          <div className="py-12 text-center text-[var(--text-muted)] italic">
             No orders found
           </div>
         ) : (
-          <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+          <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-[#2a2a3a] scrollbar-track-[#000000]">
             <table className="w-full text-sm text-left border-collapse min-w-[700px]">
-              <thead className="bg-gray-100 text-gray-700 uppercase text-xs font-semibold tracking-wider">
+              <thead className="bg-[var(--bg-elevated)] text-[var(--text-secondary)] uppercase text-xs font-semibold tracking-wider">
                 <tr>
                   <th className="py-3 px-5">Order ID</th>
                   <th className="py-3 px-5">Customer</th>
@@ -43,13 +49,13 @@ const Orders = () => {
                   <th className="py-3 px-5 text-center">Actions</th>
                 </tr>
               </thead>
-              <tbody className="text-gray-600">
+              <tbody className="text-[var(--text-secondary)]">
                 {orders.map((order) => (
                   <tr
                     key={order._id}
-                    className="border-t hover:bg-gray-50 transition-colors duration-200"
+                    className="border-t border-[var(--border-color)] hover:bg-[var(--bg-section-dark)] transition-colors duration-200"
                   >
-                    <td className="py-3 px-5 font-medium text-gray-800">
+                    <td className="py-3 px-5 font-medium text-[var(--text-primary)]">
                       #{order._id.slice(-6)}
                     </td>
                     <td className="py-3 px-5">
@@ -58,16 +64,16 @@ const Orders = () => {
                     <td className="py-3 px-5">
                       {order.cartItems?.length || 0} items
                     </td>
-                    <td className="py-3 px-5 font-semibold text-gray-700">
+                    <td className="py-3 px-5 font-semibold text-[var(--text-primary)]">
                       ${order.orderSummary?.total?.toFixed(2) || "0.00"}
                     </td>
                     <td
                       className={`py-3 px-5 font-semibold ${
                         order.status === "Completed"
-                          ? "text-green-600"
+                          ? "text-green-500"
                           : order.status === "Pending"
-                          ? "text-yellow-600"
-                          : "text-red-600"
+                          ? "text-yellow-500"
+                          : "text-red-500"
                       }`}
                     >
                       {order.status || "Pending"}
@@ -75,14 +81,14 @@ const Orders = () => {
                     <td className="py-3 px-5 flex justify-center gap-3">
                       <button
                         onClick={() => setSelectedOrder(order)}
-                        className="flex items-center gap-1 bg-blue-500 text-white px-3 py-1.5 rounded-lg hover:bg-blue-600 active:scale-95 shadow-sm transition"
+                        className="flex items-center gap-1 bg-[var(--accent-blue)] text-white px-3 py-1.5 rounded-lg hover:bg-[var(--accent-hover)] active:scale-95 shadow-sm transition"
                       >
                         <Eye size={15} />
                         <span>View</span>
                       </button>
                       <button
                         onClick={() => deleteOrder(order._id)}
-                        className="flex items-center gap-1 bg-red-500 text-white px-3 py-1.5 rounded-lg hover:bg-red-600 active:scale-95 shadow-sm transition"
+                        className="flex items-center gap-1 bg-red-600 text-white px-3 py-1.5 rounded-lg hover:bg-red-700 active:scale-95 shadow-sm transition"
                       >
                         <Trash2 size={15} />
                         <span>Delete</span>

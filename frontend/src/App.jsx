@@ -51,18 +51,25 @@ const App = () => {
           <Route path="/shop" element={<Shop />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<About />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/product-details/:id" element={<ProductDetails />} />
           <Route
-            path="/cart"
+            path="/checkout"
             element={
-              <>
-                <Cart />
-              </>
+              <ProtectedRoute>
+                <Checkout />
+              </ProtectedRoute>
             }
           />
-          <Route path="/product-details/:id" element={<ProductDetails />} />
-          <Route path="/checkout" element={<Checkout />} />
           <Route path="order-success" element={<OrderSuccess />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
         </Route>
 
         <Route element={<AuthLayout />}>

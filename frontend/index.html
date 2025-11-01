@@ -4,9 +4,26 @@
     <meta charset="UTF-8" />
     <!-- <link rel="icon" type="image/svg+xml" href="/vite.svg" /> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (() => {
+        const theme = localStorage.getItem("theme");
+        if (
+          theme === "dark" ||
+          (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)
+        ) {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+      })();
+    </script>
     <title>ShopEase</title>
     <link rel="icon" type="image/png" href="/SE.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/android-chrome-512x512.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/android-chrome-512x512.png"
+    />
   </head>
   <body>
     <div id="root"></div>

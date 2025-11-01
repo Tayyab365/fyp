@@ -66,12 +66,12 @@ const OrderSummary = ({ formData, setFormData }) => {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 max-h-[500px] overflow-y-auto">
-      <h2 className="text-lg font-semibold text-[#1E293B] border-b border-gray-200 pb-3 mb-5">
+    <div className="bg-white dark:bg-[var(--bg-card)] rounded-xl shadow-sm border border-gray-100 dark:border-[var(--border-color)] p-6 max-h-[500px] overflow-y-auto transition-colors duration-300">
+      <h2 className="text-lg font-semibold text-[#1E293B] dark:text-[var(--text-primary)] border-b border-gray-200 dark:border-[var(--border-color)] pb-3 mb-5">
         Order Summary
       </h2>
 
-      <div className="space-y-3 text-[#1E293B] text-sm">
+      <div className="space-y-3 text-[#1E293B] dark:text-[var(--text-secondary)] text-sm">
         <div className="flex justify-between">
           <span>Subtotal</span>
           <span className="font-medium">${subTotal.toFixed(2)}</span>
@@ -84,7 +84,7 @@ const OrderSummary = ({ formData, setFormData }) => {
           <span>Tax</span>
           <span className="font-medium">${tax.toFixed(2)}</span>
         </div>
-        <div className="border-t border-gray-200 pt-3 flex justify-between font-semibold text-base">
+        <div className="border-t border-gray-200 dark:border-[var(--border-color)] pt-3 flex justify-between font-semibold text-base text-[#1E293B] dark:text-[var(--text-primary)]">
           <span>Total</span>
           <span>${total.toFixed(2)}</span>
         </div>
@@ -92,7 +92,7 @@ const OrderSummary = ({ formData, setFormData }) => {
 
       <button
         onClick={handlePlaceOrder}
-        className="w-full mt-5 bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-medium py-2.5 rounded-md transition duration-200"
+        className="w-full mt-5 bg-[var(--accent-blue)] hover:bg-[var(--accent-hover)] text-white font-medium py-2.5 rounded-md transition duration-200"
       >
         Place Order
       </button>

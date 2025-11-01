@@ -1,166 +1,100 @@
-import React, { useState } from "react";
+import React from "react";
 
 const CheckoutForm = ({ formData, setFormData }) => {
-  const formChange = (e) => {
-    const { name, value } = e.target;
-    const updatedForm = { ...formData, [name]: value };
-    setFormData(updatedForm);
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-      <h2 className="text-xl font-semibold text-[#1E293B] border-b border-gray-200 pb-3 mb-5">
-        Checkout Information
+    <form className="space-y-8 bg-white dark:bg-[var(--bg-card)] border border-gray-200 dark:border-[var(--border-color)] rounded-xl p-6 shadow-sm transition-colors duration-300">
+      <h2 className="text-2xl font-semibold text-[#1E293B] dark:text-[var(--text-primary)] border-b border-gray-200 dark:border-[var(--border-color)] pb-3">
+        Billing Details
       </h2>
 
-      <form className="space-y-6 text-sm">
-        <div>
-          <label className="block text-[#1E293B] font-medium mb-2">
-            Full Name
-          </label>
-          <input
-            type="text"
-            name="fullName"
-            value={formData.fullName}
-            onChange={formChange}
-            placeholder="Enter your full name"
-            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#2563EB] outline-none"
-          />
-        </div>
-
-        <div>
-          <label className="block text-[#1E293B] font-medium mb-2">
-            Email Address
-          </label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={formChange}
-            placeholder="you@example.com"
-            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#2563EB] outline-none"
-          />
-        </div>
-
-        <div>
-          <label className="block text-[#1E293B] font-medium mb-2">
-            Phone Number
-          </label>
-          <input
-            type="text"
-            name="phone"
-            value={formData.phone}
-            onChange={formChange}
-            placeholder="03XXXXXXXXX"
-            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#2563EB] outline-none"
-          />
-        </div>
-
-        <div>
-          <label className="block text-[#1E293B] font-medium mb-2">
-            Address
-          </label>
-          <input
-            type="text"
-            name="address"
-            value={formData.address}
-            onChange={formChange}
-            placeholder="House no, Street no"
-            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#2563EB] outline-none"
-          />
-        </div>
-
-        <div>
-          <label className="block text-[#1E293B] font-medium mb-2">City</label>
-          <input
-            type="text"
-            name="city"
-            value={formData.city}
-            onChange={formChange}
-            placeholder="Lahore, Karachi, etc."
-            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#2563EB] outline-none"
-          />
-        </div>
-
-        <div>
-          <label className="block text-[#1E293B] font-medium mb-2">
-            Payment Method
-          </label>
-          <select
-            name="paymentMethod"
-            value={formData.paymentMethod}
-            onChange={formChange}
-            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#2563EB] outline-none"
-          >
-            <option>Cash on Delivery</option>
-            <option>Credit/Debit Card</option>
-            <option>Easypaisa / JazzCash</option>
-          </select>
-        </div>
-
-        {formData.paymentMethod === "Credit/Debit Card" && (
-          <div className="space-y-4 animate-fadeIn">
-            <div>
-              <label className="block text-[#1E293B] font-medium mb-2">
-                Card Number
-              </label>
-              <input
-                type="text"
-                name="cardNumber"
-                value={formData.cardNumber}
-                onChange={formChange}
-                placeholder="XXXX-XXXX-XXXX-XXXX"
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#2563EB]"
-              />
-            </div>
-            <div className="flex gap-4">
-              <div className="w-1/2">
-                <label className="block text-[#1E293B] font-medium mb-2">
-                  Expiry Date
-                </label>
-                <input
-                  type="text"
-                  name="expiry"
-                  value={formData.expiry}
-                  onChange={formChange}
-                  placeholder="MM/YY"
-                  className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#2563EB]"
-                />
-              </div>
-              <div className="w-1/2">
-                <label className="block text-[#1E293B] font-medium mb-2">
-                  CVV
-                </label>
-                <input
-                  type="password"
-                  name="cvv"
-                  value={formData.cvv}
-                  onChange={formChange}
-                  placeholder="123"
-                  className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#2563EB]"
-                />
-              </div>
-            </div>
-          </div>
-        )}
-
-        {formData.paymentMethod === "Easypaisa / JazzCash" && (
-          <div className="animate-fadeIn">
-            <label className="block text-[#1E293B] font-medium mb-2">
-              Account / Mobile Number
+      {/* Basic Fields */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        {[
+          { label: "Full Name", name: "fullName" },
+          { label: "Email", name: "email" },
+          { label: "Phone", name: "phone" },
+          { label: "Address", name: "address" },
+          { label: "City", name: "city" },
+        ].map((field) => (
+          <div key={field.name}>
+            <label className="block text-sm font-medium text-[#1E293B] dark:text-[var(--text-secondary)] mb-1.5">
+              {field.label}
             </label>
             <input
               type="text"
-              name="easypaisaNumber"
-              value={formData.easypaisaNumber}
-              onChange={formChange}
-              placeholder="03XXXXXXXXX"
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#2563EB]"
+              name={field.name}
+              value={formData[field.name]}
+              onChange={handleChange}
+              placeholder={`Enter your ${field.label.toLowerCase()}`}
+              className="w-full bg-white dark:bg-[var(--bg-elevated)] text-[#1E293B] dark:text-[var(--text-primary)] border border-gray-300 dark:border-[var(--border-color)] rounded-lg px-4 py-2 focus:ring-2 focus:ring-[var(--accent-blue)] outline-none transition"
             />
           </div>
-        )}
-      </form>
-    </div>
+        ))}
+      </div>
+
+      {/* Payment Method */}
+      <div>
+        <label className="block text-sm font-medium text-[#1E293B] dark:text-[var(--text-secondary)] mb-1.5">
+          Payment Method
+        </label>
+        <select
+          name="paymentMethod"
+          value={formData.paymentMethod}
+          onChange={handleChange}
+          className="w-full bg-white dark:bg-[var(--bg-elevated)] text-[#1E293B] dark:text-[var(--text-primary)] border border-gray-300 dark:border-[var(--border-color)] rounded-lg px-4 py-2 focus:ring-2 focus:ring-[var(--accent-blue)] outline-none transition"
+        >
+          <option>Cash on Delivery</option>
+          <option>Credit/Debit Card</option>
+          <option>Easypaisa / JazzCash</option>
+        </select>
+      </div>
+
+      {/* Credit Card Fields */}
+      {formData.paymentMethod === "Credit/Debit Card" && (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 animate-fadeIn">
+          {[
+            { label: "Card Number", name: "cardNumber" },
+            { label: "Expiry", name: "expiry" },
+            { label: "CVV", name: "cvv" },
+          ].map((field) => (
+            <div key={field.name}>
+              <label className="block text-sm font-medium text-[#1E293B] dark:text-[var(--text-secondary)] mb-1.5">
+                {field.label}
+              </label>
+              <input
+                type="text"
+                name={field.name}
+                value={formData[field.name]}
+                onChange={handleChange}
+                placeholder={field.label}
+                className="w-full bg-white dark:bg-[var(--bg-elevated)] text-[#1E293B] dark:text-[var(--text-primary)] border border-gray-300 dark:border-[var(--border-color)] rounded-lg px-4 py-2 focus:ring-2 focus:ring-[var(--accent-blue)] outline-none transition"
+              />
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Easypaisa Field */}
+      {formData.paymentMethod === "Easypaisa / JazzCash" && (
+        <div className="animate-fadeIn">
+          <label className="block text-sm font-medium text-[#1E293B] dark:text-[var(--text-secondary)] mb-1.5">
+            Easypaisa / JazzCash Number
+          </label>
+          <input
+            type="text"
+            name="easypaisaNumber"
+            value={formData.easypaisaNumber}
+            onChange={handleChange}
+            placeholder="03XXXXXXXXX"
+            className="w-full bg-white dark:bg-[var(--bg-elevated)] text-[#1E293B] dark:text-[var(--text-primary)] border border-gray-300 dark:border-[var(--border-color)] rounded-lg px-4 py-2 focus:ring-2 focus:ring-[var(--accent-blue)] outline-none transition"
+          />
+        </div>
+      )}
+    </form>
   );
 };
 

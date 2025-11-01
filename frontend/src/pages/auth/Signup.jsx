@@ -23,8 +23,6 @@ const Signup = () => {
 
     try {
       const res = await signup(formData);
-      console.log("Signup response:", res);
-
       if (res.success) {
         toast.success("Verification code sent to your email!");
         navigate(`/verify-email?email=${res.email}`);
@@ -38,14 +36,19 @@ const Signup = () => {
   };
 
   return (
-    <div className="w-full max-w-md bg-white p-6 sm:p-8 rounded-lg shadow">
-      <h2 className="!text-2xl sm:text-3xl font-bold text-center mb-6 text-gray-800">
+    <div
+      className="w-full max-w-md bg-white dark:bg-[var(--bg-elevated)]
+      p-6 sm:px-8 sm:py-5 rounded-lg shadow border dark:border-[var(--border-color)]
+      transition-colors duration-300"
+    >
+      <h2 className="!text-2xl sm:text-3xl font-bold text-center mb-6 text-gray-800 dark:text-[var(--text-primary)]">
         Create Account
       </h2>
+
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Full Name */}
         <div>
-          <label className="block text-sm font-medium text-gray-600 mb-1">
+          <label className="block text-[var(--text-secondary)] font-medium mb-1">
             Full Name
           </label>
           <input
@@ -54,13 +57,13 @@ const Signup = () => {
             placeholder="Your Name"
             value={formData.name}
             onChange={handleChange}
-            className="w-full p-3 border rounded-lg text-sm sm:text-base focus:ring-2 focus:ring-green-500 outline-none"
+            className="w-full border border-[var(--border-color)] bg-[var(--bg-section-light)] p-3 rounded-lg focus:ring-2 focus:ring-[var(--accent-blue)] outline-none text-sm sm:text-base text-[var(--text-primary)]"
           />
         </div>
 
         {/* Email */}
         <div>
-          <label className="block text-sm font-medium text-gray-600 mb-1">
+          <label className="block text-[var(--text-secondary)] font-medium mb-1">
             Email
           </label>
           <input
@@ -69,13 +72,13 @@ const Signup = () => {
             placeholder="you@example.com"
             value={formData.email}
             onChange={handleChange}
-            className="w-full p-3 border rounded-lg text-sm sm:text-base focus:ring-2 focus:ring-green-500 outline-none"
+            className="w-full border border-[var(--border-color)] bg-[var(--bg-section-light)] p-3 rounded-lg focus:ring-2 focus:ring-[var(--accent-blue)] outline-none text-sm sm:text-base text-[var(--text-primary)]"
           />
         </div>
 
         {/* Password */}
         <div>
-          <label className="block text-sm font-medium text-gray-600 mb-1">
+          <label className="block text-[var(--text-secondary)] font-medium mb-1">
             Password
           </label>
           <div className="relative">
@@ -85,11 +88,11 @@ const Signup = () => {
               placeholder="********"
               value={formData.password}
               onChange={handleChange}
-              className="w-full p-3 border rounded-lg text-sm sm:text-base focus:ring-2 focus:ring-green-500 outline-none pr-10"
+              className="w-full border border-[var(--border-color)] bg-[var(--bg-section-light)] p-3 rounded-lg focus:ring-2 focus:ring-[var(--accent-blue)] outline-none text-sm sm:text-base text-[var(--text-primary)] pr-10"
             />
             <span
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-3 text-gray-500 cursor-pointer"
+              className="absolute right-3 top-3 text-[var(--text-muted)] cursor-pointer"
             >
               {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
             </span>
@@ -99,16 +102,25 @@ const Signup = () => {
         {/* Signup Button */}
         <button
           type="submit"
-          className="w-full bg-green-600 text-white py-2 sm:py-3 rounded-lg hover:bg-green-700 transition text-sm sm:text-base"
+          className="w-full bg-[var(--accent-blue)] text-white py-3 rounded-lg hover:bg-[var(--accent-hover)] transition text-sm sm:text-base"
         >
           Sign Up
         </button>
       </form>
 
-      <p className="text-center mt-4 text-sm sm:text-base text-gray-600">
+      <p className="text-center mt-4 text-sm sm:text-base text-gray-600 dark:text-[var(--text-secondary)]">
         Already have an account?{" "}
-        <Link to="/login" className="text-green-600 hover:underline">
+        <Link
+          to="/login"
+          className="text-[var(--accent-blue)] hover:text-[var(--accent-hover)]"
+        >
           Login
+        </Link>
+      </p>
+      <p className="text-center mt-4 text-sm sm:text-base text-gray-600 dark:text-[var(--text-secondary)]">
+        Don’t want to Signup?{" "}
+        <Link to="/" className="text-[var(--accent-blue)]">
+          Continue as Guest
         </Link>
       </p>
     </div>

@@ -16,7 +16,11 @@ const Rating = ({ value, text }) => {
           )}
         </span>
       ))}
-      {text && <span className="ml-2 text-sm text-gray-600">{text}</span>}
+      {text && (
+        <span className="ml-2 text-sm text-gray-600 dark:text-[var(--text-secondary)]">
+          {text}
+        </span>
+      )}
     </div>
   );
 };

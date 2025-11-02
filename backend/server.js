@@ -19,7 +19,7 @@ app.use(
       "https://tayyab-fyp.netlify.app", // ✅ your Netlify live site URL
       "http://localhost:5173", // ✅ for local testing
     ],
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
   })
 );

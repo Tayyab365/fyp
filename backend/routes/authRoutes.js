@@ -44,17 +44,26 @@ router.post("/signup", async (req, res) => {
     await tempUser.save();
 
     // 6️⃣ Send verification email
+    // const transporter = nodemailer.createTransport({
+    //   host: process.env.SMTP_HOST,
+    //   port: process.env.SMTP_PORT,
+    //   auth: {
+    //     user: process.env.SMTP_USER,
+    //     pass: process.env.SMTP_PASS,
+    //   },
+    // });
+
     const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: process.env.SMTP_PORT,
+      host: "live.smtp.mailtrap.io",
+      port: 587,
       auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
+        user: "api",
+        pass: process.env.MAILTRAP_TOKEN,
       },
     });
 
     await transporter.sendMail({
-      from: `"GameStore Support" <${process.env.SMTP_FROM}>`,
+      from: process.env.MAILTRAP_FROM,
       to: email,
       subject: "Verify your GameStore Account",
       html: `

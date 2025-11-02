@@ -24,10 +24,10 @@ const Signup = () => {
     try {
       const res = await signup(formData);
       if (res.success) {
-        // toast.success("Verification code sent to your email!");
-        // navigate(`/verify-email?email=${res.email}`);
-        toast.success("Signup successful! You can now login.");
-        navigate("/login");
+        toast.success("Verification code sent to your email!");
+        navigate(`/verify-email?email=${res.email}`);
+        // toast.success("Signup successful! You can now login.");
+        // navigate("/login");
       } else {
         toast.error(res.message || "Signup failed");
       }

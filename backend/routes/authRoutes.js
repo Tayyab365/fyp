@@ -8,73 +8,108 @@ import TempUser from "../models/TempUser.js";
 
 const router = express.Router();
 
-// ✅ Signup Route (FINAL)
+// ✅ Signup Route (FINAL) with verification email
+// router.post("/signup", async (req, res) => {
+//   console.log("✅ Signup route hit");
+//   console.log("Body received:", req.body);
+//   try {
+//     const { name, email, password } = req.body;
+
+//     // 1️⃣ Check if user already exists in real users
+//     const existingUser = await User.findOne({ email });
+//     if (existingUser)
+//       return res
+//         .status(400)
+//         .json({ success: false, message: "User already exists" });
+
+//     // 2️⃣ Delete any old temp user
+//     await TempUser.deleteOne({ email });
+
+//     // 3️⃣ Generate 6-digit verification code
+//     const verificationCode = Math.floor(
+//       100000 + Math.random() * 900000
+//     ).toString();
+
+//     // 4️⃣ Hash password temporarily
+//     const hashedPassword = await bcrypt.hash(password, 10);
+
+//     // 5️⃣ Save temp user
+//     const tempUser = new TempUser({
+//       name,
+//       email,
+//       password: hashedPassword,
+//       verificationCode,
+//       expiresAt: new Date(Date.now() + 15 * 60 * 1000),
+//     });
+//     await tempUser.save();
+
+//     // 6️⃣ Send verification email
+//     const transporter = nodemailer.createTransport({
+//       host: process.env.SMTP_HOST,
+//       port: process.env.SMTP_PORT,
+//       auth: {
+//         user: process.env.SMTP_USER,
+//         pass: process.env.SMTP_PASS,
+//       },
+//     });
+
+//     await transporter.sendMail({
+//       from: `"GameStore Support" <${process.env.SMTP_FROM}>`,
+//       to: email,
+//       subject: "Verify your GameStore Account",
+//       html: `
+//         <h3>Hi ${name},</h3>
+//         <p>Your verification code is:</p>
+//         <h2>${verificationCode}</h2>
+//         <p>This code will expire in 15 minutes.</p>
+//       `,
+//     });
+
+//     res.status(200).json({
+//       success: true,
+//       message: "Verification code sent to your email.",
+//       email,
+//     });
+//   } catch (error) {
+//     console.error("Signup Error:", error);
+//     res
+//       .status(500)
+//       .json({ success: false, message: "Server error during signup" });
+//   }
+// });
+
 router.post("/signup", async (req, res) => {
-  console.log("✅ Signup route hit");
-  console.log("Body received:", req.body);
+  console.log("✅ TEMP Signup route hit");
   try {
     const { name, email, password } = req.body;
 
-    // 1️⃣ Check if user already exists in real users
     const existingUser = await User.findOne({ email });
     if (existingUser)
       return res
         .status(400)
         .json({ success: false, message: "User already exists" });
 
-    // 2️⃣ Delete any old temp user
-    await TempUser.deleteOne({ email });
-
-    // 3️⃣ Generate 6-digit verification code
-    const verificationCode = Math.floor(
-      100000 + Math.random() * 900000
-    ).toString();
-
-    // 4️⃣ Hash password temporarily
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // 5️⃣ Save temp user
-    const tempUser = new TempUser({
+    const newUser = new User({
       name,
       email,
       password: hashedPassword,
-      verificationCode,
-      expiresAt: new Date(Date.now() + 15 * 60 * 1000),
-    });
-    await tempUser.save();
-
-    // 6️⃣ Send verification email
-    const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: process.env.SMTP_PORT,
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
+      role: "Customer",
     });
 
-    await transporter.sendMail({
-      from: `"GameStore Support" <${process.env.SMTP_FROM}>`,
-      to: email,
-      subject: "Verify your GameStore Account",
-      html: `
-        <h3>Hi ${name},</h3>
-        <p>Your verification code is:</p>
-        <h2>${verificationCode}</h2>
-        <p>This code will expire in 15 minutes.</p>
-      `,
-    });
+    await newUser.save();
 
     res.status(200).json({
       success: true,
-      message: "Verification code sent to your email.",
-      email,
+      message: "Signup successful. You can now login.",
     });
   } catch (error) {
     console.error("Signup Error:", error);
-    res
-      .status(500)
-      .json({ success: false, message: "Server error during signup" });
+    res.status(500).json({
+      success: false,
+      message: "Server error during signup",
+    });
   }
 });
 

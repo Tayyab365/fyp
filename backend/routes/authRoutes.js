@@ -68,7 +68,7 @@ router.post("/signup", async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Verification code sent to your email.",
-      email,
+      email: email,
     });
   } catch (error) {
     console.error("Signup Error:", error);

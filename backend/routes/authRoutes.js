@@ -10,6 +10,8 @@ const router = express.Router();
 
 // ✅ Signup Route (FINAL)
 router.post("/signup", async (req, res) => {
+  console.log("✅ Signup route hit");
+  console.log("Body received:", req.body);
   try {
     const { name, email, password } = req.body;
 

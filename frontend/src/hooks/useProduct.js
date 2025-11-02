@@ -11,7 +11,9 @@ export function useProduct(_id) {
       setError(null);
 
       try {
-        const res = await fetch(`http://localhost:5000/api/products/${_id}`);
+        const res = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/products/${_id}`
+        );
         if (!res.ok) {
           throw new Error(`Failed to fetch products: ${res.status}`);
         }

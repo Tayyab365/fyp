@@ -30,7 +30,7 @@ export const changePassword = async ({ currentPassword, newPassword }) => {
   try {
     const token = localStorage.getItem("token");
     const response = await fetch(
-      "http://localhost:5000/api/users/change-password",
+      `${import.meta.env.VITE_API_URL}/api/users/change-password`,
       {
         method: "PUT",
         headers: {

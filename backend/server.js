@@ -13,7 +13,16 @@ connectDB();
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "https://tayyab-fyp.netlify.app", // ✅ your Netlify live site URL
+      "http://localhost:5173", // ✅ for local testing
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 app.use("/api/products", productRoutes);

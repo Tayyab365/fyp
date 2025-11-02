@@ -8,7 +8,7 @@ const FeaturedProducts = () => {
   const { dispatch } = useContext(cartContext);
   const { product, loading, error } = useProduct();
 
-  const API_URL = "http://localhost:5000/api/products";
+  const API_URL = `${import.meta.env.VITE_API_URL}/api/products`;
 
   const addToCart = (product) => {
     dispatch({ type: "ADD_ITEM", payload: product });

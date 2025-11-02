@@ -25,6 +25,7 @@ const Signup = () => {
       const res = await signup(formData);
       if (res.success) {
         toast.success("Verification code sent to your email!");
+        localStorage.setItem("pendingEmail", res.email);
         navigate(`/verify-email?email=${res.email}`);
         // toast.success("Signup successful! You can now login.");
         // navigate("/login");

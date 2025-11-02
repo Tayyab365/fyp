@@ -6,7 +6,8 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 const VerifyEmail = () => {
   const [code, setCode] = useState("");
   const [searchParams] = useSearchParams();
-  const email = searchParams.get("email");
+  const email =
+    searchParams.get("email") || localStorage.getItem("pendingEmail");
   const navigate = useNavigate();
 
   const handleVerify = async () => {

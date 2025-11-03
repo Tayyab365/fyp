@@ -94,7 +94,7 @@ const Login = () => {
             Remember Me
           </label>
           <Link
-            to="/forgot-password"
+            to="/reset-password"
             className="text-[var(--accent-blue)] hover:text-[var(--accent-hover)]"
           >
             Forgot Password?

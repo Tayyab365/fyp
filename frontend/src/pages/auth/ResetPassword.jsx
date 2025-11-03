@@ -4,16 +4,18 @@ import axios from "../../api/axios";
 import toast from "react-hot-toast";
 
 export default function ResetPassword() {
-  const [searchParams] = useSearchParams();
-  const email = searchParams.get("email");
-  const token = searchParams.get("token");
+  // const [searchParams] = useSearchParams();
+  // const email = searchParams.get("email");
+  // const token = searchParams.get("token");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!password || !confirm) return toast.error("Please fill both fields");
+    if (!email || !password || !confirm)
+      return toast.error("Please fill all fields");
     if (password !== confirm) return toast.error("Passwords do not match");
 
     try {
@@ -40,6 +42,17 @@ export default function ResetPassword() {
       </h2>
 
       <form onSubmit={handleSubmit}>
+        <input
+          type="email"
+          placeholder="Enter your email"
+          className="w-full border p-3 rounded mb-3
+          bg-white dark:bg-[var(--bg-card)]
+          text-gray-900 dark:text-[var(--text-primary)]
+          border-gray-300 dark:border-[var(--border-color)]
+          focus:ring-2 focus:ring-[var(--accent-blue)] outline-none"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
         <input
           type="password"
           placeholder="New password"

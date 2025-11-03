@@ -310,7 +310,7 @@ router.post("/forgot-password", async (req, res) => {
 
 // reset password direct without verification
 
-router.post("/reset-password-direct", async (req, res) => {
+router.post("/reset-password", async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });

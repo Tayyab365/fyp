@@ -273,37 +273,62 @@ router.post("/forgot-password", async (req, res) => {
 });
 
 // ✅ FIXED Reset Password Route
-router.post("/reset-password", async (req, res) => {
-  const { email, token, password } = req.body;
-  try {
-    // 🔹 Fix: Match both email & token properly and check expiry
-    const user = await User.findOne({
-      email,
-      resetPasswordToken: token,
-      resetPasswordExpires: { $gt: Date.now() },
-    });
+// router.post("/reset-password", async (req, res) => {
+//   const { email, token, password } = req.body;
+//   try {
+//     // 🔹 Fix: Match both email & token properly and check expiry
+//     const user = await User.findOne({
+//       email,
+//       resetPasswordToken: token,
+//       resetPasswordExpires: { $gt: Date.now() },
+//     });
 
+//     if (!user)
+//       return res
+//         .status(400)
+//         .json({ success: false, message: "Invalid or expired token." });
+
+//     // 🔹 Fix: Always hash the new password manually
+//     const hashedPassword = await bcrypt.hash(password, 10);
+//     user.password = hashedPassword;
+
+//     // 🔹 Clear reset token fields
+//     user.resetPasswordToken = undefined;
+//     user.resetPasswordExpires = undefined;
+
+//     await user.save();
+
+//     res.status(200).json({
+//       success: true,
+//       message: "Password reset successful. You can now login.",
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ success: false, message: "Server error" });
+//   }
+// });
+
+// reset password direct without verification
+
+router.post("/reset-password-direct", async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const user = await User.findOne({ email });
     if (!user)
       return res
-        .status(400)
-        .json({ success: false, message: "Invalid or expired token." });
+        .status(404)
+        .json({ success: false, message: "User not found" });
 
-    // 🔹 Fix: Always hash the new password manually
     const hashedPassword = await bcrypt.hash(password, 10);
     user.password = hashedPassword;
-
-    // 🔹 Clear reset token fields
-    user.resetPasswordToken = undefined;
-    user.resetPasswordExpires = undefined;
-
     await user.save();
 
     res.status(200).json({
       success: true,
-      message: "Password reset successful. You can now login.",
+      message: "Password updated successfully",
     });
   } catch (error) {
-    console.error(error);
+    console.error("Reset Password Error:", error);
     res.status(500).json({ success: false, message: "Server error" });
   }
 });

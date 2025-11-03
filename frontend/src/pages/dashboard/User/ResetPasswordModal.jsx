@@ -22,7 +22,7 @@ const ResetPasswordModal = ({ userId, isOpen, onClose }) => {
     setLoading(true);
     try {
       const res = await fetch(
-        `http://localhost:5000/api/users/${userId}/reset-password`,
+        `${import.meta.env.VITE_API_URL}/api/users/${userId}/reset-password`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },

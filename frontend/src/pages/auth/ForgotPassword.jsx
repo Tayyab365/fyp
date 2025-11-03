@@ -6,18 +6,25 @@ export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   if (!email) return toast.error("Please enter your email");
+  //   setLoading(true);
+  //   try {
+  //     await axios.post("/auth/forgot-password", { email });
+  //     toast.success("If that email exists, a reset link has been sent.");
+  //   } catch {
+  //     toast.error("Something went wrong.");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (!email) return toast.error("Please enter your email");
-    setLoading(true);
-    try {
-      await axios.post("/auth/forgot-password", { email });
-      toast.success("If that email exists, a reset link has been sent.");
-    } catch {
-      toast.error("Something went wrong.");
-    } finally {
-      setLoading(false);
-    }
+    // ✅ Directly navigate to reset password page (no email sent)
+    navigate(`/reset-password?email=${email}`);
   };
 
   return (

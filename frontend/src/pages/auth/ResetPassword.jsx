@@ -17,11 +17,11 @@ export default function ResetPassword() {
     if (password !== confirm) return toast.error("Passwords do not match");
 
     try {
-      await axios.post("/auth/reset-password", { email, token, password });
+      await axios.post("/auth/reset-password", { email, password }); // token b likhna ha email or password k sath agr verification wala krna ha to
       toast.success("Password reset successful!");
       navigate("/login");
     } catch (err) {
-      toast.error(err.response?.data?.message || "Invalid or expired link");
+      toast.error(err.response?.data?.message || "Something went wrong");
     }
   };
 

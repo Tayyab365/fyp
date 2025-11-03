@@ -16,6 +16,7 @@ const app = express();
 app.use(
   cors({
     origin: [
+      "https://tayyab-fyp.vercel.app",
       "https://tayyab-fyp.netlify.app", // ✅ your Netlify live site URL
       "http://localhost:5173", // ✅ for local testing
     ],

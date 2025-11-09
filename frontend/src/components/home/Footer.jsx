@@ -18,7 +18,7 @@ const Footer = () => {
           <h3 className="text-lg font-semibold text-[#1E293B] dark:text-white mb-4">
             Quick Links
           </h3>
-          <ul className="space-y-2 text-sm">
+          <ul className="space-y-2 text-sm font-semibold">
             <li>
               <Link
                 to="/"
@@ -62,7 +62,7 @@ const Footer = () => {
               href="https://facebook.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 flex items-center justify-center rounded-full bg-[#F1F5F9] dark:bg-[#252535] text-[#475569] dark:text-[#b3b3b3] hover:bg-[#2563EB] hover:text-white transition"
+              className="w-10 h-10 flex items-center justify-center rounded-full bg-[#1877F2] dark:bg-[#1a1a24] text-[#FFFFFF] dark:text-[#1877F2]"
             >
               <FaFacebookF size={16} />
             </a>
@@ -70,7 +70,7 @@ const Footer = () => {
               href="https://instagram.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 flex items-center justify-center rounded-full bg-[#F1F5F9] dark:bg-[#252535] text-[#475569] dark:text-[#b3b3b3] hover:bg-[#2563EB] hover:text-white transition"
+              className="w-10 h-10 flex items-center justify-center rounded-full bg-gradient-to-tr from-[#F58529] via-[#DD2A7B] to-[#515BD4] dark:bg-[#1a1a24] text-[#FFFFFF] dark:text-white"
             >
               <FaInstagram size={16} />
             </a>
@@ -78,9 +78,9 @@ const Footer = () => {
               href="https://x.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 flex items-center justify-center rounded-full bg-[#F1F5F9] dark:bg-[#252535] text-[#475569] dark:text-[#b3b3b3] hover:bg-[#2563EB] hover:text-white transition"
+              className="w-10 h-10 font-bold flex items-center justify-center rounded-full bg-[#000000] dark:bg-[#1a1a24] text-[#FFFFFF] dark:text-white"
             >
-              <FaTwitter size={16} />
+              X
             </a>
           </div>
         </div>

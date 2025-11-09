@@ -22,7 +22,7 @@ const Orders = () => {
     );
 
   return (
-    <div className="bg-[var(--bg-page)] min-h-screen space-y-8 text-[var(--text-primary)]">
+    <div className="min-h-screen space-y-8 text-[var(--text-primary)]">
       {/* Header */}
       <div className="flex sm:flex-row px-2">
         <h1 className="text-2xl font-bold text-[var(--text-primary)]">
@@ -31,7 +31,7 @@ const Orders = () => {
       </div>
 
       {/* Orders Table */}
-      <div className="bg-[var(--bg-card)] rounded-2xl shadow-md border border-[var(--border-color)] overflow-hidden">
+      <div className=" rounded-2xl border border-[var(--border-color)] shadow-md overflow-hidden">
         {orders.length === 0 ? (
           <div className="py-12 text-center text-[var(--text-muted)] italic">
             No orders found

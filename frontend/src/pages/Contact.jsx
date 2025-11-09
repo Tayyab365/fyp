@@ -43,16 +43,16 @@ const Contact = () => {
         </form>
 
         <div className="flex flex-col justify-center space-y-6 text-gray-700 dark:text-[var(--text-secondary)] px-2">
-          <h2 className="text-3xl font-bold text-gray-800 dark:text-[var(--text-primary)] mb-3">
+          <h2 className="text-2xl font-bold text-gray-800 dark:text-[var(--text-primary)] mb-3">
             Get in Touch
           </h2>
-          <p className="flex items-center gap-3 text-base md:text-lg">
+          <p className="flex items-center gap-3 text-base md:text-md">
             📧 mtayyab3897@gmail.com
           </p>
-          <p className="flex items-center gap-3 text-base md:text-lg">
+          <p className="flex items-center gap-3 text-base md:text-md">
             📞 +92 306 1822394
           </p>
-          <p className="flex items-center gap-3 text-base md:text-lg">
+          <p className="flex items-center gap-3 text-base md:text-md">
             📍 123 Main Street, Lahore, Pakistan
           </p>
         </div>

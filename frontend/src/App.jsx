@@ -98,7 +98,7 @@ const App = () => {
         <Route path="*" element={<NotFound />} />
       </Routes>
 
-      <Toaster position="center-center" reverseOrder={false} />
+      <Toaster position="top-right" reverseOrder={false} />
 
       <ChatbotButton onToggle={toggleChat} isOpen={isChatOpen} />
       {isChatOpen && <ChatWindow onClose={toggleChat} />}

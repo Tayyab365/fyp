@@ -58,7 +58,7 @@ const Users = () => {
       </div>
 
       {/* Table */}
-      <div className="bg-[var(--bg-card)] rounded-2xl shadow-md border border-[var(--border-color)] overflow-hidden">
+      <div className="rounded-2xl shadow-md border border-[var(--border-color)] overflow-hidden">
         <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-[#2a2a3a] scrollbar-track-[#000000]">
           <table className="w-full text-sm text-left border-collapse min-w-[700px]">
             <thead className="bg-[var(--bg-elevated)] text-[var(--text-secondary)] uppercase text-xs font-semibold tracking-wider">

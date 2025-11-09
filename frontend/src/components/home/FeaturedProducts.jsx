@@ -37,7 +37,7 @@ const FeaturedProducts = () => {
               key={product._id}
               className="bg-white dark:bg-[#1a1a24] rounded-lg shadow-md dark:shadow-black/50 hover:shadow-xl dark:hover:shadow-black/70 transition-all duration-300 hover:-translate-y-2 p-5 flex flex-col border border-[#E2E8F0] dark:border-[#2a2a3a] h-full"
             >
-              <div className="h-40 w-full mb-4 flex items-center justify-center overflow-hidden rounded-lg bg-white dark:bg-black">
+              <div className="h-40 w-full mb-4 flex items-center justify-center overflow-hidden rounded-lg bg-white dark:bg-[#1a1a24]">
                 <img
                   src={product.image}
                   alt={product.name}

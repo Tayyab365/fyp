@@ -41,8 +41,8 @@ const Login = () => {
   return (
     <div
       className="bg-white dark:bg-[var(--bg-elevated)] 
-  p-6 sm:p-8 rounded-lg shadow-lg w-full max-w-md 
-  transition-colors duration-300 border dark:border-[var(--border-color)]"
+                  p-6 sm:p-8 rounded-lg shadow-lg w-full max-w-md 
+                  transition-colors duration-300 border dark:border-[var(--border-color)]"
     >
       <h2 className="text-2xl sm:text-3xl font-bold text-center text-[var(--text-primary)] mb-6">
         Login

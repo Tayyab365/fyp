@@ -18,11 +18,11 @@ const Footer = () => {
           <h3 className="text-lg font-semibold text-[#1E293B] dark:text-white mb-4">
             Quick Links
           </h3>
-          <ul className="space-y-2 text-sm font-semibold">
+          <ul className="space-y-2 text-sm font-medium">
             <li>
               <Link
                 to="/"
-                className="hover:text-[#2563EB] text-[#475569] dark:text-[#b3b3b3]"
+                className="hover:text-[#2563EB] dark:hover:text-[#2563EB] text-[#475569] dark:text-[#b3b3b3]"
               >
                 Home
               </Link>
@@ -30,7 +30,7 @@ const Footer = () => {
             <li>
               <Link
                 to="/shop"
-                className="hover:text-[#2563EB] text-[#475569] dark:text-[#b3b3b3]"
+                className="hover:text-[#2563EB] dark:hover:text-[#2563EB] text-[#475569] dark:text-[#b3b3b3]"
               >
                 Shop
               </Link>
@@ -38,7 +38,7 @@ const Footer = () => {
             <li>
               <Link
                 to="/about"
-                className="hover:text-[#2563EB] text-[#475569] dark:text-[#b3b3b3]"
+                className="hover:text-[#2563EB] dark:hover:text-[#2563EB] text-[#475569] dark:text-[#b3b3b3]"
               >
                 About
               </Link>
@@ -46,7 +46,7 @@ const Footer = () => {
             <li>
               <Link
                 to="/contact"
-                className="hover:text-[#2563EB] text-[#475569] dark:text-[#b3b3b3]"
+                className="hover:text-[#2563EB] dark:hover:text-[#2563EB] text-[#475569] dark:text-[#b3b3b3]"
               >
                 Contact
               </Link>

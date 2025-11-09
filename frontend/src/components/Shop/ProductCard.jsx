@@ -79,13 +79,13 @@ const ProductCard = ({ selectedCategory }) => {
             <div className="mt-4 flex flex-col sm:flex-row gap-2">
               <button
                 onClick={() => addToCart(product)}
-                className="w-full sm:flex-1 py-1.5 rounded-lg bg-[#2563EB] text-white font-semibold text-sm md:text-base hover:bg-[#1D4ED8] transition"
+                className="w-full sm:flex-1 py-1.5 rounded-lg bg-[#2563EB] text-white font-semibold text-sm md:text-md hover:bg-[#1D4ED8] transition"
               >
                 Add to Cart
               </button>
               <Link
                 to={`/product-details/${product._id}`}
-                className="w-full sm:flex-1 py-1.5 text-center rounded-lg bg-white dark:bg-transparent border border-[#2563EB] text-[#2563EB] font-semibold text-sm md:text-base hover:bg-[#2563EB] hover:text-white transition"
+                className="w-full sm:flex-1 py-1.5 text-center rounded-lg bg-white dark:bg-transparent border border-[#2563EB] text-[#2563EB] font-semibold text-sm md:text-md hover:bg-[#2563EB] hover:text-white transition"
               >
                 View Product
               </Link>

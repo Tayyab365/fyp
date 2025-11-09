@@ -93,7 +93,7 @@ const ProductDetails = () => {
 
         {/* Product Info */}
         <div className="flex flex-col justify-center space-y-3">
-          <h1 className="text-2xl sm:text-3xl font-semibold text-gray-800 dark:text-[var(--text-primary)] tracking-tight">
+          <h1 className="text-2xl sm:text-2xl font-semibold text-gray-800 dark:text-[var(--text-primary)] tracking-tight">
             {product.name}
           </h1>
 
@@ -104,26 +104,36 @@ const ProductDetails = () => {
             />
           </div>
 
-          <p className="text-[var(--accent-blue)] text-2xl font-bold mt-2">
+          <p className="text-[var(--accent-blue)] text-xl font-bold mt-2">
             ${product.price}
           </p>
 
-          <p className="text-gray-600 dark:text-[var(--text-secondary)] leading-relaxed text-[15px] sm:text-base max-w-lg">
+          <p className="text-gray-600 dark:text-[var(--text-secondary)] leading-relaxed text-[15px] sm:text-md max-w-lg">
             {product.description ||
               "No description available for this product."}
           </p>
 
           {/* Quantity Selector */}
-          <div className="flex items-center gap-3 mt-3">
-            <span className="font-medium text-gray-700 dark:text-[var(--text-primary)]">
+          <div className="flex items-center gap-2 mt-2">
+            <span className="font-medium text-gray-700 dark:text-[var(--text-primary)] text-sm">
               Quantity:
             </span>
             <input
               type="number"
               min="1"
               value={quantity}
-              onChange={(e) => setQuantity(Number(e.target.value))}
-              className="w-20 border border-gray-300 dark:border-[var(--border-color)] bg-white dark:bg-[var(--bg-card)] text-gray-800 dark:text-[var(--text-primary)] rounded-md text-center py-1.5 focus:ring-2 focus:ring-[var(--accent-blue)] focus:border-[var(--accent-blue)] transition-all font-medium"
+              onChange={(e) => {
+                const val = e.target.value;
+                if (val === "") {
+                  setQuantity("");
+                } else {
+                  setQuantity(Number(val));
+                }
+              }}
+              onBlur={() => {
+                if (!quantity || quantity < 1) setQuantity(1);
+              }}
+              className="w-12 border border-gray-300 dark:border-[var(--border-color)] bg-white dark:bg-[var(--bg-card)] text-gray-800 dark:text-[var(--text-primary)] rounded-md text-center py-[2px] focus:ring-1 focus:ring-[var(--accent-blue)] focus:border-[var(--accent-blue)] transition-all text-sm font-medium [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             />
           </div>
 
@@ -131,7 +141,7 @@ const ProductDetails = () => {
           <div className="flex flex-col sm:flex-row gap-3 mt-5">
             <button
               onClick={addToCart}
-              className="bg-[var(--accent-blue)] hover:bg-[var(--accent-hover)] text-white px-5 py-2.5 rounded-lg font-medium shadow-sm hover:shadow-md transition-all"
+              className="bg-[var(--accent-blue)] hover:bg-[var(--accent-hover)] text-white px-5 py-1.5 rounded-lg font-medium shadow-sm hover:shadow-md transition-all"
             >
               Add to Cart
             </button>
@@ -172,7 +182,7 @@ const ProductDetails = () => {
           <button
             onClick={submitReview}
             disabled={submitting}
-            className="bg-[var(--accent-blue)] hover:bg-[var(--accent-hover)] text-white px-5 py-2 rounded-md font-medium"
+            className="bg-[var(--accent-blue)] hover:bg-[var(--accent-hover)] text-white px-5 py-1.5 rounded-lg font-medium"
           >
             {submitting ? "Submitting..." : "Submit Review"}
           </button>

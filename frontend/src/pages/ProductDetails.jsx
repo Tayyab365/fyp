@@ -33,7 +33,7 @@ const ProductDetails = () => {
     setSubmitting(true);
     try {
       const res = await fetch(
-        `http://localhost:5000/api/products/${product._id}/reviews`,
+        `${import.meta.env.VITE_API_URL}/api/products/${product._id}/reviews`,
         {
           method: "POST",
           headers: {

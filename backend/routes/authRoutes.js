@@ -56,10 +56,13 @@ router.post("/signup", async (req, res) => {
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
       port: process.env.SMTP_PORT,
-      secure: false,
+      secure: true, // ✅ true for port 465
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
+      },
+      tls: {
+        rejectUnauthorized: false, // ✅ Important for some servers
       },
     });
 

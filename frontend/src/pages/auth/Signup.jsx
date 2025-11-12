@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 import toast from "react-hot-toast";
-import { signup } from "../../hooks/useAuth";
+import API from "../../api/axios";
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -21,28 +22,37 @@ const Signup = () => {
     e.preventDefault();
     toast.dismiss();
 
+    // Validation
+    if (!formData.name || !formData.email || !formData.password) {
+      return toast.error("All fields are required!");
+    }
+
+    if (formData.password.length < 6) {
+      return toast.error("Password must be at least 6 characters!");
+    }
+
+    setLoading(true);
     try {
-      const res = await signup(formData);
-      if (res.success) {
-        // toast.success("Verification code sent to your email!");
-        // navigate(`/verify-email?email=${res.email}`);
-        toast.success("Signup successful! You can now login.");
-        navigate("/login");
+      const res = await API.post("/auth/signup", formData);
+
+      if (res.data.success) {
+        toast.success("Verification code sent to your email!");
+        navigate(`/verify-email?email=${res.data.email}`);
       } else {
-        toast.error(res.message || "Signup failed");
+        toast.error(res.data.message || "Signup failed");
       }
     } catch (error) {
       console.error("Signup error:", error);
-      toast.error("Server error, please try again");
+      toast.error(
+        error.response?.data?.message || "Server error. Please try again."
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div
-      className="w-full max-w-md bg-white dark:bg-[var(--bg-elevated)]
-      p-6 sm:px-8 sm:py-5 rounded-lg shadow border dark:border-[var(--border-color)]
-      transition-colors duration-300"
-    >
+    <div className="w-full max-w-md bg-white dark:bg-[var(--bg-elevated)] p-6 sm:px-8 sm:py-5 rounded-lg shadow border dark:border-[var(--border-color)] transition-colors duration-300">
       <h2 className="!text-2xl sm:text-3xl font-bold text-center mb-6 text-gray-800 dark:text-[var(--text-primary)]">
         Create Account
       </h2>
@@ -60,6 +70,7 @@ const Signup = () => {
             value={formData.name}
             onChange={handleChange}
             className="w-full border border-[var(--border-color)] bg-[var(--bg-section-light)] p-3 rounded-lg focus:ring-2 focus:ring-[var(--accent-blue)] outline-none text-sm sm:text-base text-[var(--text-primary)]"
+            disabled={loading}
           />
         </div>
 
@@ -75,6 +86,7 @@ const Signup = () => {
             value={formData.email}
             onChange={handleChange}
             className="w-full border border-[var(--border-color)] bg-[var(--bg-section-light)] p-3 rounded-lg focus:ring-2 focus:ring-[var(--accent-blue)] outline-none text-sm sm:text-base text-[var(--text-primary)]"
+            disabled={loading}
           />
         </div>
 
@@ -87,10 +99,11 @@ const Signup = () => {
             <input
               type={showPassword ? "text" : "password"}
               name="password"
-              placeholder="********"
+              placeholder="Min. 6 characters"
               value={formData.password}
               onChange={handleChange}
               className="w-full border border-[var(--border-color)] bg-[var(--bg-section-light)] p-3 rounded-lg focus:ring-2 focus:ring-[var(--accent-blue)] outline-none text-sm sm:text-base text-[var(--text-primary)] pr-10"
+              disabled={loading}
             />
             <span
               onClick={() => setShowPassword(!showPassword)}
@@ -104,9 +117,10 @@ const Signup = () => {
         {/* Signup Button */}
         <button
           type="submit"
-          className="w-full bg-[var(--accent-blue)] text-white py-3 rounded-lg hover:bg-[var(--accent-hover)] transition text-sm sm:text-base"
+          disabled={loading}
+          className="w-full bg-[var(--accent-blue)] text-white py-3 rounded-lg hover:bg-[var(--accent-hover)] transition text-sm sm:text-base disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Sign Up
+          {loading ? "Signing up..." : "Sign Up"}
         </button>
       </form>
 
@@ -119,8 +133,9 @@ const Signup = () => {
           Login
         </Link>
       </p>
-      <p className="text-center mt-4 text-sm sm:text-base text-gray-600 dark:text-[var(--text-secondary)]">
-        Don’t want to Signup?{" "}
+
+      <p className="text-center mt-2 text-sm sm:text-base text-gray-600 dark:text-[var(--text-secondary)]">
+        Don't want to Signup?{" "}
         <Link to="/" className="text-[var(--accent-blue)]">
           Continue as Guest
         </Link>

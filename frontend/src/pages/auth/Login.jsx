@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 import toast from "react-hot-toast";
-import { login } from "../../hooks/useAuth";
+import API from "../../api/axios";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -19,31 +20,41 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    toast.dismiss();
+
     const { email, password } = formData;
 
     if (!email || !password) {
-      toast.error("Please fill all fields!");
-      return;
+      return toast.error("Please fill all fields!");
     }
 
+    setLoading(true);
     try {
-      const res = await login(formData);
-      toast.success("Login successful!");
-      localStorage.setItem("token", res.token);
-      localStorage.setItem("user", JSON.stringify(res.user));
-      localStorage.setItem("userId", res.user.id);
-      navigate("/");
+      const res = await API.post("/auth/login", formData);
+
+      if (res.data.success) {
+        toast.success("Login successful! 🎉");
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("user", JSON.stringify(res.data.user));
+        localStorage.setItem("userId", res.data.user.id);
+
+        setTimeout(() => {
+          navigate("/");
+        }, 500);
+      } else {
+        toast.error(res.data.message);
+      }
     } catch (err) {
-      toast.error(err.message || "Invalid credentials!");
+      console.error("Login error:", err);
+      const errorMsg = err.response?.data?.message || "Invalid credentials!";
+      toast.error(errorMsg);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div
-      className="bg-white dark:bg-[var(--bg-elevated)] 
-                  p-6 sm:p-8 rounded-lg shadow-lg w-full max-w-md 
-                  transition-colors duration-300 border dark:border-[var(--border-color)]"
-    >
+    <div className="bg-white dark:bg-[var(--bg-elevated)] p-6 sm:p-8 rounded-lg shadow-lg w-full max-w-md transition-colors duration-300 border dark:border-[var(--border-color)]">
       <h2 className="text-2xl sm:text-3xl font-bold text-center text-[var(--text-primary)] mb-6">
         Login
       </h2>
@@ -61,6 +72,7 @@ const Login = () => {
             onChange={handleChange}
             placeholder="you@example.com"
             className="w-full border border-[var(--border-color)] bg-[var(--bg-section-light)] p-3 rounded-lg focus:ring-2 focus:ring-[var(--accent-blue)] outline-none text-sm sm:text-base text-[var(--text-primary)]"
+            disabled={loading}
           />
         </div>
 
@@ -77,6 +89,7 @@ const Login = () => {
               onChange={handleChange}
               placeholder="********"
               className="w-full border border-[var(--border-color)] bg-[var(--bg-section-light)] p-3 rounded-lg focus:ring-2 focus:ring-[var(--accent-blue)] outline-none text-sm sm:text-base text-[var(--text-primary)]"
+              disabled={loading}
             />
             <span
               onClick={() => setShowPassword(!showPassword)}
@@ -94,7 +107,7 @@ const Login = () => {
             Remember Me
           </label>
           <Link
-            to="/reset-password"
+            to="/forgot-password"
             className="text-[var(--accent-blue)] hover:text-[var(--accent-hover)]"
           >
             Forgot Password?
@@ -104,15 +117,16 @@ const Login = () => {
         {/* Login Button */}
         <button
           type="submit"
-          className="w-full bg-[var(--accent-blue)] text-white py-3 rounded-lg hover:bg-[var(--accent-hover)] transition text-sm sm:text-base"
+          disabled={loading}
+          className="w-full bg-[var(--accent-blue)] text-white py-3 rounded-lg hover:bg-[var(--accent-hover)] transition text-sm sm:text-base disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Login
+          {loading ? "Logging in..." : "Login"}
         </button>
       </form>
 
       {/* Signup Link */}
       <p className="text-center mt-4 text-sm sm:text-base text-gray-600 dark:text-[var(--text-secondary)]">
-        Don’t have an account?{" "}
+        Don't have an account?{" "}
         <Link
           to="/signup"
           className="text-[var(--accent-blue)] hover:text-[var(--accent-hover)]"
@@ -120,8 +134,9 @@ const Login = () => {
           Sign up
         </Link>
       </p>
-      <p className="text-center mt-4 text-sm sm:text-base text-gray-600 dark:text-[var(--text-secondary)]">
-        Don’t want to login?{" "}
+
+      <p className="text-center mt-2 text-sm sm:text-base text-gray-600 dark:text-[var(--text-secondary)]">
+        Don't want to login?{" "}
         <Link to="/" className="text-[var(--accent-blue)]">
           Continue as Guest
         </Link>

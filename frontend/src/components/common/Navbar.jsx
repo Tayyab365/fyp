@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { cartContext } from "../../Context/CartContext";
 import useTheme from "../../hooks/useTheme";
-import { LogOut, Moon, LayoutDashboard, User, Sun } from "lucide-react";
+import { LogOut, Moon, LayoutDashboard, User, Sun, User2 } from "lucide-react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -168,8 +168,9 @@ const Navbar = () => {
                           navigate("/profile");
                           setIsDropdownOpen(false);
                         }}
-                        className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-[#2a2a3a] cursor-pointer transition"
+                        className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-[#2a2a3a] cursor-pointer flex items-center gap-2 transition"
                       >
+                        <User2 className="w-4 h-4" />
                         My Profile
                       </li>
 

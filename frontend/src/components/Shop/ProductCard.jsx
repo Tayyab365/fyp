@@ -38,7 +38,7 @@ const ProductCard = ({ selectedCategory }) => {
   const visibleProducts = filteredCategories.slice(0, visibleCount);
 
   return (
-    <div className="px-4 md:px-10 bg-[#F8FAFC] dark:bg-[#000000] transition-colors duration-300">
+    <div className="px-4 md:px-10 dark:bg-[#000000] transition-colors duration-300">
       <div className="flex flex-col md:flex-row justify-between pt-10 my-6 items-center gap-4">
         <h3 className="!text-2xl md:text-4xl font-bold text-[#1E293B] dark:text-[#ffffff] text-center md:text-left">
           Shop All Products

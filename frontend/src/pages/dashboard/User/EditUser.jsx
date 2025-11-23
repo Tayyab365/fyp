@@ -7,7 +7,7 @@ const EditUser = ({ onClose, user }) => {
 
   const [form, setForm] = useState({
     name: user?.name || "",
-    email: user?.email || "",
+    // email: user?.email || "",
     role: user?.role || "",
   });
 
@@ -48,13 +48,13 @@ const EditUser = ({ onClose, user }) => {
             onChange={handleChange}
             className="w-full border border-[var(--border-color)] bg-[var(--bg-elevated)] text-[var(--text-primary)] p-2 rounded"
           />
-          <input
+          {/* <input
             name="email"
             placeholder="Email"
             value={form.email}
             onChange={handleChange}
             className="w-full border border-[var(--border-color)] bg-[var(--bg-elevated)] text-[var(--text-primary)] p-2 rounded"
-          />
+          /> */}
 
           <select
             name="role"

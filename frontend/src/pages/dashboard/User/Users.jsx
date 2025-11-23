@@ -45,7 +45,7 @@ const Users = () => {
     );
 
   return (
-    <div className="bg-[var(--bg-page)] min-h-screen space-y-8 text-[var(--text-primary)]">
+    <div className="min-h-screen space-y-8 text-[var(--text-primary)]">
       {/* Header */}
       <div className="flex sm:flex-row items-start sm:items-center justify-between gap-3 px-2">
         <h1 className="text-2xl font-bold text-[var(--text-primary)]">Users</h1>

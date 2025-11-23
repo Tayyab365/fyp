@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CheckCircle } from "lucide-react";
+import Footer from "../components/home/Footer";
 
 const OrderSuccess = () => {
   const [order, setOrder] = useState(null);
@@ -99,15 +100,17 @@ const OrderSuccess = () => {
         </div>
       </div>
 
-      <button
-        className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-5 sm:px-6 py-2 sm:py-2.5 rounded-md font-medium text-sm sm:text-base transition duration-200"
-        onClick={() => {
-          localStorage.removeItem("orderData");
-          navigate("/");
-        }}
-      >
-        Back to Home
-      </button>
+      <div className="mb-5">
+        <button
+          className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-5 sm:px-6 py-2 sm:py-2.5 rounded-md font-medium text-sm sm:text-base transition duration-200"
+          onClick={() => {
+            localStorage.removeItem("orderData");
+            navigate("/");
+          }}
+        >
+          Back to Home
+        </button>
+      </div>
     </div>
   );
 };

@@ -140,20 +140,20 @@ const Profile = () => {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 mt-8">
-            <button
+            {/* <button
               onClick={() => alert("Edit feature coming soon!")}
               className="bg-blue-600 hover:bg-blue-700 
                          dark:bg-[var(--accent-blue)] dark:hover:bg-[var(--accent-hover)] 
                          text-white px-5 py-2 rounded-lg font-semibold transition w-full sm:w-auto"
             >
               Edit Profile
-            </button>
+            </button> */}
             <button
               onClick={() => setIsPasswordModalOpen(true)}
               className="border border-blue-600 text-blue-600 
-                         dark:border-[var(--accent-blue)] dark:text-[var(--accent-blue)] 
-                         hover:bg-blue-50 dark:hover:bg-[var(--bg-card)] 
-                         px-5 py-2 rounded-lg font-semibold transition w-full sm:w-auto"
+                         dark:border-[var(--accent-blue)] 
+                         hover:bg-[#2563EB] hover:text-white dark:hover:bg-transparent 
+                         px-5 py-2 text-sm rounded-lg font-semibold transition w-full sm:w-auto"
             >
               Change Password
             </button>

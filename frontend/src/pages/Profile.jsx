@@ -129,7 +129,13 @@ const Profile = () => {
               <p className="text-sm text-gray-500 dark:text-[var(--text-muted)]">
                 Member Since
               </p>
-              <p className="font-semibold">{new Date().toLocaleDateString()}</p>
+              <p className="font-semibold">
+                {new Date(user.createdAt).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </p>
             </div>
             <div>
               <p className="text-sm text-gray-500 dark:text-[var(--text-muted)]">

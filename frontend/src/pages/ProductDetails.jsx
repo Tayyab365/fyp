@@ -74,13 +74,10 @@ const ProductDetails = () => {
 
   return (
     <div className="max-w-7xl mx-auto mt-20 px-2 sm:px-4 lg:px-8">
-      {/* Product Section */}
       <div className="relative bg-gradient-to-br from-gray-50 to-white dark:from-[var(--bg-section-dark)] dark:to-[var(--bg-section-light)] rounded-2xl shadow-lg dark:shadow-black/40 p-6 sm:p-10 grid md:grid-cols-2 gap-10 items-center overflow-hidden border border-gray-100 dark:border-[var(--border-color)]">
-        {/* Soft background blur accents */}
         <div className="absolute top-0 left-0 w-64 h-64 bg-blue-100 dark:bg-[var(--bg-elevated)] blur-3xl opacity-20 rounded-full -z-10"></div>
         <div className="absolute bottom-0 right-0 w-64 h-64 bg-purple-100 dark:bg-[var(--bg-elevated)] blur-3xl opacity-20 rounded-full -z-10"></div>
 
-        {/* Product Image */}
         <div className="flex justify-center items-center">
           <div className="relative bg-white dark:bg-[var(--bg-card)] rounded-xl shadow-md dark:shadow-black/40 p-5 border border-gray-200 dark:border-[var(--border-color)]">
             <img
@@ -91,7 +88,6 @@ const ProductDetails = () => {
           </div>
         </div>
 
-        {/* Product Info */}
         <div className="flex flex-col justify-center space-y-3">
           <h1 className="text-2xl sm:text-2xl font-semibold text-gray-800 dark:text-[var(--text-primary)] tracking-tight">
             {product.name}
@@ -113,7 +109,6 @@ const ProductDetails = () => {
               "No description available for this product."}
           </p>
 
-          {/* Quantity Selector */}
           <div className="flex items-center gap-2 mt-2">
             <span className="font-medium text-gray-700 dark:text-[var(--text-primary)] text-sm">
               Quantity:
@@ -137,7 +132,6 @@ const ProductDetails = () => {
             />
           </div>
 
-          {/* Buttons */}
           <div className="flex flex-col sm:flex-row gap-3 mt-5">
             <button
               onClick={addToCart}
@@ -149,7 +143,6 @@ const ProductDetails = () => {
         </div>
       </div>
 
-      {/* Review Section */}
       {user ? (
         <div className="bg-white dark:bg-[var(--bg-card)] rounded-lg shadow-md dark:shadow-black/40 mt-8 p-4 sm:p-6 border border-gray-100 dark:border-[var(--border-color)]">
           <h2 className="text-xl font-semibold mb-3 text-gray-800 dark:text-[var(--text-primary)]">
@@ -206,7 +199,6 @@ const ProductDetails = () => {
         </div>
       )}
 
-      {/* Customer Reviews */}
       <div className="bg-white dark:bg-[var(--bg-card)] rounded-lg shadow-md dark:shadow-black/40 mt-8 p-4 sm:p-6 border border-gray-100 dark:border-[var(--border-color)]">
         <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-[var(--text-primary)]">
           Customer Reviews

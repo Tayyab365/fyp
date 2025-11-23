@@ -33,7 +33,6 @@ const AddProduct = ({ onClose }) => {
       });
       onClose();
     } catch (err) {
-      console.error("Add product failed:", err);
       toast.error("Failed to add product");
     }
   };

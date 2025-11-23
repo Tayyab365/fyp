@@ -23,14 +23,12 @@ const Orders = () => {
 
   return (
     <div className="min-h-screen space-y-8 text-[var(--text-primary)]">
-      {/* Header */}
       <div className="flex sm:flex-row px-2">
         <h1 className="text-2xl font-bold text-[var(--text-primary)]">
           Orders
         </h1>
       </div>
 
-      {/* Orders Table */}
       <div className=" rounded-2xl border border-[var(--border-color)] shadow-md overflow-hidden">
         {orders.length === 0 ? (
           <div className="py-12 text-center text-[var(--text-muted)] italic">

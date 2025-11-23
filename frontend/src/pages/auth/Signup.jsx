@@ -22,7 +22,6 @@ const Signup = () => {
     e.preventDefault();
     toast.dismiss();
 
-    // Validation
     if (!formData.name || !formData.email || !formData.password) {
       return toast.error("All fields are required!");
     }
@@ -42,7 +41,6 @@ const Signup = () => {
         toast.error(res.data.message || "Signup failed");
       }
     } catch (error) {
-      console.error("Signup error:", error);
       toast.error(
         error.response?.data?.message || "Server error. Please try again."
       );
@@ -58,7 +56,6 @@ const Signup = () => {
       </h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Full Name */}
         <div>
           <label className="block text-[var(--text-secondary)] font-medium mb-1">
             Full Name
@@ -74,7 +71,6 @@ const Signup = () => {
           />
         </div>
 
-        {/* Email */}
         <div>
           <label className="block text-[var(--text-secondary)] font-medium mb-1">
             Email
@@ -90,7 +86,6 @@ const Signup = () => {
           />
         </div>
 
-        {/* Password */}
         <div>
           <label className="block text-[var(--text-secondary)] font-medium mb-1">
             Password
@@ -114,7 +109,6 @@ const Signup = () => {
           </div>
         </div>
 
-        {/* Signup Button */}
         <button
           type="submit"
           disabled={loading}

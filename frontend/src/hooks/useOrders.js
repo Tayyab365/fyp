@@ -8,7 +8,6 @@ export function useOrders() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // ✅ Fetch All Orders
   const fetchOrders = async () => {
     setLoading(true);
     setError(null);
@@ -18,14 +17,12 @@ export function useOrders() {
       const data = await res.json();
       setOrders(data.orders || []);
     } catch (err) {
-      console.error(err);
       setError(err.message || "Something went wrong");
     } finally {
       setLoading(false);
     }
   };
 
-  // ✅ Place New Order
   const placeOrder = async (order) => {
     setLoading(true);
     try {
@@ -42,7 +39,6 @@ export function useOrders() {
       setOrders((prev) => [data.order, ...prev]);
       toast.success("Order placed successfully!");
     } catch (err) {
-      console.log(err);
       toast.error("Failed to place order");
       setError(err.message);
     } finally {
@@ -50,7 +46,6 @@ export function useOrders() {
     }
   };
 
-  // ✅ Delete Order
   const deleteOrder = async (_id) => {
     toast.dismiss();
     try {
@@ -62,13 +57,11 @@ export function useOrders() {
       setOrders((prev) => prev.filter((o) => o._id !== _id));
       toast.success("Order deleted successfully");
     } catch (err) {
-      console.log(err);
       setError("Failed to delete order");
       toast.error("Failed to delete order");
     }
   };
 
-  // ✅ Update Order Status (for Mark Completed / Cancel)
   const updateOrderStatus = async (id, status) => {
     try {
       const res = await fetch(`${API_URL}/${id}/status`, {
@@ -89,7 +82,6 @@ export function useOrders() {
       }
     } catch (err) {
       toast.error("Error updating order status");
-      console.error(err);
     }
   };
 
@@ -99,13 +91,12 @@ export function useOrders() {
       const data = await res.json();
 
       if (res.ok && data.success) {
-        return data.data; // [{ _id: userId, totalOrders: number }]
+        return data.data;
       } else {
         toast.error("Failed to fetch user order counts");
         return [];
       }
     } catch (err) {
-      console.error(err);
       toast.error("Error fetching user order counts");
       return [];
     }

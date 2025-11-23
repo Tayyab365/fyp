@@ -3,7 +3,6 @@ import Order from "../models/Order.js";
 
 const router = express.Router();
 
-// ✅ Create Order
 router.post("/", async (req, res) => {
   try {
     const newOrder = new Order(req.body);
@@ -15,7 +14,6 @@ router.post("/", async (req, res) => {
       order: savedOrder,
     });
   } catch (error) {
-    console.error("Error creating order:", error.message);
     res.status(500).json({
       success: false,
       message: "Error creating order",
@@ -24,13 +22,11 @@ router.post("/", async (req, res) => {
   }
 });
 
-// ✅ Get All Orders
 router.get("/", async (req, res) => {
   try {
     const orders = await Order.find().sort({ createdAt: -1 });
     res.status(200).json({ success: true, orders });
   } catch (error) {
-    console.error("Error fetching orders:", error.message);
     res.status(500).json({
       success: false,
       message: "Error fetching orders",
@@ -39,7 +35,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-// ✅ Delete Order
 router.delete("/:id", async (req, res) => {
   try {
     const deleted = await Order.findByIdAndDelete(req.params.id);
@@ -50,7 +45,6 @@ router.delete("/:id", async (req, res) => {
 
     res.json({ success: true, message: "Order deleted successfully" });
   } catch (error) {
-    console.error("Error deleting order:", error.message);
     res.status(500).json({
       success: false,
       message: "Error deleting order",
@@ -59,7 +53,6 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-// ✅ Update Order Status (Mark Completed / Cancel)
 router.put("/:id/status", async (req, res) => {
   try {
     const { status } = req.body;
@@ -82,7 +75,6 @@ router.put("/:id/status", async (req, res) => {
       order,
     });
   } catch (error) {
-    console.error("Error updating order status:", error);
     res.status(500).json({
       success: false,
       message: "Error updating order status",
@@ -99,7 +91,6 @@ router.get("/user-orders-count", async (req, res) => {
 
     res.json({ success: true, data: result });
   } catch (error) {
-    console.error("Error fetching user order count:", error.message);
     res.status(500).json({
       success: false,
       message: "Error fetching user order count",

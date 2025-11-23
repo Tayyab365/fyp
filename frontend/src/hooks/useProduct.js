@@ -20,7 +20,6 @@ export function useProduct(_id) {
         const data = await res.json();
         setProduct(data);
       } catch (err) {
-        console.error(err);
         setError(err.message || "Something went wrong");
       } finally {
         setLoading(false);

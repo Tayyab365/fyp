@@ -28,7 +28,6 @@ const ResetPassword = () => {
 
     const { password, confirmPassword } = formData;
 
-    // Validation
     if (!password || !confirmPassword) {
       return toast.error("Please fill all fields");
     }
@@ -62,14 +61,12 @@ const ResetPassword = () => {
         toast.error(res.data.message);
       }
     } catch (err) {
-      console.error("Reset password error:", err);
       toast.error(err.response?.data?.message || "Something went wrong");
     } finally {
       setLoading(false);
     }
   };
 
-  // Check if link is valid
   if (!email || !token) {
     return (
       <div className="max-w-md mx-auto p-6 bg-white dark:bg-[var(--bg-elevated)] rounded-lg shadow border dark:border-[var(--border-color)] transition-colors duration-300">
@@ -111,7 +108,6 @@ const ResetPassword = () => {
 
   return (
     <div className="w-full max-w-md p-6 sm:p-8 rounded-lg shadow bg-white dark:bg-[var(--bg-elevated)] border dark:border-[var(--border-color)] transition-colors duration-300">
-      {/* Header */}
       <div className="text-center mb-6">
         <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
           <svg
@@ -138,7 +134,6 @@ const ResetPassword = () => {
         </p>
       </div>
 
-      {/* Email Display */}
       <div className="bg-gray-50 dark:bg-[var(--bg-card)] p-3 rounded-lg mb-6">
         <p className="text-gray-600 dark:text-[var(--text-secondary)] text-xs text-center">
           Resetting password for:
@@ -148,9 +143,7 @@ const ResetPassword = () => {
         </p>
       </div>
 
-      {/* Form */}
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* New Password */}
         <div>
           <label className="block text-[var(--text-secondary)] font-medium mb-2 text-sm">
             New Password
@@ -174,7 +167,6 @@ const ResetPassword = () => {
           </div>
         </div>
 
-        {/* Confirm Password */}
         <div>
           <label className="block text-[var(--text-secondary)] font-medium mb-2 text-sm">
             Confirm Password
@@ -198,14 +190,12 @@ const ResetPassword = () => {
           </div>
         </div>
 
-        {/* Password Requirements */}
         <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3">
           <p className="text-blue-800 dark:text-blue-200 text-xs">
             Password must be at least 6 characters long
           </p>
         </div>
 
-        {/* Submit Button */}
         <button
           type="submit"
           disabled={loading}
@@ -215,7 +205,6 @@ const ResetPassword = () => {
         </button>
       </form>
 
-      {/* Back to Login */}
       <div className="text-center mt-6">
         <Link
           to="/login"

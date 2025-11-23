@@ -10,7 +10,6 @@ const Shop = () => {
 
   return (
     <div className="flex flex-col md:flex-row">
-      {/* Sidebar */}
       <div
         className="md:w-64 w-full md:h-screen sticky top-0 
                   bg-white dark:bg-[var(--bg-section-dark)] 
@@ -18,8 +17,6 @@ const Shop = () => {
       >
         <Sidebar setSelectedCategory={setSelectedCategory} />
       </div>
-
-      {/* Product Section */}
       <div className="flex-1 py-6 bg-white dark:bg-[var(--bg-page)] text-gray-900 dark:text-[var(--text-primary)]">
         <ProductCard selectedCategory={selectedCategory} />
       </div>

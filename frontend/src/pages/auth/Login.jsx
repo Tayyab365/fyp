@@ -45,7 +45,6 @@ const Login = () => {
         toast.error(res.data.message);
       }
     } catch (err) {
-      console.error("Login error:", err);
       const errorMsg = err.response?.data?.message || "Invalid credentials!";
       toast.error(errorMsg);
     } finally {
@@ -60,7 +59,6 @@ const Login = () => {
       </h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Email Field */}
         <div>
           <label className="block text-[var(--text-secondary)] font-medium mb-1">
             Email
@@ -76,7 +74,6 @@ const Login = () => {
           />
         </div>
 
-        {/* Password Field */}
         <div>
           <label className="block text-[var(--text-secondary)] font-medium mb-1">
             Password
@@ -100,7 +97,6 @@ const Login = () => {
           </div>
         </div>
 
-        {/* Remember Me & Forgot Password */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0 text-sm text-[var(--text-secondary)]">
           <label className="flex items-center gap-2">
             <input type="checkbox" className="accent-[var(--accent-blue)]" />
@@ -114,7 +110,6 @@ const Login = () => {
           </Link>
         </div>
 
-        {/* Login Button */}
         <button
           type="submit"
           disabled={loading}
@@ -124,7 +119,6 @@ const Login = () => {
         </button>
       </form>
 
-      {/* Signup Link */}
       <p className="text-center mt-4 text-sm sm:text-base text-gray-600 dark:text-[var(--text-secondary)]">
         Don't have an account?{" "}
         <Link

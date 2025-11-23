@@ -9,7 +9,6 @@ const Topbar = ({ onMenuClick }) => {
 
   return (
     <div className="fixed top-0 left-0 w-full z-50 shadow-sm border-b border-transparent dark:border-[#2a2a3a] bg-white dark:bg-[#1a1a24] text-[#1E293B] dark:text-white transition-all duration-300 px-4 sm:px-6 md:px-8 py-3 flex justify-between items-center">
-      {/* Left: Hamburger + Logo */}
       <div className="flex items-center gap-3">
         <button
           onClick={onMenuClick}

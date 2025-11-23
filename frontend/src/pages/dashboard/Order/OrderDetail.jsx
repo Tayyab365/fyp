@@ -15,7 +15,6 @@ const OrderDetail = ({ order, onClose }) => {
   return (
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 px-2 sm:px-4">
       <div className="bg-[var(--bg-card)] text-[var(--text-primary)] rounded-2xl shadow-lg w-full max-w-3xl p-4 sm:p-6 relative max-h-[90vh] overflow-y-auto border border-[var(--border-color)]">
-        {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-[var(--border-color)] pb-3 gap-2">
           <h2 className="text-lg sm:text-xl font-bold text-[var(--text-primary)]">
             Order #{_id.slice(-6)}
@@ -39,7 +38,6 @@ const OrderDetail = ({ order, onClose }) => {
           </button>
         </div>
 
-        {/* Customer Info */}
         <div className="mt-4 border-b border-[var(--border-color)] pb-3">
           <h3 className="font-semibold mb-2 text-[var(--text-secondary)] text-sm sm:text-base">
             Customer Info
@@ -78,7 +76,6 @@ const OrderDetail = ({ order, onClose }) => {
           </div>
         </div>
 
-        {/* Products */}
         <div className="mt-4 overflow-x-auto">
           <h3 className="font-semibold mb-2 text-[var(--text-secondary)] text-sm sm:text-base">
             Products
@@ -118,7 +115,6 @@ const OrderDetail = ({ order, onClose }) => {
           )}
         </div>
 
-        {/* Summary */}
         <div className="mt-4 border-t border-[var(--border-color)] pt-3 text-xs sm:text-sm text-[var(--text-secondary)]">
           <p>
             <span className="font-medium text-[var(--text-primary)]">
@@ -150,7 +146,6 @@ const OrderDetail = ({ order, onClose }) => {
           </p>
         </div>
 
-        {/* Footer Buttons */}
         <div className="mt-6 flex flex-wrap justify-end gap-2 sm:gap-3">
           <button
             onClick={() => handleStatusChange("Completed")}

@@ -8,7 +8,7 @@ const tempUserSchema = new mongoose.Schema(
     verificationCode: String,
     expiresAt: {
       type: Date,
-      expires: 900, // 900 seconds = 15 minutes
+      expires: 900,
     },
   },
   { timestamps: true }

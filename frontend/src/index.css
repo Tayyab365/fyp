@@ -1,20 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
-/* {Poppins font} */
-/* https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap */
-
-/* {inter Font} */
-/* https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap */
-
-/* {Montserrat Font} */
-/* https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap */
-
-/* {Nunito Sans Font} */
-/* https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&display=swap */
-
-/* {Urbanist Font} */
-/* https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700&display=swap */
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -26,7 +11,6 @@
 body {
   @apply bg-white dark:bg-black text-[#1E293B] dark:text-white;
 }
-/* index.css ya App.css me add karo */
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px;
 }
@@ -37,14 +21,12 @@ body {
 }
 
 .custom-scrollbar:hover::-webkit-scrollbar-thumb {
-  background-color: #cbd5e1; /* light gray on hover */
+  background-color: #cbd5e1;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
   background: transparent;
 }
-
-/* bg-gradient-to-r from-blue-100 via-white to-blue-100 */
 
 :root {
   --bg-page: #ffffff;

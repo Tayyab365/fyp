@@ -8,13 +8,9 @@ const DashboardLayout = () => {
 
   return (
     <div className="bg-gray-50 dark:bg-[var(--bg-page)] min-h-screen overflow-x-hidden text-gray-900 dark:text-[var(--text-primary)]">
-      {/* Topbar */}
       <Topbar onMenuClick={() => setSidebarOpen(true)} />
-
-      {/* Sidebar + Main Content */}
       <div className="flex pt-[72px] relative">
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-
         <main className="flex-1 ml-0 md:ml-64 p-4 transition-all duration-300 overflow-x-hidden">
           <Outlet />
         </main>

@@ -4,7 +4,6 @@ import { adminOnly, protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-// GET all (with simple search / filter / pagination support)
 router.get("/", async (req, res) => {
   try {
     const {
@@ -44,7 +43,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-// GET single product
 router.get("/:id", async (req, res) => {
   try {
     const p = await Product.findById(req.params.id);
@@ -55,7 +53,6 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// POST create new product
 router.post("/", protect, adminOnly, async (req, res) => {
   try {
     const product = new Product(req.body);
@@ -66,7 +63,6 @@ router.post("/", protect, adminOnly, async (req, res) => {
   }
 });
 
-// PUT update product
 router.put("/:id", protect, adminOnly, async (req, res) => {
   try {
     const updated = await Product.findByIdAndUpdate(req.params.id, req.body, {
@@ -79,7 +75,6 @@ router.put("/:id", protect, adminOnly, async (req, res) => {
   }
 });
 
-// DELETE product
 router.delete("/:id", protect, adminOnly, async (req, res) => {
   try {
     const deleted = await Product.findByIdAndDelete(req.params.id);
@@ -90,7 +85,6 @@ router.delete("/:id", protect, adminOnly, async (req, res) => {
   }
 });
 
-// ✅ ADD REVIEW (only new addition)
 router.post("/:id/reviews", protect, async (req, res) => {
   try {
     const { rating, comment } = req.body;
@@ -99,7 +93,7 @@ router.post("/:id/reviews", protect, async (req, res) => {
     if (!product) return res.status(404).json({ message: "Product not found" });
 
     const review = {
-      name: req.user.name, // from token middleware
+      name: req.user.name,
       rating: Number(rating),
       comment,
       user: req.user._id.toString(),

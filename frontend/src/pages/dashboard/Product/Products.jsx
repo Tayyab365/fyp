@@ -24,7 +24,6 @@ const Products = () => {
 
   return (
     <div className="min-h-screen space-y-8 text-[var(--text-primary)]">
-      {/* Header */}
       <div className="flex sm:flex-row items-start sm:items-center justify-between gap-3 px-2">
         <h1 className="text-2xl font-bold text-[var(--text-primary)]">
           Products
@@ -37,7 +36,6 @@ const Products = () => {
         </button>
       </div>
 
-      {/* Table */}
       <div className="rounded-2xl shadow-md border border-[var(--border-color)] overflow-hidden">
         <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-[#2a2a3a] scrollbar-track-[#000000]">
           <table className="w-full text-sm text-left border-collapse min-w-[700px]">

@@ -5,7 +5,6 @@ const useTheme = () => {
     if (typeof window === "undefined") return "light";
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme) return savedTheme;
-    // System preference check
     const prefersDark = window.matchMedia(
       "(prefers-color-scheme: dark)"
     ).matches;

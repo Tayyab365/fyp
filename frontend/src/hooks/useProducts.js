@@ -3,7 +3,6 @@ import { toast } from "react-hot-toast";
 
 const API_URL = `${import.meta.env.VITE_API_URL}/api/products`;
 
-// ✅ Memory cache
 let cachedProducts = null;
 
 export function useProducts() {
@@ -14,7 +13,6 @@ export function useProducts() {
   const token = localStorage.getItem("token");
 
   const fetchProducts = async () => {
-    // ✅ Stop re-fetching if already cached
     if (cachedProducts) return;
 
     setLoading(true);
@@ -24,9 +22,8 @@ export function useProducts() {
       const data = await res.json();
       const list = Array.isArray(data) ? data : data.products;
       setProducts(list);
-      cachedProducts = list; // ✅ store in memory cache
+      cachedProducts = list;
     } catch (err) {
-      console.error(err);
       setError("Failed to fetch products");
     } finally {
       setLoading(false);
@@ -49,10 +46,9 @@ export function useProducts() {
 
       const updated = [...products, data];
       setProducts(updated);
-      cachedProducts = updated; // ✅ update cache
+      cachedProducts = updated;
       toast.success("Product added successfully!");
     } catch (err) {
-      console.error(err);
       setError("Failed to add product");
       toast.error(err.message || "Failed to add product");
     }
@@ -74,10 +70,9 @@ export function useProducts() {
 
       const updated = products.map((p) => (p._id === _id ? data : p));
       setProducts(updated);
-      cachedProducts = updated; // ✅ update cache
+      cachedProducts = updated;
       toast.success("Product updated successfully!");
     } catch (err) {
-      console.error(err);
       setError("Failed to update product");
       toast.error(err.message || "Failed to update product");
     }
@@ -97,10 +92,9 @@ export function useProducts() {
 
       const updated = products.filter((p) => p._id !== _id);
       setProducts(updated);
-      cachedProducts = updated; // ✅ update cache
+      cachedProducts = updated;
       toast.success("Product deleted successfully!");
     } catch (err) {
-      console.error(err);
       setError("Failed to delete product");
       toast.error(err.message || "Failed to delete product");
     }

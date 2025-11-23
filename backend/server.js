@@ -17,8 +17,8 @@ app.use(
   cors({
     origin: [
       "https://tayyab-fyp.vercel.app",
-      "https://tayyab-fyp.netlify.app", // ✅ your Netlify live site URL
-      "http://localhost:5173", // ✅ for local testing
+      "https://tayyab-fyp.netlify.app",
+      "http://localhost:5173",
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
@@ -38,7 +38,3 @@ app.get("/", (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
-// http://localhost:5000/api/products
-// {atlas password}
-// Y05DEhl44QGixeUH

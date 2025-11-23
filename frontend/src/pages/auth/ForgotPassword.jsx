@@ -16,7 +16,6 @@ const ForgotPassword = () => {
       return toast.error("Please enter your email");
     }
 
-    // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return toast.error("Please enter a valid email");
@@ -33,7 +32,6 @@ const ForgotPassword = () => {
         toast.error(res.data.message);
       }
     } catch (error) {
-      console.error("Forgot password error:", error);
       toast.error(error.response?.data?.message || "Something went wrong");
     } finally {
       setLoading(false);
@@ -43,7 +41,6 @@ const ForgotPassword = () => {
   if (emailSent) {
     return (
       <div className="max-w-md mx-auto p-6 bg-white dark:bg-[var(--bg-elevated)] rounded-lg shadow border dark:border-[var(--border-color)] transition-colors duration-300">
-        {/* Success Icon */}
         <div className="text-center mb-6">
           <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
             <svg
@@ -73,7 +70,6 @@ const ForgotPassword = () => {
           </p>
         </div>
 
-        {/* Instructions */}
         <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-6">
           <p className="text-blue-800 dark:text-blue-200 text-sm">
             Click the link in the email to reset your password. The link will
@@ -81,7 +77,6 @@ const ForgotPassword = () => {
           </p>
         </div>
 
-        {/* Additional Help */}
         <div className="text-center space-y-3">
           <p className="text-gray-500 dark:text-[var(--text-muted)] text-sm">
             Didn't receive the email?
@@ -97,7 +92,6 @@ const ForgotPassword = () => {
           </button>
         </div>
 
-        {/* Back to Login */}
         <div className="text-center mt-6">
           <Link
             to="/login"
@@ -112,7 +106,6 @@ const ForgotPassword = () => {
 
   return (
     <div className="max-w-md mx-auto p-6 bg-white dark:bg-[var(--bg-elevated)] rounded-lg shadow border dark:border-[var(--border-color)] transition-colors duration-300">
-      {/* Header */}
       <div className="text-center mb-6">
         <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
           <svg
@@ -139,7 +132,6 @@ const ForgotPassword = () => {
         </p>
       </div>
 
-      {/* Form */}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block text-[var(--text-secondary)] font-medium mb-2 text-sm">
@@ -164,7 +156,6 @@ const ForgotPassword = () => {
         </button>
       </form>
 
-      {/* Back to Login */}
       <div className="text-center mt-6">
         <Link
           to="/login"

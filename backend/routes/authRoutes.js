@@ -8,13 +8,10 @@ import TempUser from "../models/TempUser.js";
 
 const router = express.Router();
 
-// ✅ 1. SIGNUP - Send Verification Code
 router.post("/signup", async (req, res) => {
-  console.log("✅ Signup route hit");
   try {
     const { name, email, password } = req.body;
 
-    // Validation
     if (!name || !email || !password) {
       return res.status(400).json({
         success: false,
@@ -22,7 +19,6 @@ router.post("/signup", async (req, res) => {
       });
     }
 
-    // Check if user already exists in real users
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({
@@ -31,28 +27,23 @@ router.post("/signup", async (req, res) => {
       });
     }
 
-    // Delete any old temp user with same email
     await TempUser.deleteOne({ email });
 
-    // Generate 6-digit verification code
     const verificationCode = Math.floor(
       100000 + Math.random() * 900000
     ).toString();
 
-    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Save to TempUser
     const tempUser = new TempUser({
       name,
       email,
       password: hashedPassword,
       verificationCode,
-      expiresAt: new Date(Date.now() + 15 * 60 * 1000), // 15 minutes
+      expiresAt: new Date(Date.now() + 15 * 60 * 1000),
     });
     await tempUser.save();
 
-    // Setup email transporter
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
       port: process.env.SMTP_PORT,
@@ -63,7 +54,6 @@ router.post("/signup", async (req, res) => {
       },
     });
 
-    // Send verification email
     await transporter.sendMail({
       from: `"GameStore Support" <${process.env.SMTP_FROM}>`,
       to: email,
@@ -92,7 +82,6 @@ router.post("/signup", async (req, res) => {
       email,
     });
   } catch (error) {
-    console.error("❌ Signup Error:", error);
     res.status(500).json({
       success: false,
       message: "Server error. Please try again.",
@@ -100,7 +89,6 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-// ✅ 2. VERIFY EMAIL - Confirm Code
 router.post("/verify-email", async (req, res) => {
   try {
     const { email, code } = req.body;
@@ -112,7 +100,6 @@ router.post("/verify-email", async (req, res) => {
       });
     }
 
-    // Find temp user
     const tempUser = await TempUser.findOne({ email });
     if (!tempUser) {
       return res.status(400).json({
@@ -121,7 +108,6 @@ router.post("/verify-email", async (req, res) => {
       });
     }
 
-    // Check if code expired
     if (tempUser.expiresAt < Date.now()) {
       await TempUser.deleteOne({ email });
       return res.status(400).json({
@@ -130,7 +116,6 @@ router.post("/verify-email", async (req, res) => {
       });
     }
 
-    // Check if code matches
     if (tempUser.verificationCode !== code) {
       return res.status(400).json({
         success: false,
@@ -138,7 +123,6 @@ router.post("/verify-email", async (req, res) => {
       });
     }
 
-    // Create real user
     const newUser = new User({
       name: tempUser.name,
       email: tempUser.email,
@@ -149,7 +133,6 @@ router.post("/verify-email", async (req, res) => {
     });
     await newUser.save();
 
-    // Delete temp user
     await TempUser.deleteOne({ email });
 
     res.status(200).json({
@@ -157,7 +140,6 @@ router.post("/verify-email", async (req, res) => {
       message: "Email verified successfully! You can now login.",
     });
   } catch (error) {
-    console.error("❌ Verification Error:", error);
     res.status(500).json({
       success: false,
       message: "Server error during verification",
@@ -165,7 +147,6 @@ router.post("/verify-email", async (req, res) => {
   }
 });
 
-// ✅ 3. LOGIN
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -177,7 +158,6 @@ router.post("/login", async (req, res) => {
       });
     }
 
-    // Find user
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(404).json({
@@ -186,7 +166,6 @@ router.post("/login", async (req, res) => {
       });
     }
 
-    // Check if email is verified
     if (!user.emailVerified) {
       return res.status(403).json({
         success: false,
@@ -194,7 +173,6 @@ router.post("/login", async (req, res) => {
       });
     }
 
-    // Check if account is blocked
     if (user.status === "Blocked") {
       return res.status(403).json({
         success: false,
@@ -202,7 +180,6 @@ router.post("/login", async (req, res) => {
       });
     }
 
-    // Verify password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(400).json({
@@ -211,7 +188,6 @@ router.post("/login", async (req, res) => {
       });
     }
 
-    // Generate JWT token
     const token = jwt.sign(
       { id: user._id, email: user.email },
       process.env.JWT_SECRET,
@@ -230,7 +206,6 @@ router.post("/login", async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("❌ Login Error:", error);
     res.status(500).json({
       success: false,
       message: "Server error during login",
@@ -238,7 +213,6 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// ✅ 4. FORGOT PASSWORD - Send Reset Link
 router.post("/forgot-password", async (req, res) => {
   try {
     const { email } = req.body;
@@ -252,7 +226,6 @@ router.post("/forgot-password", async (req, res) => {
 
     const user = await User.findOne({ email });
 
-    // Always return success (security best practice)
     if (!user) {
       return res.status(200).json({
         success: true,
@@ -260,16 +233,13 @@ router.post("/forgot-password", async (req, res) => {
       });
     }
 
-    // Generate reset token
     const resetToken = crypto.randomBytes(32).toString("hex");
     user.resetPasswordToken = resetToken;
     user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
     await user.save();
 
-    // Create reset link
     const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}&email=${email}`;
 
-    // Setup email transporter
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
       port: process.env.SMTP_PORT,
@@ -280,7 +250,6 @@ router.post("/forgot-password", async (req, res) => {
       },
     });
 
-    // Send reset email
     await transporter.sendMail({
       from: `"GameStore Support" <${process.env.SMTP_FROM}>`,
       to: email,
@@ -313,7 +282,6 @@ router.post("/forgot-password", async (req, res) => {
       message: "If that email exists, a reset link has been sent.",
     });
   } catch (error) {
-    console.error("❌ Forgot Password Error:", error);
     res.status(500).json({
       success: false,
       message: "Server error. Please try again.",
@@ -321,7 +289,6 @@ router.post("/forgot-password", async (req, res) => {
   }
 });
 
-// ✅ 5. RESET PASSWORD - Verify Token & Update
 router.post("/reset-password", async (req, res) => {
   try {
     const { email, token, password } = req.body;
@@ -333,7 +300,6 @@ router.post("/reset-password", async (req, res) => {
       });
     }
 
-    // Find user with valid token
     const user = await User.findOne({
       email,
       resetPasswordToken: token,
@@ -347,11 +313,9 @@ router.post("/reset-password", async (req, res) => {
       });
     }
 
-    // Hash new password
     const hashedPassword = await bcrypt.hash(password, 10);
     user.password = hashedPassword;
 
-    // Clear reset token
     user.resetPasswordToken = undefined;
     user.resetPasswordExpires = undefined;
     await user.save();
@@ -361,7 +325,6 @@ router.post("/reset-password", async (req, res) => {
       message: "Password reset successful! You can now login.",
     });
   } catch (error) {
-    console.error("❌ Reset Password Error:", error);
     res.status(500).json({
       success: false,
       message: "Server error. Please try again.",

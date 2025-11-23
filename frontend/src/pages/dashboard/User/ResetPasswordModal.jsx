@@ -38,7 +38,6 @@ const ResetPasswordModal = ({ userId, isOpen, onClose }) => {
       setConfirmPassword("");
       onClose();
     } catch (err) {
-      console.error(err);
       toast.error("Failed to reset password ❌");
     } finally {
       setLoading(false);

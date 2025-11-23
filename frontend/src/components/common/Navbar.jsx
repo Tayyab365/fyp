@@ -123,7 +123,6 @@ const Navbar = () => {
             )}
           </NavLink>
 
-          {/* Profile Dropdown (Always visible) */}
           <div ref={dropdownRef} className="relative">
             <button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}

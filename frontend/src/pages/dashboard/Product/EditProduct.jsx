@@ -29,7 +29,6 @@ const EditProduct = ({ onClose, product }) => {
       await updateProduct(product._id, payload);
       onClose();
     } catch (err) {
-      console.error("Edit product failed:", err);
       toast.error("Failed to update product");
     }
   };

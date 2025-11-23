@@ -32,7 +32,6 @@ const userSchema = new mongoose.Schema(
       default: "Active",
     },
 
-    // verification fields
     emailVerified: { type: Boolean, default: false },
     emailVerificationCode: String,
     emailVerificationExpires: Date,

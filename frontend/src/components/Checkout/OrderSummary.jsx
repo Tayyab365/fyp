@@ -60,8 +60,8 @@ const OrderSummary = ({ formData, setFormData }) => {
         easypaisaNumber: "",
       });
       navigate("/order-success");
-    } catch (err) {
-      console.error("Order placement failed", err);
+    } catch {
+      toast.error("Order placement failed");
     }
   };
 

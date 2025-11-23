@@ -17,7 +17,6 @@ export function useUsers() {
       const data = await res.json();
       setUsers(data);
     } catch (err) {
-      console.error(err);
       setError(err.message || "Something went wrong");
     } finally {
       setLoading(false);
@@ -42,7 +41,6 @@ export function useUsers() {
       setUsers([...users, data]);
       toast.success("User added successfully");
     } catch (err) {
-      console.error(err);
       setError(err.message);
       toast.error(err.message || "Failed to add user");
     }
@@ -58,7 +56,6 @@ export function useUsers() {
       setUsers((prev) => prev.filter((user) => user._id !== _id));
       toast.success("User deleted successfully");
     } catch (err) {
-      console.log(err);
       setError("Failed to delete user");
       toast.error("Failed to delete user");
     }
@@ -77,14 +74,12 @@ export function useUsers() {
       setUsers(users.map((user) => (user._id === _id ? data : user)));
       toast.success("User updated successfully");
     } catch (err) {
-      console.log(err);
       setError("Failed to edit user");
       toast.error("Failed to edit user");
     }
   };
 
   const toggleUserStatus = async (_id, currentStatus) => {
-    // 👇 Make sure we use consistent status values with backend
     const newStatus = currentStatus === "Active" ? "Blocked" : "Active";
     const updatedUser = { status: newStatus };
 
@@ -100,15 +95,12 @@ export function useUsers() {
 
       const data = await res.json();
 
-      // 👇 Update frontend list instantly
       setUsers((prev) => prev.map((user) => (user._id === _id ? data : user)));
 
-      // 👇 Dynamic toast based on new status
       toast.success(
         `User ${newStatus === "Active" ? "unblocked" : "blocked"} successfully`
       );
     } catch (err) {
-      console.error(err);
       setError("Failed to update user status");
       toast.error("Failed to update user status");
     }

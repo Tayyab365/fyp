@@ -5,7 +5,6 @@ import aboutImg from "../assets/images/about.avif";
 const About = () => {
   return (
     <div className="pt-28 min-h-screen bg-[var(--bg-page)] text-[var(--text-primary)] transition-colors duration-300">
-      {/* Header Section */}
       <div className="text-center mb-12 px-4">
         <h1 className="!text-3xl md:text-5xl font-bold text-[var(--text-primary)] mb-3">
           About Us
@@ -16,7 +15,6 @@ const About = () => {
         </p>
       </div>
 
-      {/* Mission and Values Section */}
       <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-10 px-4 items-center mb-16">
         <div className="space-y-4">
           <h2 className="text-2xl font-bold text-[var(--text-primary)]">
@@ -48,7 +46,6 @@ const About = () => {
         </div>
       </div>
 
-      {/* Features Section */}
       <div className="max-w-4xl mx-auto grid md:grid-cols-3 gap-6 px-4 pb-16">
         {[
           {

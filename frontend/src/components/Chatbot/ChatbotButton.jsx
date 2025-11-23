@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MessageCircle, X } from "lucide-react"; // lucide-react icons use kar rahe hain
+import { MessageCircle, X } from "lucide-react";
 
 const ChatbotButton = ({ onToggle, isOpen }) => {
   return (

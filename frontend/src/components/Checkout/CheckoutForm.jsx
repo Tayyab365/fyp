@@ -11,7 +11,6 @@ const CheckoutForm = ({ formData, setFormData }) => {
         Billing Details
       </h2>
 
-      {/* Basic Fields */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {[
           { label: "Full Name", name: "fullName" },
@@ -36,7 +35,6 @@ const CheckoutForm = ({ formData, setFormData }) => {
         ))}
       </div>
 
-      {/* Payment Method */}
       <div>
         <label className="block text-sm font-medium text-[#1E293B] dark:text-[var(--text-secondary)] mb-1.5">
           Payment Method
@@ -53,7 +51,6 @@ const CheckoutForm = ({ formData, setFormData }) => {
         </select>
       </div>
 
-      {/* Credit Card Fields */}
       {formData.paymentMethod === "Credit/Debit Card" && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 animate-fadeIn">
           {[
@@ -78,7 +75,6 @@ const CheckoutForm = ({ formData, setFormData }) => {
         </div>
       )}
 
-      {/* Easypaisa Field */}
       {formData.paymentMethod === "Easypaisa / JazzCash" && (
         <div className="animate-fadeIn">
           <label className="block text-sm font-medium text-[#1E293B] dark:text-[var(--text-secondary)] mb-1.5">

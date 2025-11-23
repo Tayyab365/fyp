@@ -109,7 +109,6 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
                    border border-gray-200 dark:border-[var(--border-color)]
                    rounded-2xl shadow-2xl w-full max-w-md p-6 relative"
       >
-        {/* Close button */}
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 
@@ -130,7 +129,6 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
           </svg>
         </button>
 
-        {/* Header */}
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-gray-800 dark:text-[var(--text-primary)] mb-2">
             Change Password
@@ -140,7 +138,6 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
           </p>
         </div>
 
-        {/* Error message */}
         {error && (
           <div
             className="mb-4 p-3 bg-red-50 dark:bg-red-950/40 
@@ -158,7 +155,6 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
           </div>
         )}
 
-        {/* Success message */}
         {success && (
           <div
             className="mb-4 p-3 bg-green-50 dark:bg-green-950/40 
@@ -176,7 +172,6 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
           </div>
         )}
 
-        {/* Input fields */}
         <div className="space-y-4">
           {[
             {
@@ -262,7 +257,6 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
             </div>
           ))}
 
-          {/* Buttons */}
           <div className="flex gap-3 pt-4">
             <button
               type="button"

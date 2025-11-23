@@ -28,7 +28,7 @@ const ChatWindow = ({ onClose }) => {
 
     try {
       const userId = localStorage.getItem("userId");
-      const res = await axios.post("http://localhost:5000/api/chat", {
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/chat`, {
         message: input,
         userId,
       });
@@ -64,7 +64,6 @@ const ChatWindow = ({ onClose }) => {
       border-gray-200 dark:border-[var(--border-color)] 
       z-50 flex flex-col transition-all duration-300"
     >
-      {/* Header */}
       <div
         className="flex justify-between items-center px-4 py-3 
       bg-white dark:bg-[var(--bg-section-dark)] 
@@ -84,7 +83,6 @@ const ChatWindow = ({ onClose }) => {
         </button>
       </div>
 
-      {/* Chat Section */}
       <div
         className="overflow-y-auto px-4 py-3 space-y-3 
         bg-gradient-to-b from-white to-gray-100 
@@ -115,7 +113,6 @@ const ChatWindow = ({ onClose }) => {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input Section */}
       <div
         className="bg-white dark:bg-[var(--bg-section-dark)] 
       border-t border-gray-200 dark:border-[var(--border-color)] 

@@ -38,8 +38,7 @@ const Sidebar = ({ isOpen, onClose }) => {
   };
 
   return (
-    <>
-      {/* Mobile overlay */}
+    <div>
       {isOpen && (
         <div
           className="fixed inset-0 bg-black/40 z-40 md:hidden"
@@ -47,7 +46,6 @@ const Sidebar = ({ isOpen, onClose }) => {
         ></div>
       )}
 
-      {/* Sidebar */}
       <aside
         className={`fixed top-[60px] left-0 w-64 h-[calc(100vh-60px)]
         bg-white dark:bg-[var(--bg-card)] border-r border-gray-200 dark:border-[var(--border-color)]
@@ -55,7 +53,6 @@ const Sidebar = ({ isOpen, onClose }) => {
         ${isOpen ? "translate-x-0" : "-translate-x-full"}
         md:translate-x-0`}
       >
-        {/* Close button (mobile only) */}
         <button
           onClick={onClose}
           className="md:hidden absolute top-4 right-4 text-gray-600 dark:text-[var(--text-secondary)] hover:text-gray-800 dark:hover:text-[var(--text-primary)]"
@@ -63,7 +60,6 @@ const Sidebar = ({ isOpen, onClose }) => {
           <X size={20} />
         </button>
 
-        {/* Nav links */}
         <nav className="space-y-2 mt-8 px-2">
           {links.map((link) => (
             <NavLink
@@ -85,7 +81,6 @@ const Sidebar = ({ isOpen, onClose }) => {
           ))}
         </nav>
 
-        {/* Logout button */}
         <div className="mt-8 border-t border-gray-200 dark:border-[var(--border-color)] pt-4 px-2">
           <button
             onClick={handleLogout}
@@ -96,7 +91,7 @@ const Sidebar = ({ isOpen, onClose }) => {
           </button>
         </div>
       </aside>
-    </>
+    </div>
   );
 };
 

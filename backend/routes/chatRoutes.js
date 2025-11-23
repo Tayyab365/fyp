@@ -8,7 +8,6 @@ import User from "../models/User.js";
 dotenv.config();
 const router = express.Router();
 
-// ✅ Helper: call OpenAI only if key available
 async function getAIResponse(message) {
   if (!process.env.OPENAI_API_KEY) {
     return `You said: ${message}`;
@@ -39,7 +38,6 @@ async function getAIResponse(message) {
   return response.data.choices[0].message.content;
 }
 
-// ✅ Chat Route
 router.post("/", async (req, res) => {
   try {
     const { message, userId } = req.body;
@@ -53,7 +51,6 @@ router.post("/", async (req, res) => {
     const lowerMsg = message.toLowerCase();
     let reply = "";
 
-    // 🧠 INTENT DETECTION
     if (lowerMsg.includes("order")) {
       if (!userId) {
         reply = "Please log in to check your orders.";
@@ -74,13 +71,11 @@ router.post("/", async (req, res) => {
       const users = await User.countDocuments();
       reply = `We currently have ${users} registered customers on ShopEase.`;
     } else {
-      // 🧠 fallback to AI
       reply = await getAIResponse(message);
     }
 
     res.json({ success: true, reply });
   } catch (error) {
-    console.error("Chatbot Error:", error.message);
     res
       .status(500)
       .json({ success: false, error: "Something went wrong with chatbot." });

@@ -1,12 +1,11 @@
 import mongoose from "mongoose";
 
-// ✅ Review schema added
 const reviewSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     rating: { type: Number, required: true },
     comment: { type: String, required: true },
-    user: { type: String, required: true }, // string rakha taake cast error na aaye
+    user: { type: String, required: true },
   },
   { timestamps: true }
 );
@@ -19,9 +18,8 @@ const productSchema = new mongoose.Schema(
     description: { type: String },
     price: { type: Number, required: true },
     stock: { type: Number, default: 0 },
-    image: { type: String }, // ✅ single image instead of array
+    image: { type: String },
 
-    // ✅ Added only for review system
     reviews: [reviewSchema],
     rating: { type: Number, default: 0 },
     numReviews: { type: Number, default: 0 },

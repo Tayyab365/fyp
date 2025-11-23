@@ -41,7 +41,6 @@ const AddUser = ({ onClose }) => {
       });
       onClose();
     } catch (err) {
-      console.error("Add user failed:", err);
       toast.error("Failed to add user");
     }
   };

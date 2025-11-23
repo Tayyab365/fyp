@@ -74,7 +74,6 @@ const Profile = () => {
                       rounded-3xl shadow-xl flex flex-col sm:flex-row 
                       overflow-hidden border border-gray-100 dark:border-[var(--border-color)]"
       >
-        {/* Left Section */}
         <div
           className="sm:w-1/3 w-full bg-gradient-to-b from-blue-600 to-blue-500 
                         flex flex-col justify-center items-center text-white p-6"
@@ -96,7 +95,6 @@ const Profile = () => {
           </span>
         </div>
 
-        {/* Right Section */}
         <div className="sm:w-2/3 w-full flex flex-col justify-center p-6 sm:p-10">
           <h3
             className="text-2xl font-bold text-gray-800 dark:text-[var(--text-primary)] 
@@ -146,14 +144,6 @@ const Profile = () => {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 mt-8">
-            {/* <button
-              onClick={() => alert("Edit feature coming soon!")}
-              className="bg-blue-600 hover:bg-blue-700 
-                         dark:bg-[var(--accent-blue)] dark:hover:bg-[var(--accent-hover)] 
-                         text-white px-5 py-2 rounded-lg font-semibold transition w-full sm:w-auto"
-            >
-              Edit Profile
-            </button> */}
             <button
               onClick={() => setIsPasswordModalOpen(true)}
               className="border border-blue-600 text-blue-600 
@@ -166,7 +156,6 @@ const Profile = () => {
           </div>
         </div>
       </div>
-
       <ChangePasswordModal
         isOpen={isPasswordModalOpen}
         onClose={() => setIsPasswordModalOpen(false)}

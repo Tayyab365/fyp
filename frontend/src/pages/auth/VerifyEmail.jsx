@@ -35,14 +35,12 @@ const VerifyEmail = () => {
         toast.error(res.data.message);
       }
     } catch (error) {
-      console.error("Verification error:", error);
       toast.error(error.response?.data?.message || "Verification failed");
     } finally {
       setLoading(false);
     }
   };
 
-  // Handle paste event
   const handlePaste = (e) => {
     const pastedData = e.clipboardData.getData("text");
     if (/^\d{6}$/.test(pastedData)) {
@@ -53,7 +51,6 @@ const VerifyEmail = () => {
   return (
     <div className="flex justify-center items-center px-4 sm:px-6 min-h-screen">
       <div className="p-6 sm:p-8 rounded-lg shadow-lg w-full max-w-sm sm:max-w-md bg-white dark:bg-[var(--bg-elevated)] border dark:border-[var(--border-color)] transition-colors duration-300">
-        {/* Header */}
         <div className="text-center mb-6">
           <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
             <svg
@@ -76,7 +73,6 @@ const VerifyEmail = () => {
           </h2>
         </div>
 
-        {/* Email Display */}
         <div className="bg-gray-50 dark:bg-[var(--bg-card)] p-4 rounded-lg mb-6">
           <p className="text-gray-600 dark:text-[var(--text-secondary)] text-sm sm:text-base text-center">
             We've sent a 6-digit verification code to:
@@ -86,7 +82,6 @@ const VerifyEmail = () => {
           </p>
         </div>
 
-        {/* Verification Form */}
         <form onSubmit={handleVerify} className="space-y-4">
           <div>
             <label className="block text-[var(--text-secondary)] font-medium mb-2 text-sm">
@@ -96,7 +91,6 @@ const VerifyEmail = () => {
               type="text"
               value={code}
               onChange={(e) => {
-                // Only allow numbers
                 const value = e.target.value.replace(/\D/g, "");
                 if (value.length <= 6) {
                   setCode(value);
@@ -119,7 +113,6 @@ const VerifyEmail = () => {
           </button>
         </form>
 
-        {/* Help Text */}
         <div className="mt-6 text-center">
           <p className="text-gray-500 dark:text-[var(--text-muted)] text-sm">
             Didn't receive the code?
@@ -135,7 +128,6 @@ const VerifyEmail = () => {
           </p>
         </div>
 
-        {/* Code expires info */}
         <div className="mt-4 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
           <p className="text-yellow-800 dark:text-yellow-200 text-xs text-center">
             ⏰ This code will expire in 15 minutes

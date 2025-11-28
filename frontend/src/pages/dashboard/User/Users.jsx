@@ -48,12 +48,12 @@ const Users = () => {
     <div className="min-h-screen space-y-8 text-[var(--text-primary)]">
       <div className="flex sm:flex-row items-start sm:items-center justify-between gap-3 px-2">
         <h1 className="text-2xl font-bold text-[var(--text-primary)]">Users</h1>
-        <button
+        {/* <button
           onClick={() => setShowModal(true)}
           className="bg-[var(--accent-blue)] text-white px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg hover:bg-[var(--accent-hover)] active:scale-95 shadow-sm transition text-sm sm:text-base"
         >
           + Add User
-        </button>
+        </button> */}
       </div>
 
       <div className="rounded-2xl shadow-md border border-[var(--border-color)] overflow-hidden">
@@ -160,7 +160,7 @@ const Users = () => {
         </div>
       </div>
 
-      {showModal && <AddUser onClose={() => setShowModal(false)} />}
+      {/* {showModal && <AddUser onClose={() => setShowModal(false)} />} */}
       {editUser && (
         <EditUser user={editUser} onClose={() => setEditUser(null)} />
       )}

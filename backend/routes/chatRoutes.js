@@ -102,7 +102,7 @@ router.post("/", async (req, res) => {
         reply = "No products available right now. Check back soon! 🎮";
       } else {
         const names = products.map((p) => p.name).join(", ");
-        reply = `We have amazing games like: **${names}**. Want to see more? Visit our shop! 🛒`;
+        reply = `We have amazing prodcuts like: **${names}**. Want to see more? Visit our shop! 🛒`;
       }
     }
     // ✅ Command: User Count (Admin-like info)
@@ -121,9 +121,9 @@ router.post("/", async (req, res) => {
       lowerMsg === "hello"
     ) {
       reply = `Hi! 👋 I can help you with:
-      - Check your **orders** status
-      - Browse our **products/games**
-      - Get **customer count** info
+      - Check your orders status
+      - Browse our products/games
+      - Get customer count info
       - Answer general questions about ShopEase
       
       Just ask me anything!`;

@@ -5,9 +5,10 @@ const ChatbotButton = ({ onToggle, isOpen }) => {
   return (
     <button
       onClick={onToggle}
-      className="fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg transition duration-300"
+      aria-label="Toggle Chatbot"
+      className="chatbot-floating-button fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg transition duration-300 z-40"
     >
-      {isOpen ? <X size={24} /> : <MessageCircle size={24} />}
+      {isOpen ? <X size={20} /> : <MessageCircle size={20} />}
     </button>
   );
 };

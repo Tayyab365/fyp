@@ -7,20 +7,28 @@ const ChatWindow = ({ onClose }) => {
   const navigate = useNavigate();
   const chatWindowRef = useRef(null);
   const messagesEndRef = useRef();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const [isLoggedIn, setIsLoggedIn] = useState(null);
+
   const [messages, setMessages] = useState([
     {
       sender: "bot",
       text: "Hi! 👋 I'm your gaming assistant. How can I help you?",
     },
   ]);
+  const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (
-        chatWindowRef.current &&
-        !chatWindowRef.current.contains(event.target)
-      ) {
+      const isOutsideChatWindow =
+        chatWindowRef.current && !chatWindowRef.current.contains(event.target);
+
+      const isFloatingButton =
+        event.target.closest('button[aria-label="Toggle Chatbot"]') ||
+        event.target.closest(".chatbot-floating-button");
+
+      if (isOutsideChatWindow && !isFloatingButton) {
         onClose();
       }
     };
@@ -34,20 +42,12 @@ const ChatWindow = ({ onClose }) => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
-
-    if (token && userId) {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
+    setIsLoggedIn(!!(token && userId));
   }, []);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
-
-  const [input, setInput] = useState("");
-  const [loading, setLoading] = useState(false);
 
   const handleSend = async () => {
     if (!input.trim()) return;
@@ -95,6 +95,10 @@ const ChatWindow = ({ onClose }) => {
     if (e.key === "Enter") handleSend();
   };
 
+  if (isLoggedIn === null) {
+    return null;
+  }
+
   if (!isLoggedIn) {
     return (
       <div
@@ -124,8 +128,7 @@ const ChatWindow = ({ onClose }) => {
           </button>
         </div>
 
-        <div className="p-6 text-center space-y-4">
-          <Lock size={48} className="mx-auto text-red-500" />
+        <div className="p-6 text-center space-y-3">
           <h3 className="text-lg font-bold text-gray-800 dark:text-[var(--text-primary)]">
             Login to Use Chatbot
           </h3>
@@ -135,7 +138,7 @@ const ChatWindow = ({ onClose }) => {
           <button
             onClick={() => navigate("/login")}
             className="w-full bg-[var(--accent-blue)] hover:bg-[var(--accent-hover)] 
-            text-white py-3 rounded-lg transition font-medium"
+            text-white py-2 rounded-lg transition font-medium"
           >
             Go to Login
           </button>

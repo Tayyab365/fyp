@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Check, X } from "lucide-react";
 import toast from "react-hot-toast";
 import API from "../../api/axios";
 
@@ -14,6 +14,15 @@ const Signup = () => {
   });
   const navigate = useNavigate();
 
+  // ✅ Password validation checks
+  const passwordValidation = {
+    minLength: formData.password.length >= 6,
+    hasNumber: /\d/.test(formData.password),
+  };
+
+  const isPasswordValid =
+    passwordValidation.minLength && passwordValidation.hasNumber;
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -22,12 +31,17 @@ const Signup = () => {
     e.preventDefault();
     toast.dismiss();
 
+    // Validation checks
     if (!formData.name || !formData.email || !formData.password) {
       return toast.error("All fields are required!");
     }
 
-    if (formData.password.length < 6) {
+    if (!passwordValidation.minLength) {
       return toast.error("Password must be at least 6 characters!");
+    }
+
+    if (!passwordValidation.hasNumber) {
+      return toast.error("Password must contain at least one number!");
     }
 
     setLoading(true);
@@ -94,7 +108,7 @@ const Signup = () => {
             <input
               type={showPassword ? "text" : "password"}
               name="password"
-              placeholder="Min. 6 characters"
+              placeholder="Enter password"
               value={formData.password}
               onChange={handleChange}
               className="w-full border border-[var(--border-color)] bg-[var(--bg-section-light)] p-3 rounded-lg focus:ring-2 focus:ring-[var(--accent-blue)] outline-none text-sm sm:text-base text-[var(--text-primary)] pr-10"
@@ -107,11 +121,50 @@ const Signup = () => {
               {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
             </span>
           </div>
+
+          {/* ✅ Password Requirements Checklist */}
+          {formData.password && (
+            <div className="mt-2 space-y-1">
+              <div className="flex items-center gap-2 text-sm">
+                {passwordValidation.minLength ? (
+                  <Check size={16} className="text-green-500" />
+                ) : (
+                  <X size={16} className="text-red-500" />
+                )}
+                <span
+                  className={
+                    passwordValidation.minLength
+                      ? "text-green-600 dark:text-green-400"
+                      : "text-red-600 dark:text-red-400"
+                  }
+                >
+                  At least 6 characters
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2 text-sm">
+                {passwordValidation.hasNumber ? (
+                  <Check size={16} className="text-green-500" />
+                ) : (
+                  <X size={16} className="text-red-500" />
+                )}
+                <span
+                  className={
+                    passwordValidation.hasNumber
+                      ? "text-green-600 dark:text-green-400"
+                      : "text-red-600 dark:text-red-400"
+                  }
+                >
+                  Contains at least one number
+                </span>
+              </div>
+            </div>
+          )}
         </div>
 
         <button
           type="submit"
-          disabled={loading}
+          disabled={loading || (formData.password && !isPasswordValid)}
           className="w-full bg-[var(--accent-blue)] text-white py-3 rounded-lg hover:bg-[var(--accent-hover)] transition text-sm sm:text-base disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? "Signing up..." : "Sign Up"}

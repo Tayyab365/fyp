@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const ChatWindow = ({ onClose }) => {
   const navigate = useNavigate();
-  const chatWindowRef = useRef(null); // Reference to chat window
+  const chatWindowRef = useRef(null);
   const messagesEndRef = useRef();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [messages, setMessages] = useState([
@@ -15,14 +15,13 @@ const ChatWindow = ({ onClose }) => {
     },
   ]);
 
-  // ✅ Click Outside to Close
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
         chatWindowRef.current &&
         !chatWindowRef.current.contains(event.target)
       ) {
-        onClose(); // Close chatbot if click is outside
+        onClose();
       }
     };
 
@@ -32,7 +31,6 @@ const ChatWindow = ({ onClose }) => {
     };
   }, [onClose]);
 
-  // Check if user is logged in
   useEffect(() => {
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
@@ -97,7 +95,6 @@ const ChatWindow = ({ onClose }) => {
     if (e.key === "Enter") handleSend();
   };
 
-  // If not logged in, show login prompt
   if (!isLoggedIn) {
     return (
       <div

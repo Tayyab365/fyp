@@ -8,7 +8,6 @@ import User from "../models/User.js";
 dotenv.config();
 const router = express.Router();
 
-/* ================== HELPERS (ADD) ================== */
 const isRecommendationQuery = (msg) => {
   return (
     msg.includes("best") ||
@@ -30,9 +29,7 @@ const isListingQuery = (msg) => {
     msg.includes("available")
   );
 };
-/* ================================================== */
 
-// ✅ AI Response Function
 async function getAIResponse(message) {
   const AI_API_KEY = process.env.AI_API_KEY;
   const AI_MODEL = process.env.AI_MODEL || "gpt-3.5-turbo";
@@ -75,7 +72,6 @@ Give clear and specific answers. Do NOT repeat generic replies.`,
   }
 }
 
-// ✅ Main Chat Route
 router.post("/", async (req, res) => {
   try {
     const { message, userId } = req.body;
@@ -93,7 +89,6 @@ router.post("/", async (req, res) => {
     const lowerMsg = message.toLowerCase();
     let reply = "";
 
-    // ✅ Orders (fixed)
     if (lowerMsg.includes("order")) {
       const orders = await Order.find({ userId }).sort({ createdAt: -1 });
       reply =
@@ -102,15 +97,9 @@ router.post("/", async (req, res) => {
           : `Your latest order status is **${
               orders[0].status || "Processing"
             }**.`;
-    }
-
-    // ✅ Recommendations → AI (NO SAME REPLY)
-    else if (isRecommendationQuery(lowerMsg)) {
+    } else if (isRecommendationQuery(lowerMsg)) {
       reply = await getAIResponse(message);
-    }
-
-    // ✅ Product listing → DB ONLY
-    else if (
+    } else if (
       isListingQuery(lowerMsg) ||
       lowerMsg.includes("mouse") ||
       lowerMsg.includes("keyboard") ||
@@ -123,20 +112,14 @@ router.post("/", async (req, res) => {
         products.length === 0
           ? "No products available right now."
           : `Available products: ${products.map((p) => p.name).join(", ")}.`;
-    }
-
-    // ✅ Help
-    else if (
+    } else if (
       lowerMsg === "hi" ||
       lowerMsg === "hello" ||
       lowerMsg.includes("help")
     ) {
       reply =
         "Hi! 👋 Ask me for product recommendations, order status, or available items.";
-    }
-
-    // ✅ Everything else → AI
-    else {
+    } else {
       reply = await getAIResponse(message);
     }
 

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const ChatWindow = ({ onClose }) => {
   const navigate = useNavigate();
+  const chatWindowRef = useRef(null); // Reference to chat window
   const messagesEndRef = useRef();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [messages, setMessages] = useState([
@@ -13,6 +14,23 @@ const ChatWindow = ({ onClose }) => {
       text: "Hi! 👋 I'm your gaming assistant. How can I help you?",
     },
   ]);
+
+  // ✅ Click Outside to Close
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        chatWindowRef.current &&
+        !chatWindowRef.current.contains(event.target)
+      ) {
+        onClose(); // Close chatbot if click is outside
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [onClose]);
 
   // Check if user is logged in
   useEffect(() => {
@@ -36,7 +54,6 @@ const ChatWindow = ({ onClose }) => {
   const handleSend = async () => {
     if (!input.trim()) return;
 
-    // Check login before sending
     if (!isLoggedIn) {
       setMessages((prev) => [
         ...prev,
@@ -84,6 +101,7 @@ const ChatWindow = ({ onClose }) => {
   if (!isLoggedIn) {
     return (
       <div
+        ref={chatWindowRef}
         className="fixed bottom-20 right-4 sm:right-6 w-72 sm:w-80 md:w-96 
         bg-white dark:bg-[var(--bg-elevated)]
         shadow-2xl rounded-3xl overflow-hidden border 
@@ -131,6 +149,7 @@ const ChatWindow = ({ onClose }) => {
 
   return (
     <div
+      ref={chatWindowRef}
       className="fixed bottom-20 right-4 sm:right-6 w-72 sm:w-80 md:w-96 
       bg-white dark:bg-[var(--bg-elevated)]
       shadow-2xl rounded-3xl overflow-hidden border 

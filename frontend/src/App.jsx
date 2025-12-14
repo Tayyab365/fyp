@@ -38,10 +38,38 @@ const ScrollToTop = () => {
   return null;
 };
 
-const App = () => {
+// ✅ Component to conditionally show chatbot
+const ChatbotWrapper = () => {
+  const location = useLocation();
   const [isChatOpen, setIsChatOpen] = useState(false);
   const toggleChat = () => setIsChatOpen(!isChatOpen);
 
+  // ✅ Hide chatbot on auth pages and dashboard
+  const hideOnPages = [
+    "/login",
+    "/signup",
+    "/forgot-password",
+    "/reset-password",
+    "/verify-email",
+  ];
+
+  const shouldHideChatbot =
+    hideOnPages.includes(location.pathname) ||
+    location.pathname.startsWith("/dashboard");
+
+  if (shouldHideChatbot) {
+    return null; // Don't show chatbot
+  }
+
+  return (
+    <>
+      <ChatbotButton onToggle={toggleChat} isOpen={isChatOpen} />
+      {isChatOpen && <ChatWindow onClose={toggleChat} />}
+    </>
+  );
+};
+
+const App = () => {
   return (
     <BrowserRouter>
       <ScrollToTop />
@@ -100,8 +128,8 @@ const App = () => {
 
       <Toaster position="top-right" reverseOrder={false} />
 
-      <ChatbotButton onToggle={toggleChat} isOpen={isChatOpen} />
-      {isChatOpen && <ChatWindow onClose={toggleChat} />}
+      {/* ✅ Chatbot (conditionally shown) */}
+      <ChatbotWrapper />
     </BrowserRouter>
   );
 };

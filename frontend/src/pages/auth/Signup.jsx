@@ -14,7 +14,6 @@ const Signup = () => {
   });
   const navigate = useNavigate();
 
-  // ✅ Password validation checks
   const passwordValidation = {
     minLength: formData.password.length >= 6,
     hasNumber: /\d/.test(formData.password),
@@ -31,7 +30,6 @@ const Signup = () => {
     e.preventDefault();
     toast.dismiss();
 
-    // Validation checks
     if (!formData.name || !formData.email || !formData.password) {
       return toast.error("All fields are required!");
     }
@@ -122,7 +120,6 @@ const Signup = () => {
             </span>
           </div>
 
-          {/* ✅ Password Requirements Checklist */}
           {formData.password && (
             <div className="mt-2 space-y-1">
               <div className="flex items-center gap-2 text-sm">

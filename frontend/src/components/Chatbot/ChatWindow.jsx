@@ -1,15 +1,30 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { X } from "lucide-react";
+import { X, Lock } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const ChatWindow = ({ onClose }) => {
+  const navigate = useNavigate();
   const messagesEndRef = useRef();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [messages, setMessages] = useState([
     {
       sender: "bot",
       text: "Hi! 👋 I'm your gaming assistant. How can I help you?",
     },
   ]);
+
+  // Check if user is logged in
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
+
+    if (token && userId) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, []);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -20,6 +35,15 @@ const ChatWindow = ({ onClose }) => {
 
   const handleSend = async () => {
     if (!input.trim()) return;
+
+    // Check login before sending
+    if (!isLoggedIn) {
+      setMessages((prev) => [
+        ...prev,
+        { sender: "bot", text: "🔒 Please login to use the chatbot." },
+      ]);
+      return;
+    }
 
     const userMessage = { sender: "user", text: input };
     setMessages((prev) => [...prev, userMessage]);
@@ -55,6 +79,55 @@ const ChatWindow = ({ onClose }) => {
   const handleKeyDown = (e) => {
     if (e.key === "Enter") handleSend();
   };
+
+  // If not logged in, show login prompt
+  if (!isLoggedIn) {
+    return (
+      <div
+        className="fixed bottom-20 right-4 sm:right-6 w-72 sm:w-80 md:w-96 
+        bg-white dark:bg-[var(--bg-elevated)]
+        shadow-2xl rounded-3xl overflow-hidden border 
+        border-gray-200 dark:border-[var(--border-color)] 
+        z-50 flex flex-col transition-all duration-300"
+      >
+        <div
+          className="flex justify-between items-center px-4 py-3 
+        bg-white dark:bg-[var(--bg-section-dark)] 
+        border-b border-gray-200 dark:border-[var(--border-color)]"
+        >
+          <div className="flex items-center gap-2">
+            <Lock size={18} className="text-red-500" />
+            <span className="font-semibold text-gray-800 dark:text-[var(--text-primary)] text-sm">
+              Login Required
+            </span>
+          </div>
+          <button
+            onClick={onClose}
+            className="text-gray-500 dark:text-[var(--text-muted)] hover:text-red-500 transition"
+          >
+            <X size={18} />
+          </button>
+        </div>
+
+        <div className="p-6 text-center space-y-4">
+          <Lock size={48} className="mx-auto text-red-500" />
+          <h3 className="text-lg font-bold text-gray-800 dark:text-[var(--text-primary)]">
+            Login to Use Chatbot
+          </h3>
+          <p className="text-sm text-gray-600 dark:text-[var(--text-secondary)]">
+            Please login to your account to access the AI assistant.
+          </p>
+          <button
+            onClick={() => navigate("/login")}
+            className="w-full bg-[var(--accent-blue)] hover:bg-[var(--accent-hover)] 
+            text-white py-3 rounded-lg transition font-medium"
+          >
+            Go to Login
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div

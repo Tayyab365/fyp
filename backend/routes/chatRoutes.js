@@ -8,16 +8,39 @@ import User from "../models/User.js";
 dotenv.config();
 const router = express.Router();
 
-// ✅ AI Response Function (Works with ANY API)
+/* ================== HELPERS (ADD) ================== */
+const isRecommendationQuery = (msg) => {
+  return (
+    msg.includes("best") ||
+    msg.includes("recommend") ||
+    msg.includes("suggest") ||
+    msg.includes("which") ||
+    msg.includes("compare") ||
+    msg.includes("better") ||
+    msg.includes("under")
+  );
+};
+
+const isListingQuery = (msg) => {
+  return (
+    msg.includes("show") ||
+    msg.includes("list") ||
+    msg.includes("products") ||
+    msg.includes("items") ||
+    msg.includes("available")
+  );
+};
+/* ================================================== */
+
+// ✅ AI Response Function
 async function getAIResponse(message) {
   const AI_API_KEY = process.env.AI_API_KEY;
   const AI_MODEL = process.env.AI_MODEL || "gpt-3.5-turbo";
   const AI_API_URL =
     process.env.AI_API_URL || "https://api.openai.com/v1/chat/completions";
 
-  // If no API key, return fallback
   if (!AI_API_KEY) {
-    return "⚠️ AI service is currently unavailable. Please contact support.";
+    return "⚠️ AI is not configured. Please contact admin.";
   }
 
   try {
@@ -29,13 +52,12 @@ async function getAIResponse(message) {
           {
             role: "system",
             content: `You are an AI assistant for a gaming e-commerce store called ShopEase.
-            Only answer questions about products, orders, shipping, and support.
-            If the user asks anything unrelated, reply: "I'm sorry, I can only assist with ShopEase store questions."
-            Keep responses short and helpful.`,
+You help users with gaming products like mouse, keyboard, headset, controller.
+Give clear and specific answers. Do NOT repeat generic replies.`,
           },
           { role: "user", content: message },
         ],
-        temperature: 0.7,
+        temperature: 0.8,
         max_tokens: 150,
       },
       {
@@ -43,7 +65,6 @@ async function getAIResponse(message) {
           "Content-Type": "application/json",
           Authorization: `Bearer ${AI_API_KEY}`,
         },
-        timeout: 10000, // 10 second timeout
       }
     );
 
@@ -60,75 +81,61 @@ router.post("/", async (req, res) => {
     const { message, userId } = req.body;
 
     if (!message || !message.trim()) {
-      return res.status(400).json({
-        success: false,
-        error: "Message is required",
-      });
+      return res
+        .status(400)
+        .json({ success: false, error: "Message required" });
     }
 
-    // ✅ Check if user is logged in (Simple check)
     if (!userId) {
-      return res.status(401).json({
-        success: false,
-        error: "Please login to use the chatbot",
-      });
+      return res.status(401).json({ success: false, error: "Login required" });
     }
 
     const lowerMsg = message.toLowerCase();
     let reply = "";
 
-    // ✅ Command: Check Orders
-    if (lowerMsg.includes("order") || lowerMsg.includes("my order")) {
+    // ✅ Orders (fixed)
+    if (lowerMsg.includes("order")) {
       const orders = await Order.find({ userId }).sort({ createdAt: -1 });
-
-      if (orders.length === 0) {
-        reply =
-          "You haven't placed any orders yet. Browse our shop to find amazing games! 🎮";
-      } else {
-        const latestOrder = orders[0];
-        const orderStatus = latestOrder.status || "Processing";
-        reply = `You have ${orders.length} order(s). Latest order status: **${orderStatus}**. Need more details? Check your profile!`;
-      }
+      reply =
+        orders.length === 0
+          ? "You haven't placed any orders yet."
+          : `Your latest order status is **${
+              orders[0].status || "Processing"
+            }**.`;
     }
-    // ✅ Command: Check Products
+
+    // ✅ Recommendations → AI (NO SAME REPLY)
+    else if (isRecommendationQuery(lowerMsg)) {
+      reply = await getAIResponse(message);
+    }
+
+    // ✅ Product listing → DB ONLY
     else if (
-      lowerMsg.includes("product") ||
-      lowerMsg.includes("items") ||
-      lowerMsg.includes("game")
+      isListingQuery(lowerMsg) ||
+      lowerMsg.includes("mouse") ||
+      lowerMsg.includes("keyboard") ||
+      lowerMsg.includes("headset") ||
+      lowerMsg.includes("controller")
     ) {
       const products = await Product.find().limit(5);
 
-      if (products.length === 0) {
-        reply = "No products available right now. Check back soon! 🎮";
-      } else {
-        const names = products.map((p) => p.name).join(", ");
-        reply = `We have amazing prodcuts like: **${names}**. Want to see more? Visit our shop! 🛒`;
-      }
+      reply =
+        products.length === 0
+          ? "No products available right now."
+          : `Available products: ${products.map((p) => p.name).join(", ")}.`;
     }
-    // ✅ Command: User Count (Admin-like info)
+
+    // ✅ Help
     else if (
-      lowerMsg.includes("user") ||
-      lowerMsg.includes("customer") ||
-      lowerMsg.includes("account")
-    ) {
-      const userCount = await User.countDocuments();
-      reply = `We currently have **${userCount}** registered customers on ShopEase! 🎉`;
-    }
-    // ✅ Command: Help
-    else if (
-      lowerMsg.includes("help") ||
       lowerMsg === "hi" ||
-      lowerMsg === "hello"
+      lowerMsg === "hello" ||
+      lowerMsg.includes("help")
     ) {
-      reply = `Hi! 👋 I can help you with:
-      - Check your orders status
-      - Browse our products/games
-      - Get customer count info
-      - Answer general questions about ShopEase
-      
-      Just ask me anything!`;
+      reply =
+        "Hi! 👋 Ask me for product recommendations, order status, or available items.";
     }
-    // ✅ Use AI for everything else
+
+    // ✅ Everything else → AI
     else {
       reply = await getAIResponse(message);
     }
@@ -138,7 +145,7 @@ router.post("/", async (req, res) => {
     console.error("Chatbot Error:", error);
     res.status(500).json({
       success: false,
-      error: "Something went wrong with the chatbot. Please try again.",
+      error: "Chatbot error",
     });
   }
 });

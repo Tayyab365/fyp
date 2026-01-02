@@ -134,7 +134,10 @@ The application will be available at `http://localhost:3000`
 
 ## 📱 Screenshots
 
-_Add your application screenshots here_
+<img width="1590" height="745" alt="home" src="https://github.com/user-attachments/assets/245267dc-ea48-4323-92cc-5e1b18c811ab" />
+<img width="1590" height="745" alt="shop" src="https://github.com/user-attachments/assets/144bb69d-dcc5-400b-ad3a-161d4d770779" />
+<img width="1590" height="745" alt="product-detail" src="https://github.com/user-attachments/assets/426003da-64a8-447f-a2fd-3924c4dd18d8" />
+<img width="1590" height="745" alt="admin-dashboard" src="https://github.com/user-attachments/assets/c39aaa62-10cb-4f36-a8d9-e0bb3db3754b" />
 
 ## 🔮 Future Enhancements
 

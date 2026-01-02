@@ -2,8 +2,6 @@
 
 A full-stack MERN ecommerce web application specializing in gaming products with integrated AI-powered chatbot assistance.
 
-![ShopEase Banner](link-to-banner-image)
-
 ## 🎮 About The Project
 
 ShopEase is a modern ecommerce platform built specifically for gaming enthusiasts, offering a wide range of gaming products including laptops, keyboards, mice, and accessories. The platform features role-based access control and includes an AI-powered chatbot accessible on every page for user assistance.

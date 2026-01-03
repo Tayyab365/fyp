@@ -56,7 +56,7 @@ ShopEase is a modern ecommerce platform built specifically for gaming enthusiast
 
 1. **Clone the repository**
 
-git clone https://github.com/yourusername/shopease.git
+git clone https://github.com/Tayyab365/fyp.git
 cd fyp
 
 2. **Install Backend Dependencies**
@@ -98,8 +98,6 @@ Start Frontend Server:
 
 cd frontend
 npm start
-
-The application will be available at `http://localhost:3000`
 
 ## 👥 User Roles
 
@@ -151,7 +149,6 @@ The application will be available at `http://localhost:3000`
 ## 🤝 Contributing
 
 Contributions are welcome! Feel free to submit a Pull Request.
-
 
 ## 👨‍💻 Author
 
